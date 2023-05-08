@@ -1,0 +1,11 @@
+# https://stackoverflow.com/a/9227991/13695737
+
+*
+!*/
+
+!.gitignore
+
+!nvim/**
+nvim/plugin
+
+!README.md
