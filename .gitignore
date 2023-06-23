@@ -8,4 +8,4 @@
 !nvim/**
 nvim/plugin
 
-!README.md
+!/README.md
