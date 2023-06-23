@@ -8,4 +8,6 @@
 !nvim/**
 nvim/plugin
 
+!nixos/**
+
 !/README.md
