@@ -23,6 +23,7 @@ return require('packer').startup(function(use)
     use { "catppuccin/nvim", as = "catppuccin" }
     use'zbirenbaum/copilot.lua'
     use'zbirenbaum/copilot-cmp'
+    use'wakatime/vim-wakatime'
     use {
         'numToStr/Comment.nvim',
         config = function()

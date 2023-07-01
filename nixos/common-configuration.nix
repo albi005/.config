@@ -4,9 +4,18 @@
 
 { config, pkgs, ... }:
 
+# https://discourse.nixos.org/t/installing-only-a-single-package-from-unstable/5598/4
+let
+  unstable = import
+    (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+in
 {
   imports =
     [
+      (import "${home-manager}/nixos")
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -14,6 +23,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # https://nixos.wiki/wiki/NTFS
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -50,8 +61,7 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    layout = "us,hu";
   };
 
   # Enable CUPS to print documents.
@@ -77,18 +87,36 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  environment.variables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      BROWSER = "google-chrome";
+      TERM = "alacritty";
+      TERMINAL = "alacritty";
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.albi = {
     isNormalUser = true;
-    description = "Albert";
+    description = "Albert Ragány-Németh";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       neovim
       spotify
       google-chrome
       alacritty
+      gnomeExtensions.clipboard-indicator
+      headsetcontrol
+      gnomeExtensions.headsetcontrol
+      gnomeExtensions.twitchlive-panel
+      gnomeExtensions.openweather
+      gnome.gnome-disk-utility
+      gnome.nautilus
+      gnome.totem
     ];
   };
+
+  home-manager.users.albi = import ./home.nix;
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
@@ -110,8 +138,19 @@
     lsd
     ripgrep
     unzip
-    tailscale
-    gnomeExtensions.twitchlive-panel
+    unstable.nixd
+    lua-language-server
+    rustup
+    dotnet-sdk_8
+    # dotnet-sdk_7
+    # omnisharp-roslyn
+    # msbuild
+    ombi
+    qbittorrent
+    tmux
+    python3
+    sqlitebrowser
+    jetbrains.rider
   ];
 
   fonts.fonts = with pkgs; [
@@ -119,6 +158,62 @@
   ];
 
   services.tailscale.enable = true;
+
+  services.jellyseerr.enable = true;
+
+  services.sonarr.enable = true;
+  services.sonarr.group = "media";
+
+  services.radarr.enable = true;
+  services.radarr.group = "media";
+
+  services.prowlarr.enable = true;
+
+  services.jellyfin.enable = true;
+  services.jellyfin.group = "media";
+
+  services.nginx = {
+      enable = true;
+      virtualHosts = 
+          let listen = [ {
+              addr = "100.74.100.33";
+              port = 80;
+              ssl = false;
+          } ];
+      in
+      {
+          "jellyseer.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:5055";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+          "sonarr.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:8989";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+          "radarr.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:7878";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+          "prowlarr.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:9696";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+          "jellyfin.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:8096";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+          "torrent.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:10069";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+      };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -131,13 +226,13 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+  };
+  networking.interfaces.eno1.wakeOnLan.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -18,3 +18,13 @@ ctrl+p search git
 ctrl+e harpoon toggle
 ctrl+{htns} harpoon open
 ```
+
+## tmux cheat sheet
+
+```
+C-b ?    help
+C-b c    create window
+C-b 1    select window 1
+C-b w    window tree
+C-b d    deattach
+```
