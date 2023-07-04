@@ -5,17 +5,15 @@
 # enable if dconf not found:
 # programs.dconf.enable = true;
 
-    xsession.enable = true;
-    xsession.windowManager.command = "...";
 
-    programs.git = {
-        enable = true;
-        userName = "Albert Ragány-Németh";
-        userEmail = "me@alb1.hu";
-        extraConfig = {
-            init.defaultBranch = "main";
-        };
-    };
+    # programs.git = {
+    #     enable = true;
+    #     userName = "Albert Ragány-Németh";
+    #     userEmail = "me@alb1.hu";
+    #     extraConfig = {
+    #         init.defaultBranch = "main";
+    #     };
+    # };
 
     programs.alacritty = {
         enable = true;
