@@ -93,4 +93,4 @@ cmp.setup({
 require'lspconfig'.sourcekit.setup{}
 require'lspconfig'.pylyzer.setup{}
 require'Comment'.setup(); --https://github.com/numToStr/Comment.nvim#configuration-optional
-require'lspconfig'.nixd.setup{}
+require'lspconfig'.nil_ls.setup{}

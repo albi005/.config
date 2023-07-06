@@ -18,6 +18,9 @@
     programs.alacritty = {
         enable = true;
         settings = {
+            import = [
+                "${config.home.homeDirectory}/.config/alacritty/catppuccin/catppuccin-mocha.yml"
+            ];
             font = {
                 normal = {
                     family = "CaskaydiaCove Nerd Font";
@@ -67,6 +70,7 @@
 
         sessionVariables = {
             PATH = "$PATH:/home/albi/.dotnet/tools";
+            PS1 = "\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
         };
     };
 }

@@ -31,6 +31,7 @@ in
         alacritty
         lsd
         nil
+        neofetch
     ];
 
 # Auto upgrade nix package and the daemon service.
@@ -40,6 +41,7 @@ in
 # Create /etc/zshrc that loads the nix-darwin environment.
     programs.zsh.enable = true;  # default shell on catalina
     programs.bash.enable = true;
+    environment.shells = with pkgs; [ bashInteractive zsh ];
 
     fonts.fontDir.enable = true;
     fonts.fonts = with pkgs; [

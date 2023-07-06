@@ -11,3 +11,5 @@ nvim/plugin
 !nixos/**
 
 !/README.md
+
+!/alacritty/catppuccin
