@@ -1,15 +1,18 @@
-# https://stackoverflow.com/a/9227991/13695737
+# whitelist: https://stackoverflow.com/a/9227991/13695737
 
 *
 !*/
 
-!.gitignore
+!/.gitignore
 
-!nvim/**
-nvim/plugin
+!/alacritty/catppuccin
 
-!nixos/**
+!/git/**
+
+!/nixos/**
+
+!/nvim/**
+/nvim/plugin
 
 !/README.md
 
-!/alacritty/catppuccin

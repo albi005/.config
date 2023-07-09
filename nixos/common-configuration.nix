@@ -57,8 +57,8 @@ in
   services.xserver.desktopManager.gnome.enable = true;
   
   # home manager stuff
-  xsession.enable = true;
-  xsession.windowManager.command = "...";
+  # xsession.enable = true;
+  # xsession.windowManager.command = "...";
 
   # Disable GNOME default apps
   services.gnome.core-utilities.enable = false;
@@ -91,6 +91,7 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+# /etc/profile -> /nix/store/*-set-environment
   environment.variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -137,12 +138,14 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
+    gh
     gcc
     nodejs
     lsd
     ripgrep
     unzip
     unstable.nixd
+    unstable.nil
     lua-language-server
     rustup
     dotnet-sdk_8
@@ -155,6 +158,7 @@ in
     python3
     sqlitebrowser
     jetbrains.rider
+    pstree
   ];
 
   fonts.fonts = with pkgs; [
@@ -218,16 +222,6 @@ in
           };
       };
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

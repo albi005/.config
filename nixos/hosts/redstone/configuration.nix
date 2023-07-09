@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "redstone"; # Define your hostname.
 
   imports =
     [

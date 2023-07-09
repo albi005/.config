@@ -2,6 +2,10 @@
 {
     home.stateVersion = "23.05";
 
+    home.sessionPath = [
+        "${config.home.homeDirectory}/.dotnet/tools"
+    ];
+
 # enable if dconf not found:
 # programs.dconf.enable = true;
 
@@ -68,9 +72,9 @@
             ports = "sudo netstat -tulpn";
         };
 
-        sessionVariables = {
-            PATH = "$PATH:/home/albi/.dotnet/tools";
-            PS1 = "\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
-        };
+        bashrcExtra = ''
+              export PATH="$PATH:/home/albi/.dotnet/tools";
+              export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
+            '';
     };
 }
