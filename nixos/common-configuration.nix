@@ -7,7 +7,7 @@
 # https://discourse.nixos.org/t/installing-only-a-single-package-from-unstable/5598/4
 let
   unstable = import
-    (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/nixos-unstable)
+    (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/nixos-unstable")
     # reuse the current configuration
     { config = config.nixpkgs.config; };
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
@@ -48,6 +48,38 @@ in
     LC_TELEPHONE = "hu_HU.UTF-8";
     LC_TIME = "hu_HU.UTF-8";
   };
+
+
+
+  # https://nixos.wiki/wiki/Nvidia
+  # Make sure opengl is enabled
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  # Tell Xorg to use the nvidia driver (also valid for Wayland)
+  services.xserver.videoDrivers = ["nvidia"];
+
+  hardware.nvidia = {
+
+    # Modesetting is needed for most Wayland compositors
+    modesetting.enable = false;
+
+    # Use the open source version of the kernel module
+    # Only available on driver 515.43.04+
+    open = false;
+
+    # Enable the nvidia settings menu
+    nvidiaSettings = false;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+
+
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -91,13 +123,14 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-# /etc/profile -> /nix/store/*-set-environment
+# /etc/profile sources /nix/store/*-set-environment
   environment.variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
       BROWSER = "google-chrome";
       TERM = "alacritty";
       TERMINAL = "alacritty";
+      NIXPKGS_ALLOW_UNFREE = "1";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -107,6 +140,7 @@ in
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       neovim
+      neofetch
       spotify
       google-chrome
       alacritty
@@ -222,6 +256,20 @@ in
           };
       };
   };
+
+  systemd.services.nzxt = {
+    description = "NZXT Kraken and Smart Device V1 setup";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = [
+        "${pkgs.liquidctl}/bin/liquidctl initialize all"
+        "${pkgs.liquidctl}/bin/liquidctl --match Kraken set sync color off"
+        "${pkgs.liquidctl}/bin/liquidctl --match Smart set led color off"
+      ];
+    };
+  };
+ 
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
