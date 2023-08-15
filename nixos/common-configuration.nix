@@ -18,6 +18,7 @@ in
       (import "${home-manager}/nixos")
     ];
 
+  # nix.nixPath = [ "nixos-config=/home/albi/.config/nixos/hosts/redstone/configuration.nix" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
@@ -25,9 +26,6 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   # https://nixos.wiki/wiki/NTFS
   boot.supportedFilesystems = [ "ntfs" ];
-
-boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
-
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -51,8 +49,6 @@ boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
     LC_TELEPHONE = "hu_HU.UTF-8";
     LC_TIME = "hu_HU.UTF-8";
   };
-
-
 
   # https://nixos.wiki/wiki/Nvidia
   # Make sure opengl is enabled
@@ -80,9 +76,6 @@ boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
-
-
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -189,9 +182,6 @@ boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
     rustup
     rust-analyzer
     dotnet-sdk_8
-    # dotnet-sdk_7
-    # omnisharp-roslyn
-    # msbuild
     ombi
     qbittorrent
     tmux
@@ -224,13 +214,6 @@ boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
 
   services.jellyfin.enable = true;
   services.jellyfin.group = "media";
-
-  # services.couchdb.enable = true;
-  # services.couchdb.adminPass = "password";
-  # services.couchdb.configFile = "/home/albi/www/livesync/local.ini";
-  # services.couchdb.user = "root";
-  # services.couchdb.group = "root";
-    
 
   services.nginx = {
       enable = true;
@@ -269,11 +252,6 @@ boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
           };
           "torrent.alb1.hu" = {
               locations."/".proxyPass = "http://localhost:10069";
-              locations."/".proxyWebsockets = true;
-              inherit listen;
-          };
-          "couch.alb1.hu" = {
-              locations."/".proxyPass = "http://localhost:5984";
               locations."/".proxyWebsockets = true;
               inherit listen;
           };

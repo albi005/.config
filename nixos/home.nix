@@ -67,7 +67,7 @@
             c-vim = "nvim ~/.config/nvim";
             c-bash = "nvim ~/.profile && source ~/.profile";
             c-nix = "nvim ~/.config/nixos";
-            rb = "sudo nixos-rebuild switch";
+            rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
             ports = "sudo netstat -tulpn";
             cfg = "cd ~/.config; v";
@@ -87,7 +87,7 @@
     '';
 
     # behind tailscale, don't care
-    home.file.".wakatime.cfg" = ''
+    home.file.".wakatime.cfg".text = ''
         [settings]
         api_url = http://waka.alb1.hu/api
         api_key = b9753890-9f75-498f-9155-d19f2190de78

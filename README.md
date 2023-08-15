@@ -7,6 +7,8 @@ git clone --recurse-submodules https://github.com/albi005/.config ~/.config
 # if you forgot recurse-submodules above:
 cd ~/.config && git submodule update --init --recursive
 
+sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix
+
 # init packer
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 :PackerSync
@@ -15,6 +17,12 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 
 '''
+
+## TODO
+- [ ] init.sh
+  - `bash <(curl -s https://alb1.hu/init)`
+  - nixos-generate-config
+  - all of the above
 
 ## nvim cheat sheet
 
