@@ -70,11 +70,26 @@
             rb = "sudo nixos-rebuild switch";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
             ports = "sudo netstat -tulpn";
+            cfg = "cd ~/.config; v";
+            try = "nix-shell -p ";
+
         };
 
         bashrcExtra = ''
-              export PATH="$PATH:/home/albi/.dotnet/tools";
+              export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
               export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
+              export NODE_PATH=~/.npm-packages/lib/node_modules;
             '';
     };
+
+    home.file.".npmrc".text = ''
+        prefix=~/.npm-packages
+    '';
+
+    # behind tailscale, don't care
+    home.file.".wakatime.cfg" = ''
+        [settings]
+        api_url = http://waka.alb1.hu/api
+        api_key = b9753890-9f75-498f-9155-d19f2190de78
+    '';
 }

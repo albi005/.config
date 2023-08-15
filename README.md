@@ -1,5 +1,21 @@
 # .config
 
+## Clone
+'''bash
+git clone --recurse-submodules https://github.com/albi005/.config ~/.config
+
+# if you forgot recurse-submodules above:
+cd ~/.config && git submodule update --init --recursive
+
+# init packer
+git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+:PackerSync
+
+#
+
+
+'''
+
 ## nvim cheat sheet
 
 ```

@@ -4,7 +4,6 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
   'tsserver',
-  'rust_analyzer',
 })
 
 -- Fix Undefined global 'vim'
@@ -90,7 +89,9 @@ cmp.setup({
   }
 })
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 require'lspconfig'.sourcekit.setup{}
 require'lspconfig'.pylyzer.setup{}
 require'Comment'.setup(); --https://github.com/numToStr/Comment.nvim#configuration-optional
 require'lspconfig'.nil_ls.setup{}
+require'lspconfig'.rust_analyzer.setup{}

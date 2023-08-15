@@ -26,6 +26,9 @@ in
   # https://nixos.wiki/wiki/NTFS
   boot.supportedFilesystems = [ "ntfs" ];
 
+boot.loader.grub.theme = "/boot/grub/themes/minegrub-theme/theme.txt";
+
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
@@ -152,6 +155,8 @@ in
       gnome.gnome-disk-utility
       gnome.nautilus
       gnome.totem
+      gnome.file-roller
+      libreoffice
     ];
   };
 
@@ -182,6 +187,7 @@ in
     unstable.nil
     lua-language-server
     rustup
+    rust-analyzer
     dotnet-sdk_8
     # dotnet-sdk_7
     # omnisharp-roslyn
@@ -193,10 +199,15 @@ in
     sqlitebrowser
     jetbrains.rider
     pstree
+    obsidian
+    wget
+    bottom
+    vscode
   ];
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    corefonts
   ];
 
   services.tailscale.enable = true;
@@ -213,6 +224,13 @@ in
 
   services.jellyfin.enable = true;
   services.jellyfin.group = "media";
+
+  # services.couchdb.enable = true;
+  # services.couchdb.adminPass = "password";
+  # services.couchdb.configFile = "/home/albi/www/livesync/local.ini";
+  # services.couchdb.user = "root";
+  # services.couchdb.group = "root";
+    
 
   services.nginx = {
       enable = true;
@@ -251,6 +269,11 @@ in
           };
           "torrent.alb1.hu" = {
               locations."/".proxyPass = "http://localhost:10069";
+              locations."/".proxyWebsockets = true;
+              inherit listen;
+          };
+          "couch.alb1.hu" = {
+              locations."/".proxyPass = "http://localhost:5984";
               locations."/".proxyWebsockets = true;
               inherit listen;
           };
