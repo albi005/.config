@@ -6,19 +6,6 @@
         "${config.home.homeDirectory}/.dotnet/tools"
     ];
 
-# enable if dconf not found:
-# programs.dconf.enable = true;
-
-
-    # programs.git = {
-    #     enable = true;
-    #     userName = "Albert Ragány-Németh";
-    #     userEmail = "me@alb1.hu";
-    #     extraConfig = {
-    #         init.defaultBranch = "main";
-    #     };
-    # };
-
     programs.alacritty = {
         enable = true;
         settings = {
@@ -60,19 +47,18 @@
         enable = true;
 
         shellAliases = {
-            l = "lsd -Al --group-directories-first --date '+%Y-%m-%d %H:%M'";
-            tree = "lsd --tree --group-directories-first --date '+%Y-%m-%d %H:%M'";
-            v = "nvim .";
             c = "clear";
-            c-vim = "nvim ~/.config/nvim";
             c-bash = "nvim ~/.profile && source ~/.profile";
-            c-nix = "nvim ~/.config/nixos";
-            rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
+            c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
+            c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
-            ports = "sudo netstat -tulpn";
             cfg = "cd ~/.config; v";
+            l = "lsd -Al --group-directories-first --date '+%Y-%m-%d %H:%M'";
+            ports = "sudo netstat -tulpn";
+            rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
+            tree = "lsd --tree --group-directories-first --date '+%Y-%m-%d %H:%M'";
             try = "nix-shell -p ";
-
+            v = "nvim .";
         };
 
         bashrcExtra = ''
