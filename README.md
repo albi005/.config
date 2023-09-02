@@ -1,7 +1,7 @@
 # .config
 
 ## Clone
-'''bash
+```bash
 git clone --recurse-submodules https://github.com/albi005/.config ~/.config
 
 # if you forgot recurse-submodules above:
@@ -15,8 +15,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 #
 
-
-'''
+```
 
 ## TODO
 - [ ] init.sh
