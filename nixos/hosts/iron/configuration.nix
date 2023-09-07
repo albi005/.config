@@ -101,6 +101,17 @@ in
     };
     users.groups.wakapi = { };
 
+# https://github.com/vogler/free-games-claimer
+# sudo docker run --rm -it -p 6080:6080 -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games
+# noVNC at http://iron:6080
+    services.cron = {
+        enable = true;
+        systemCronJobs = [
+            "0 3 */2 * * docker run --rm -it -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games"
+        ];
+    };
+
+
     virtualisation.oci-containers = {
         backend = "docker";
         containers = {

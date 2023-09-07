@@ -1,11 +1,4 @@
--- https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
-
 local dap = require('dap')
-dap.adapters.cppdbg = {
-    id = 'cppdbg',
-    type = 'executable',
-    command = '/home/albi/.local/bin/ms-vscode.cpptools-1.15.3@linux-x64/extension/debugAdapters/bin/OpenDebugAD7',
-}
 
 vim.keymap.set('n', "<C-b>", dap.toggle_breakpoint)
 vim.keymap.set('n', "<F5>", dap.continue)
