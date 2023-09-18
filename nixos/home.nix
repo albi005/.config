@@ -34,20 +34,12 @@
         };
     };
 
-    programs.tmux = {
-        enable = true;
-        escapeTime = 0;
-        mouse = true;
-
-        # needed, otherwise colors in tmux in alacritty are wrong
-        extraConfig = "set-option -ga terminal-overrides ',alacritty:Tc'";
-    };
-
     programs.bash = {
         enable = true;
 
         shellAliases = {
             c = "clear";
+            cl = "c && l";
             c-bash = "nvim ~/.profile && source ~/.profile";
             c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
             c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";

@@ -10,7 +10,6 @@ let
     (builtins.fetchTarball "https://github.com/nixos/nixpkgs/tarball/nixos-unstable")
     # reuse the current configuration
     { config = config.nixpkgs.config; };
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
   imports =
@@ -118,16 +117,6 @@ in
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-# /etc/profile sources /nix/store/*-set-environment
-  environment.variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      BROWSER = "google-chrome";
-      TERM = "alacritty";
-      TERMINAL = "alacritty";
-      NIXPKGS_ALLOW_UNFREE = "1";
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.albi = {

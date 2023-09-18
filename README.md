@@ -40,6 +40,7 @@ ctrl+p search git
  a harpoon add
 ctrl+e harpoon toggle
 ctrl+{htns} harpoon open
+:sort
 ```
 
 ## tmux cheat sheet
