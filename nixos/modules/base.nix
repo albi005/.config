@@ -12,6 +12,9 @@ in
       (import "${home-manager}/nixos")
     ];
 
+    # https://nixos.wiki/wiki/NTFS
+    boot.supportedFilesystems = [ "ntfs" ];
+
     environment = {
         systemPackages = with pkgs; [
             bottom
@@ -68,6 +71,8 @@ in
         tailscale.enable = true;
         openssh.enable = true;
     };
+
+    system.stateVersion = "23.05";
 
     users.users.albi = {
         isNormalUser = true;

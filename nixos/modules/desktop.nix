@@ -27,6 +27,8 @@
         displayManager.gdm.enable = true;
         desktopManager.gnome.enable = true;
 
+        layout = "us,hu";
+
         xkbOptions = "caps:swapescape";
     };
 

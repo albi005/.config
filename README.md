@@ -41,6 +41,8 @@ ctrl+p search git
 ctrl+e harpoon toggle
 ctrl+{htns} harpoon open
 :sort
+gx open url
+gf open file
 ```
 
 ## tmux cheat sheet
