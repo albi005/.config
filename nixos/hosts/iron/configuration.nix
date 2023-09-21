@@ -107,7 +107,7 @@ in
     services.cron = {
         enable = true;
         systemCronJobs = [
-            "0 3 */2 * * docker run --rm -it -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games"
+            "0 3 * * * docker run --rm -it -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games"
         ];
     };
 
@@ -133,7 +133,7 @@ in
                     ASPNETCORE_ENVIRONMENT = "Production";
                     ConnectionStrings__Database = "Data Source=/data/dishelps.db";
                 };
-                ports = [ "10005:80" ];
+                ports = [ "10005:8080" ];
             };
         };
     };
