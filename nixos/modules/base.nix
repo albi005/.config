@@ -37,6 +37,7 @@ in
             unzip
             wget
             yt-dlp
+            zip
         ];
 
 # /etc/profile sources /nix/store/*-set-environment
