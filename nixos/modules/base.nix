@@ -61,6 +61,7 @@ in
         };
     };
 
+    programs.direnv.enable = true;
     programs.tmux = {
         enable = true;
         keyMode = "vi";

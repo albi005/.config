@@ -6,16 +6,16 @@
 }:
 
 buildDotnetModule {
-    name = "alb1.hu";
+    name = "KeletiKuria";
 
     src = fetchFromGitHub {
         owner = "albi005";
-        repo = "alb1.hu";
+        repo = "KeletiKuria";
         rev = "main";
-        sha256 = "sha256-AYrpuMOSqDj4y+aXbw81eE8k7N9aHO1gdnIiyaTiHGE=";
+        sha256 = "sha256-p8BH3uX5XgM2swkpWNWbk5/3GbbSIyKWhWGnwgUY1+A=";
     };
 
-    projectFile = "Hello/Hello.csproj";
+    projectFile = "KeletiKuria/KeletiKuria.csproj";
     nugetDeps = ./deps.nix;
     dotnet-sdk = dotnetCorePackages.sdk_7_0;
     dotnet-runtime = dotnetCorePackages.runtime_7_0;

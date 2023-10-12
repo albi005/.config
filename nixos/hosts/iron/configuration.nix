@@ -1,20 +1,14 @@
 { config, pkgs, ... }:
-let
-    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
 {
-    imports = [
-        ./hardware-configuration.nix
-        (import "${home-manager}/nixos")
-        ../../modules/default.nix
-    ];
-
     networking.hostName = "iron";
 
-    virtualisation.docker.enable = true;
+    imports = [
+        ./hardware-configuration.nix
+        ../../modules/base.nix
+        ../../pkgs/qbittorrent.nix
+    ];
 
-    services.openssh.enable = true;
-    services.tailscale.enable = true;
+    virtualisation.docker.enable = true;
 
     services.vaultwarden = {
         enable = true;
@@ -107,7 +101,7 @@ in
     services.cron = {
         enable = true;
         systemCronJobs = [
-            "0 3 * * * docker run --rm -it -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games"
+            "0 3 * * * docker run --rm -it -p 6080:6080 -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games"
         ];
     };
 
@@ -135,55 +129,60 @@ in
                 };
                 ports = [ "10005:8080" ];
             };
-        };
-    };
-    
-    services.nginx = {
-        enable = true;
-        virtualHosts = 
-            let listen = [ {
-                addr = "100.99.26.122";
-                port = 80;
-                ssl = false;
-            } ];
-        in
-        {
-            "waka.alb1.hu" = {
-                locations."/".proxyPass = "http://localhost:10010";
-                locations."/".proxyWebsockets = true;
-                inherit listen;
+            keletikuria = {
+                image = "keletikuria";
+                volumes = [ "/home/albi/www/KeletiKuria:/data" ];
+                environment = {
+                    ASPNETCORE_ENVIRONMENT = "Production";
+                    ConnectionStrings__Database = "Data Source=/data/keletikuria.db";
+                };
+                environmentFiles = [ /home/albi/secrets/keletikuria.env ];
+                ports = [ "10006:8080" ];
             };
         };
     };
 
-    home-manager.users.albi = import ../../home.nix;
+    services = {
+        # jellyseerr.enable = true;
+        #
+        # sonarr.enable = true;
+        # sonarr.group = "media";
+        #
+        # radarr.enable = true;
+        # radarr.group = "media";
+        #
+        # prowlarr.enable = true;
+        #
+        # jellyfin.enable = true;
+        # jellyfin.group = "media";
+        #
+        # qbittorrent.enable = true;
+        # qbittorrent.group = "media";
+
+        nginx = {
+            enable = true;
+            virtualHosts = 
+                let listen = [ {
+                    addr = "100.99.26.122";
+                    port = 80;
+                    ssl = false;
+                } ];
+            in
+            {
+                "waka.alb1.hu" = {
+                    locations."/".proxyPass = "http://localhost:10010";
+                    locations."/".proxyWebsockets = true;
+                    inherit listen;
+                };
+            };
+        };
+    };
+
+    services.tailscale.useRoutingFeatures = "both";
 
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/sda";
 
-    networking.networkmanager.enable = true;
-
-    users.users.albi = {
-        isNormalUser = true;
-        description = "Albert Ragány-Németh";
-        extraGroups = [ "networkmanager" "wheel" "couchdb" ];
-        packages = with pkgs; [];
-    };
-
-    environment.systemPackages = with pkgs; [
-    ];
-
-    networking.firewall.trustedInterfaces = [ "tailscale0" ];
-
-    time.timeZone = "Europe/Budapest";
-
-    nixpkgs.config.allowUnfree = true;
-
-# This value determines the NixOS release from which the default
-# settings for stateful data, like file locations and database versions
-# on your system were taken. It‘s perfectly fine and recommended to leave
-# this value at the release version of the first install of this system.
-# Before changing this value read the documentation for this option
-# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "23.05"; # Did you read the comment?
+    users.users.albi.extraGroups = [ "couchdb" ];
+    users.groups.media = { };
 }
