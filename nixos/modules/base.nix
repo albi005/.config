@@ -23,6 +23,7 @@ in
             git gh
             glow
             go gopls gotools
+            inetutils
             lsd
             lua-language-server
             mono
@@ -36,6 +37,7 @@ in
             rustup
             unzip
             wget
+            xclip
             yt-dlp
             zip
         ];

@@ -101,6 +101,8 @@
         };
     };
 
+    services.tailscale.useRoutingFeatures = "both";
+
     systemd.services.nzxt = {
         description = "NZXT Kraken and Smart Device V1 setup";
         wantedBy = [ "default.target" ];
