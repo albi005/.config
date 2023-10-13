@@ -35,6 +35,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    cloudflare-warp
   ];
 
 # dont change

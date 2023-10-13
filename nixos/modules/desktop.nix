@@ -54,6 +54,7 @@
         jetbrains.rider
         libreoffice
         obsidian
+        remmina
         sqlitebrowser
         vscode
     ];
