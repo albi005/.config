@@ -24,6 +24,7 @@ return require('packer').startup(function(use)
     use'zbirenbaum/copilot.lua'
     use'zbirenbaum/copilot-cmp'
     use'wakatime/vim-wakatime'
+    use'folke/neodev.nvim' -- nvim lua lib completion
     use {
         'numToStr/Comment.nvim',
         config = function()

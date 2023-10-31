@@ -40,10 +40,11 @@
 
     users.users.albi.packages = with pkgs; [
         alacritty
+        cinnamon.nemo-with-extensions
+        gimp
         gnome.file-roller
         gnome.gnome-disk-utility
         gnome.gnome-tweaks
-        gnome.nautilus
         gnome.totem
         gnomeExtensions.clipboard-indicator
         gnomeExtensions.headsetcontrol
