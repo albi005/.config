@@ -41,6 +41,7 @@
     users.users.albi.packages = with pkgs; [
         alacritty
         cinnamon.nemo-with-extensions
+        firefox
         gimp
         gnome.file-roller
         gnome.gnome-disk-utility

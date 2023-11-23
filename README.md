@@ -43,6 +43,17 @@ ctrl+{htns} harpoon open
 :sort
 gx open url
 gf open file
+
+n	gd				definition
+n	K				hover
+n	<leader>vws		workspace_symbol
+n	<leader>vd		open_float
+n	[d				goto_next
+n	]d				goto_prev
+n	<leader>vca		code_action
+n	<leader>vrr		references
+n	<leader>vrn		rename
+i	<C-h>			signature_help
 ```
 
 ## tmux cheat sheet

@@ -32,7 +32,7 @@ in
             nil
             nodejs
             pstree
-            python3
+            python3 pylyzer
             ripgrep
             rustup
             unzip

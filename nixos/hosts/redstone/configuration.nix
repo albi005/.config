@@ -116,6 +116,11 @@
         };
     };
 
+    systemd.targets.sleep.enable = false;
+    systemd.targets.suspend.enable = false;
+    systemd.targets.hibernate.enable = false;
+    systemd.targets.hybrid-sleep.enable = false;
+
     fileSystems = {
         "/mnt/hdd" = {
             device = "/dev/disk/by-uuid/560AFE250AFE01B3";

@@ -9,6 +9,9 @@
     programs.alacritty = {
         enable = true;
         settings = {
+            window = {
+                startup_mode = "Fullscreen";
+            };
             import = [
                 "${config.home.homeDirectory}/.config/alacritty/catppuccin/catppuccin-mocha.yml"
             ];
