@@ -5,7 +5,6 @@ in
 {
     nixpkgs.config.allowUnfree = true;
 
-    # nix.nixPath = [ "nixos-config=/home/albi/.config/nixos/hosts/redstone/configuration.nix" ];
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     imports = [
@@ -14,6 +13,9 @@ in
 
     # https://nixos.wiki/wiki/NTFS
     boot.supportedFilesystems = [ "ntfs" ];
+
+    # https://nixos.wiki/wiki/Nixos-generate-config
+    fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
     environment = {
         systemPackages = with pkgs; [
