@@ -12,7 +12,7 @@ git clone --recurse-submodules https://github.com/albi005/.config.git ~/.config
 
 cd ~/.config/nixos
 mkdir -p hosts/$HOSTNAME
-cp /etc/nixos/hardware-configuraion.nix hosts/$HOSTNAME
+cp /etc/nixos/hardware-configuration.nix hosts/$HOSTNAME
 cp template.nix hosts/$HOSTNAME/configuration.nix
 sed -i "s/HOSTNAME/$HOSTNAME/g" hosts/$HOSTNAME/configuration.nix
 nvim --clean hosts/$HOSTNAME/configuration.nix
