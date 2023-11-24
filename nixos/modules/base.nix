@@ -11,6 +11,10 @@ in
       (import "${home-manager}/nixos")
     ];
 
+    # Bootloader
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+
     # https://nixos.wiki/wiki/NTFS
     boot.supportedFilesystems = [ "ntfs" ];
 
