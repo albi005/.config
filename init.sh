@@ -1,24 +1,23 @@
-#!/bin/bash
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash
+#! nix-shell -p bash git
+# https://nix.dev/tutorials/first-steps/reproducible-scripts
 
-read -p "Enter the new hostname: " NEW_HOSTNAME
+set -e # exit on error
 
-git clone --recurse-submodules https://github.com/albi005/.config.git /tmp/mytempconfig
+read -p "Enter the new hostname: " HOSTNAME
 
-cp -r /tmp/mytempconfig ~/.config
+rm -rf /tmp/.config
+git clone --recurse-submodules https://github.com/albi005/.config.git /tmp/.config
+cp -r /tmp/.config/* ~/.config
 
-mkdir -p ~/.config/nixos/hosts/$NEW_HOSTNAME
+mkdir -p ~/.config/nixos/hosts/$HOSTNAME
+cp -r /etc/nixos/* ~/.config/nixos/hosts/$HOSTNAME
+sed -i 's/networking.hostName = "nixos"/networking.hostName = "'"$HOSTNAME"'"/g' ~/.config/nixos/hosts/$HOSTNAME/configuration.nix
 
-cp -r /etc/nixos/* ~/.config/nixos/hosts/$NEW_HOSTNAME
+sudo nixos-rebuild switch -I nixos-config=~/.config/nixos/hosts/$HOSTNAME/configuration.nix
 
-# Update hostName
-sed -i 's/networking.hostName = "nixos"/networking.hostName = "'"$NEW_HOSTNAME"'"/g' ~/.config/nixos/hosts/$NEW_HOSTNAME/configuration.nix
-
-sudo nixos-rebuild switch -I nixos-config=~/.config/nixos/hosts/$NEW_HOSTNAME/configuration.nix
-
-# Clone packer.nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-# Run :PackerSync
 nvim --headless -c ":PackerSync" -c ":q"
 
 gh auth login
