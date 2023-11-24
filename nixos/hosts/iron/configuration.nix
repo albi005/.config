@@ -46,19 +46,6 @@
     };
     users.groups.cloudflared = { };
 
-    systemd.services.alb1 = {
-        description = "alb1.hu";
-        after = [ "network.target" ];
-        wantedBy = [ "default.target" ];
-        serviceConfig =
-        let
-            package = pkgs.callPackage ../../pkgs/alb1.hu/default.nix { };
-        in
-        {
-            ExecStart = "${package}/bin/Hello --urls=http://localhost:10001";
-        };
-    };
-
     systemd.services.wakapi = {
         description = "Wakapi";
         after = [ "network.target" ];
@@ -109,6 +96,10 @@
     virtualisation.oci-containers = {
         backend = "docker";
         containers = {
+            alb1 = {
+                image = "alb1";
+                ports = [ "10001:8080" ];
+            };
             menza = {
                 image = "menza";
                 volumes = [ "/home/albi/www/Menza:/data" ];

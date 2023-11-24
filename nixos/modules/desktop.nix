@@ -40,6 +40,7 @@
 
     users.users.albi.packages = with pkgs; [
         alacritty
+        caprine-bin
         cinnamon.nemo-with-extensions
         firefox
         gimp
