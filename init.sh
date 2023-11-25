@@ -17,6 +17,8 @@ cp template.nix hosts/$HOSTNAME/configuration.nix
 sed -i "s/HOSTNAME/$HOSTNAME/g" hosts/$HOSTNAME/configuration.nix
 nvim --clean hosts/$HOSTNAME/configuration.nix
 
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+sudo nix-channel --update
 sudo nixos-rebuild switch -I nixos-config=~/.config/nixos/hosts/$HOSTNAME/configuration.nix
 
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
