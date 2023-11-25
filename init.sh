@@ -1,6 +1,6 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash
-#! nix-shell -p bash git nvim
+#! nix-shell -p bash git neovim
 # https://nix.dev/tutorials/first-steps/reproducible-scripts
 
 set -e # exit on error
