@@ -100,6 +100,7 @@
             };
         };
     };
+    users.groups.media = {};
 
     services.tailscale.useRoutingFeatures = "both";
 
@@ -125,10 +126,6 @@
         "/mnt/hdd" = {
             device = "/dev/disk/by-uuid/560AFE250AFE01B3";
             fsType = "ntfs3";
-        };
-        "/mnt/popos" = {
-            device = "/dev/disk/by-uuid/cd8454ca-b374-43b4-8285-570e3216a6fa";
-            fsType = "ext4";
         };
         "/mnt/win11" = {
             device = "/dev/disk/by-uuid/8014EE8214EE7A94";

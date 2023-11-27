@@ -84,6 +84,8 @@ in
 
     system.stateVersion = "23.05";
 
+    systemd.enableEmergencyMode = false;
+
     users.users.albi = {
         isNormalUser = true;
         description = "Albert Ragány-Németh";
