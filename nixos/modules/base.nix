@@ -38,7 +38,7 @@ in
             nil
             nodejs
             pstree
-            python3 pylyzer
+            python3 nodePackages_latest.pyright
             ripgrep
             rustup
             unzip
