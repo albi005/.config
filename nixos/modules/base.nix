@@ -37,6 +37,7 @@ in
             neofetch
             neovim
             nil
+            nmap
             nodejs
             pstree
             python3 nodePackages_latest.pyright
