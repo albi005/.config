@@ -9,9 +9,6 @@
     programs.alacritty = {
         enable = true;
         settings = {
-            window = {
-                startup_mode = "Fullscreen";
-            };
             import = [
                 "${config.home.homeDirectory}/.config/alacritty/catppuccin/catppuccin-mocha.yml"
             ];
@@ -45,6 +42,7 @@
             cl = "c && l";
             c-bash = "nvim ~/.profile && source ~/.profile";
             c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
+            c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; v; cd $PREV_PWD";
             c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
             cfg = "cd ~/.config; v";

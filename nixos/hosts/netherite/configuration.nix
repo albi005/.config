@@ -7,5 +7,8 @@
     ];
 
     networking.hostName = "netherite";
+
+      programs.hyprland.enable = true;
+
 }
 
