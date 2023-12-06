@@ -27,6 +27,9 @@
 
         layout = "us,hu";
         xkbOptions = "caps:swapescape";
+
+        # Disable mouse acceleration
+        libinput.mouse.accelProfile = "flat";
     };
 
     # Disable GNOME default apps

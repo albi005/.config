@@ -85,6 +85,7 @@ in
 
     system.stateVersion = "23.05";
 
+    # Ignore missing disks
     systemd.enableEmergencyMode = false;
 
     users.users.albi = {
