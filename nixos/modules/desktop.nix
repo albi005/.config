@@ -54,6 +54,7 @@
         headsetcontrol
         jetbrains.rider
         libreoffice
+        libsForQt5.kruler
         obsidian
         remmina
         sqlitebrowser
