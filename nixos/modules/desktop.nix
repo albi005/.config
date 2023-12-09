@@ -44,6 +44,7 @@
         alacritty
         caprine-bin
         cinnamon.nemo-with-extensions
+        dbeaver
         gimp
         gnome.file-roller
         gnome.gnome-disk-utility
