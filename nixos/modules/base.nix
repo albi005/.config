@@ -95,4 +95,7 @@ in
         extraGroups = [ "networkmanager" "wheel" ];
         packages = [ ];
     };
+
+    # blank tty after 60 seconds
+    boot.kernelParams = [ "consoleblank=60" ];
 }
