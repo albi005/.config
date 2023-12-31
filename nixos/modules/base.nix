@@ -35,6 +35,7 @@ in
             bottom
             calc
             dotnet-sdk_8
+            exiftool
             gcc
             git gh
             glow
@@ -78,6 +79,8 @@ in
             enable = true;
             trustedInterfaces = [ "tailscale0" ];
         };
+
+        nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
     };
 
     programs.direnv.enable = true;

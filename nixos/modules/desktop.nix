@@ -16,6 +16,17 @@
     # Disable default GNOME apps
     services.gnome.core-utilities.enable = false;
 
+    environment.systemPackages = with pkgs; [
+        #Hyprland
+        hyprpicker
+        waybar
+        hyprpaper
+        wofi
+        font-awesome
+        xfce.thunar
+        rofi
+    ];
+
     programs.firefox.enable = true;
 
     users.users.albi.packages = with pkgs; [
@@ -41,6 +52,9 @@
         remmina
         sqlitebrowser
         vscode
+
+        libsecret
+        azuredatastudio
     ];
 
     fonts.packages = with pkgs; [
