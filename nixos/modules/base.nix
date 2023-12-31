@@ -10,17 +10,16 @@ in
     nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # https://nixos.wiki/wiki/Bootloader
+    # https://nixos.org/manual/nixos/unstable/#sec-installation-manual-installing (scroll down)
     boot.loader = {
-        # Use systemd-boot by default, but GRUB is needed on systems running BIOS instead of UEFI
-        # TODO: Check if this actually works
-        systemd-boot.enable = !config.boot.loader.grub.enable;
+        # Use systemd-boot by default
+        systemd-boot.enable = lib.mkDefault true;
 
         # Set to false when running on garbage
         # https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI
         efi.canTouchEfiVariables = lib.mkDefault true;
 
-        # Might want to change this
+        # Update as necessary
         grub.device = lib.mkDefault "/dev/sda";
     };
 
@@ -64,7 +63,7 @@ in
         variables = {
             EDITOR = "nvim";
             VISUAL = "nvim";
-            BROWSER = "google-chrome";
+            BROWSER = "google-chrome-stable";
             TERM = "alacritty";
             TERMINAL = "alacritty";
             NIXPKGS_ALLOW_UNFREE = "1";

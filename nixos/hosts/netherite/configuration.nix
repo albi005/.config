@@ -7,6 +7,10 @@
         ../../pkgs/qbittorrent.nix
     ];
 
+    nixpkgs.config.permittedInsecurePackages = [
+        "electron-25.9.0"
+    ];
+
     networking.hostName = "netherite";
 
     programs.hyprland.enable = true;

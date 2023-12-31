@@ -9,8 +9,9 @@
 ### Bootloader edge cases
 - BIOS instead of UEFI: 
 ```nix
-# Use grub instead of systemd-boot
-boot.loader.grub.enable = true;
+# Use grub instead of systemd-boot:
+# GRUB is enabled by default, so just disable systemd-boot
+boot.loader.systemd-boot.enable = false;
 boot.loader.grub.useOSProber = true; # if dual booting
 boot.loader.grub.device = "/dev/sda"; # if needed
 ```
