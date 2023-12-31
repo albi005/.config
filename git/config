@@ -6,9 +6,11 @@
 	name = "Albert Ragány-Németh"
 
 [credential "https://github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/run/current-system/sw/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/run/current-system/sw/bin/gh auth git-credential
 
 [pull]
 	rebase = true
