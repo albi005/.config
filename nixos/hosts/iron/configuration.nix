@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
     networking.hostName = "iron";
 
@@ -7,6 +7,26 @@
         ../../modules/base.nix
         ../../pkgs/qbittorrent.nix
     ];
+
+    system.autoUpgrade = {
+        enable = true;
+        channel = "nixos-unstable";
+        flags = [ "-I" "nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix" ];
+        dates = "03:00";
+        allowReboot = true;
+        rebootWindow = {
+            lower = "01:00";
+            upper = "05:00";
+        };
+        randomizedDelaySec = "45min";
+    };
+
+    nix.gc = {
+        automatic = true;
+        dates = "03:30";
+        options = "--delete-older-than 30d";
+        randomizedDelaySec = "45min";
+    };
 
     virtualisation.docker.enable = true;
 
@@ -171,6 +191,7 @@
 
     services.tailscale.useRoutingFeatures = "both";
 
+    boot.loader.systemd-boot.enable = lib.mkForce false;
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/sda";
 
