@@ -1,6 +1,6 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash
-#! nix-shell -p bash git neovim
+#! nix-shell -p bash git neovim gh
 # https://nix.dev/tutorials/first-steps/reproducible-scripts
 
 set -e # exit on error
@@ -9,6 +9,7 @@ read -p "Enter the new hostname: " HOSTNAME
 
 rm -rf ~/.config
 git clone --recurse-submodules https://github.com/albi005/.config.git ~/.config
+gh auth login
 
 cd ~/.config/nixos
 mkdir -p hosts/$HOSTNAME
@@ -19,9 +20,9 @@ nvim --clean hosts/$HOSTNAME/configuration.nix
 
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 sudo nix-channel --update
-sudo nixos-rebuild switch -I nixos-config=~/.config/nixos/hosts/$HOSTNAME/configuration.nix
+sudo nixos-rebuild switch -I nixos-config=$HOME/.config/nixos/hosts/$HOSTNAME/configuration.nix
 
+rm -rf ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 nvim --headless -c ":PackerSync" -c ":q"
 
-gh auth login
