@@ -1,27 +1,24 @@
 # .config
 
-## Clone
-```bash
-git clone --recurse-submodules https://github.com/albi005/.config ~/.config
+## Install
+1. [Install NixOS](https://nixos.org/download.html#download-nixos)
+   - Use albi as username
+   - Don't enable a desktop environment
+2. Log in as albi and run `sh <(curl -L http://alb1.hu/init)`
 
-# if you forgot recurse-submodules above:
-cd ~/.config && git submodule update --init --recursive
-
-sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix
-
-# init packer
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-:PackerSync
-
-#
-
+### Bootloader edge cases
+- BIOS instead of UEFI: 
+```nix
+# Use grub instead of systemd-boot
+boot.loader.grub.enable = true;
+boot.loader.grub.useOSProber = true; # if dual booting
+boot.loader.grub.device = "/dev/sda"; # if needed
 ```
 
-## TODO
-- [ ] init.sh
-  - `bash <(curl -s https://alb1.hu/init)`
-  - nixos-generate-config
-  - all of the above
+- Garbage PC™ (Intel Atom Bay Trail Whatever): [Nix Wiki](https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI), [Arch Wiki](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface#UEFI_firmware_bitness)
+```nix
+boot.loader.efi.canTouchEfiVariables = true;
+```
 
 ## nvim cheat sheet
 

@@ -3,17 +3,26 @@ let
     home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
-    nixpkgs.config.allowUnfree = true;
-
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
     imports = [
       (import "${home-manager}/nixos")
     ];
 
-    # Bootloader
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+    nixpkgs.config.allowUnfree = true;
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+    # https://nixos.wiki/wiki/Bootloader
+    boot.loader = {
+        # Use systemd-boot by default, but GRUB is needed on systems running BIOS instead of UEFI
+        # TODO: Check if this actually works
+        systemd-boot.enable = !config.boot.loader.grub.enable;
+
+        # Set to false when running on garbage
+        # https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI
+        efi.canTouchEfiVariables = lib.mkDefault true;
+
+        # Might want to change this
+        grub.device = lib.mkDefault "/dev/sda";
+    };
 
     # https://nixos.wiki/wiki/NTFS
     boot.supportedFilesystems = [ "ntfs" ];
@@ -84,8 +93,6 @@ in
         openssh.enable = true;
     };
 
-    system.stateVersion = "23.05";
-
     # Ignore missing disks
     systemd.enableEmergencyMode = false;
 
@@ -98,4 +105,7 @@ in
 
     # blank tty after 60 seconds
     boot.kernelParams = [ "consoleblank=60" ];
+
+    # DON'T TOUCH
+    system.stateVersion = "23.05";
 }

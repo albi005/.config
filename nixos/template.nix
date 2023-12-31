@@ -8,4 +8,3 @@
 
     networking.hostName = "HOSTNAME";
 }
-

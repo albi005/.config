@@ -9,10 +9,6 @@
     networking.hostName = "redstone";
     virtualisation.docker.enable = true;
 
-    # Bootloader.
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-
     # https://nixos.wiki/wiki/Nvidia
     # Make sure opengl is enabled
     hardware.opengl = {
@@ -24,26 +20,18 @@
     # Tell Xorg to use the nvidia driver (also valid for Wayland)
     services.xserver.videoDrivers = ["nvidia"];
 
-    # Enable CUPS to print documents.
-    services.printing.enable = true;
+    hardware.nvidia = {
+        # Modesetting is needed for most Wayland compositors
+        modesetting.enable = false;
 
-    # Enable sound with pipewire.
-    sound.enable = true;
-    hardware.pulseaudio.enable = false;
-    security.rtkit.enable = true;
-    services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        # If you want to use JACK applications, uncomment this
-        #jack.enable = true;
+        # Use the open source version of the kernel module
+        # Only available on driver 515.43.04+
+        open = false;
 
-        # use the example session manager (no others are packaged yet so this is enabled by default,
-        # no need to redefine it in your config for now)
-        #media-session.enable = true;
+        # Enable the nvidia settings menu
+        nvidiaSettings = false;
     };
-    
+
     services = {
         jellyseerr.enable = true;
 
@@ -132,18 +120,6 @@
             device = "/dev/disk/by-uuid/8014EE8214EE7A94";
             fsType = "ntfs3";
         };
-    };
-
-    hardware.nvidia = {
-        # Modesetting is needed for most Wayland compositors
-        modesetting.enable = false;
-
-        # Use the open source version of the kernel module
-        # Only available on driver 515.43.04+
-        open = false;
-
-        # Enable the nvidia settings menu
-        nvidiaSettings = false;
     };
 }
 

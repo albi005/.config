@@ -1,12 +1,14 @@
 { config, pkgs, lib, ... }:
 {
-    networking.hostName = "iron";
-
     imports = [
         ./hardware-configuration.nix
         ../../modules/base.nix
         ../../pkgs/qbittorrent.nix
     ];
+
+    networking.hostName = "iron";
+
+    boot.loader.grub.enable = true;
 
     system.autoUpgrade = {
         enable = true;
@@ -190,10 +192,6 @@
     };
 
     services.tailscale.useRoutingFeatures = "both";
-
-    boot.loader.systemd-boot.enable = lib.mkForce false;
-    boot.loader.grub.enable = true;
-    boot.loader.grub.device = "/dev/sda";
 
     users.users.albi.extraGroups = [ "couchdb" ];
     users.groups.media = { };
