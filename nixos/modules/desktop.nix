@@ -16,24 +16,14 @@
     # Disable default GNOME apps
     services.gnome.core-utilities.enable = false;
 
-    environment.systemPackages = with pkgs; [
-        #Hyprland
-        hyprpicker
-        waybar
-        hyprpaper
-        wofi
-        font-awesome
-        xfce.thunar
-        rofi
-    ];
-
     programs.firefox.enable = true;
+    programs.wireshark.enable = true;
 
     users.users.albi.packages = with pkgs; [
         alacritty
-        caprine-bin
         cinnamon.nemo-with-extensions
         dbeaver
+        ffmpeg-full
         gimp
         gnome.file-roller
         gnome.gnome-disk-utility
@@ -52,9 +42,7 @@
         remmina
         sqlitebrowser
         vscode
-
-        libsecret
-        azuredatastudio
+        wireshark
     ];
 
     fonts.packages = with pkgs; [

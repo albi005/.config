@@ -10,7 +10,7 @@
 - BIOS instead of UEFI: 
 ```nix
 # Use grub instead of systemd-boot:
-# GRUB is enabled by default, so just disable systemd-boot
+# Disabling systemd-boot enables GRUB
 boot.loader.systemd-boot.enable = false;
 boot.loader.grub.useOSProber = true; # if dual booting
 boot.loader.grub.device = "/dev/sda"; # if needed
@@ -21,7 +21,19 @@ boot.loader.grub.device = "/dev/sda"; # if needed
 boot.loader.efi.canTouchEfiVariables = true;
 ```
 
-## nvim cheat sheet
+## Cheat sheets
+
+### Alacritty
+
+[Alacritty features](https://github.com/alacritty/alacritty/blob/master/docs/features.md)
+
+```
+ctrl+shift+space   vi mode
+ctrl+shift+f       search forward
+ctrl+shift+b       search backward
+```
+
+### nvim cheat sheet
 
 ```
 d create dir
@@ -41,6 +53,7 @@ ctrl+{htns} harpoon open
 :sort
 gx open url
 gf open file
+gv select last selection
 
 n	gd				definition
 n	K				hover
@@ -54,7 +67,7 @@ n	<leader>vrn		rename
 i	<C-h>			signature_help
 ```
 
-## tmux cheat sheet
+### tmux cheat sheet
 
 ```
 C-b ?    help
@@ -63,3 +76,7 @@ C-b 1    select window 1
 C-b w    window tree
 C-b d    deattach
 ```
+
+## Bookmarks
+
+- https://github.com/hyprland-community/awesome-hyprland

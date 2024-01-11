@@ -1,38 +1,23 @@
 { config, pkgs, ... }:
 {
+    # TODO: GTK theme
+    gtk = {
+        enable = true;
+        theme = {
+            name = "Catppuccin-Macchiato-Compact-Pink-Dark";
+            package = pkgs.catppuccin-gtk.override {
+                accents = [ "pink" ];
+                size = "compact";
+                variant = "macchiato";
+            };
+        };
+    };
+
     home.stateVersion = "23.05";
 
     home.sessionPath = [
         "${config.home.homeDirectory}/.dotnet/tools"
     ];
-
-    programs.alacritty = {
-        enable = true;
-        settings = {
-            import = [
-                "${config.home.homeDirectory}/.config/alacritty/catppuccin/catppuccin-mocha.yml"
-            ];
-            font = {
-                normal = {
-                    family = "CaskaydiaCove Nerd Font";
-                    style = "Regular";
-                };
-                bold = {
-                    family = "CaskaydiaCove Nerd Font";
-                    style = "Bold";
-                };
-                italic = {
-                    family = "CaskaydiaCove Nerd Font";
-                    style = "Italic";
-                };
-                bold_italic = {
-                    family = "CaskaydiaCove Nerd Font";
-                    style = "Bold Italic";
-                };
-                size = 11;
-            };
-        };
-    };
 
     programs.bash = {
         enable = true;

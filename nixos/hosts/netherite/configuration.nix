@@ -4,6 +4,7 @@
         ./hardware-configuration.nix
         ../../modules/base.nix
         ../../modules/desktop.nix
+        ../../modules/hyprland.nix
         ../../pkgs/qbittorrent.nix
     ];
 
@@ -13,12 +14,10 @@
 
     networking.hostName = "netherite";
 
-    programs.hyprland.enable = true;
-
     fileSystems = {
         "/mnt/win11" = {
             device = "/dev/disk/by-uuid/64F2AE4CF2AE21F2";
-            fsType = "ntfs3";
+            fsType = "ntfs-3g";
         };
     };
 
@@ -33,8 +32,9 @@
     };
     users.groups.mssql = {};
 
+    virtualisation.docker.enable = true;
+
     virtualisation.oci-containers = {
-        backend = "docker";
         containers = {
             dfv = {
                 image = "mcr.microsoft.com/mssql/server:2022-latest";
@@ -69,6 +69,7 @@
 
         qbittorrent.enable = true;
         qbittorrent.group = "media";
+        qbittorrent.port = 9797;
 
         nginx = {
             enable = true;
@@ -106,7 +107,7 @@
                     inherit listen;
                 };
                 "torrent.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:8080";
+                    locations."/".proxyPass = "http://localhost:9797";
                     locations."/".proxyWebsockets = true;
                     inherit listen;
                 };

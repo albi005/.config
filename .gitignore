@@ -1,11 +1,11 @@
-# whitelist: https://stackoverflow.com/a/9227991/13695737
+# .gitignore whitelist: https://stackoverflow.com/a/9227991/13695737
 
 *
 !*/
 
 !/.gitignore
 
-!/alacritty/catppuccin
+!/alacritty/**
 
 !/git/**
 
@@ -15,8 +15,9 @@
 /nvim/plugin
 
 !/hypr/**
-
 !/waybar/**
+!/eww/**
+!/clipcat/**
 
 !/README.md
 

@@ -48,15 +48,20 @@ in
             nil
             nmap
             nodejs
+            onefetch
             pstree
             python3 nodePackages_latest.pyright
             ripgrep
             rustup
+            tcpdump
             unzip
             wget
             xclip
+            xz
             yt-dlp
             zip
+
+            # libpcap
         ];
 
 # /etc/profile sources /nix/store/*-set-environment
@@ -69,6 +74,8 @@ in
             NIXPKGS_ALLOW_UNFREE = "1";
         };
     };
+
+    programs.nix-ld.enable = true;
 
     home-manager.users.albi = import ../home.nix;
 
@@ -92,7 +99,6 @@ in
 
     services = {
         tailscale.enable = true;
-        openssh.enable = true;
     };
 
     # Ignore missing disks
@@ -101,7 +107,7 @@ in
     users.users.albi = {
         isNormalUser = true;
         description = "Albert Ragány-Németh";
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" ];
         packages = [ ];
     };
 
