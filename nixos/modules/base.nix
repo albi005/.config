@@ -51,6 +51,7 @@ in
             neofetch
             neovim
             nil
+            nixd
             nmap
             nodejs
             onefetch
@@ -58,6 +59,7 @@ in
             python3 nodePackages_latest.pyright
             ripgrep
             rustup
+            sl
             tcpdump
             unzip
             wget
