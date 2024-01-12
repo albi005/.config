@@ -19,7 +19,7 @@ in
         # https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI
         efi.canTouchEfiVariables = lib.mkDefault true;
 
-        # Update as necessary
+        # Update in host config as necessary
         grub.device = lib.mkDefault "/dev/sda";
     };
 
@@ -30,6 +30,11 @@ in
     fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
     environment = {
+        # /etc/profile sources /nix/store/*-set-environment
+        variables = {
+            NIXPKGS_ALLOW_UNFREE = "1";
+        };
+
         systemPackages = with pkgs; [
             bottom
             calc
@@ -60,19 +65,7 @@ in
             xz
             yt-dlp
             zip
-
-            # libpcap
         ];
-
-# /etc/profile sources /nix/store/*-set-environment
-        variables = {
-            EDITOR = "nvim";
-            VISUAL = "nvim";
-            BROWSER = "google-chrome-stable";
-            TERM = "alacritty";
-            TERMINAL = "alacritty";
-            NIXPKGS_ALLOW_UNFREE = "1";
-        };
     };
 
     programs.nix-ld.enable = true;
@@ -86,14 +79,16 @@ in
             trustedInterfaces = [ "tailscale0" ];
         };
 
+        # Cloudflare DNS
         nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
     };
 
     programs.direnv.enable = true;
+
     programs.tmux = {
         enable = true;
         keyMode = "vi";
-        plugins = with pkgs.tmuxPlugins; [ sensible ];
+        plugins = [ pkgs.tmuxPlugins.sensible ];
         extraConfig = "set-option -ga terminal-overrides ',alacritty:Tc'";
     };
 

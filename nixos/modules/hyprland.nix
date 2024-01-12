@@ -3,6 +3,8 @@
     programs.hyprland.enable = true;
     programs.kdeconnect.enable = true;
     security.polkit.enable = true;
+    services.gvfs.enable = true;
+    services.samba.enable = true;
 
     environment.systemPackages = with pkgs; [
         hyprpicker
@@ -14,6 +16,7 @@
         rofi
         libsForQt5.polkit-kde-agent
         clipcat
+        filezilla
 
         # 
         coreutils
