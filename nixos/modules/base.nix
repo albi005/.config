@@ -72,8 +72,6 @@ in
 
     programs.nix-ld.enable = true;
 
-    home-manager.users.albi = import ../home.nix;
-
     networking = {
         networkmanager.enable = true;
         firewall = {
@@ -107,6 +105,7 @@ in
         extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" ];
         packages = [ ];
     };
+    home-manager.users.albi = import ./base.home.nix;
 
     # blank tty after 60 seconds
     boot.kernelParams = [ "consoleblank=60" ];

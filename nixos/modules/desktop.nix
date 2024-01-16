@@ -45,6 +45,8 @@
         wireshark
     ];
 
+    home-manager.users.albi = import ./desktop.home.nix;
+
     fonts.packages = with pkgs; [
         (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
         corefonts

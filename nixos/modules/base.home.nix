@@ -1,20 +1,5 @@
 { config, pkgs, ... }:
 {
-    # TODO: GTK theme
-    gtk = {
-        enable = true;
-        theme = {
-            name = "Catppuccin-Macchiato-Compact-Pink-Dark";
-            package = pkgs.catppuccin-gtk.override {
-                accents = [ "pink" ];
-                size = "compact";
-                variant = "macchiato";
-            };
-        };
-    };
-
-    home.stateVersion = "23.05";
-
     home.sessionPath = [
         "${config.home.homeDirectory}/.dotnet/tools"
     ];
@@ -56,4 +41,7 @@
         api_url = http://waka.alb1.hu/api
         api_key = b9753890-9f75-498f-9155-d19f2190de78
     '';
+
+    # DONT'T TOUCH
+    home.stateVersion = "23.05"; 
 }
