@@ -1,7 +1,7 @@
 daemonize = true
 pid_file = "/run/user/1000/clipcatd.pid"
 max_history = 50
-synchronize_selection_with_clipboard = true
+synchronize_selection_with_clipboard = false
 history_file_path = "/home/albi/.cache/clipcat/clipcatd-history"
 snippets = []
 
