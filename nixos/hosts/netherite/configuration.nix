@@ -32,9 +32,8 @@
     };
     users.groups.mssql = {};
 
-    virtualisation.docker.enable = true;
-
     virtualisation.oci-containers = {
+        backend = "docker";
         containers = {
             dfv = {
                 image = "mcr.microsoft.com/mssql/server:2022-latest";
@@ -48,7 +47,7 @@
                     ACCEPT_EULA = "Y";
                     MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
                 };
-                ports = [ "1433:1433" ];
+                ports = [ "127.0.0.1:1433:1433" ];
             };
         };
     };
