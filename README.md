@@ -1,4 +1,4 @@
-# .config
+# ~/.config
 
 ## Install
 1. [Install NixOS](https://nixos.org/download.html#download-nixos)
