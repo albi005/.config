@@ -5,6 +5,7 @@ in
 {
     imports = [
       (import "${home-manager}/nixos")
+      ./neovim.nix
     ];
 
     nixpkgs.config.allowUnfree = true;
@@ -49,7 +50,6 @@ in
             lua-language-server
             mono
             neofetch
-            neovim
             nil
             nixd
             nmap
@@ -92,9 +92,7 @@ in
         extraConfig = "set-option -ga terminal-overrides ',alacritty:Tc'";
     };
 
-    services = {
-        tailscale.enable = true;
-    };
+    services.tailscale.enable = true;
 
     # Ignore missing disks
     systemd.enableEmergencyMode = false;

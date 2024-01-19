@@ -30,5 +30,5 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
--- https://github.com/MunifTanjim/exrc.nvim#readme
+-- load .nvim.lua files
 vim.o.exrc = true

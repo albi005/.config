@@ -12,7 +12,6 @@
 !/nixos/**
 
 !/nvim/**
-/nvim/plugin
 
 !/hypr/**
 !/waybar/**
