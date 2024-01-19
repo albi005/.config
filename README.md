@@ -3,7 +3,7 @@
 ## Install
 1. [Install NixOS](https://nixos.org/download.html#download-nixos)
    - Use albi as username
-   - Don't enable a desktop environment
+   - Select *No desktop*
 2. Log in as albi and run `sh <(curl -L http://alb1.hu/init)`
 
 ### Bootloader edge cases
