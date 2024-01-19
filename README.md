@@ -18,7 +18,7 @@ boot.loader.grub.device = "/dev/sda"; # if needed
 
 - Garbage PC™ (Intel Atom Bay Trail Whatever): [Nix Wiki](https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI), [Arch Wiki](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface#UEFI_firmware_bitness)
 ```nix
-boot.loader.efi.canTouchEfiVariables = true;
+boot.loader.efi.canTouchEfiVariables = false;
 ```
 
 ## Cheat sheets
