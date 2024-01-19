@@ -15,9 +15,14 @@ end)
 local lua_opts = lsp_zero.nvim_lua_ls()
 require('lspconfig').lua_ls.setup(lua_opts)
 
--- Replace the language servers listed here
--- with the ones you have installed
-lsp_zero.setup_servers({'tsserver', 'rust_analyzer'})
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- Add servers to ~/.config/nixos/modules/neovim.nix
+lsp_zero.setup_servers({
+    'clangd',
+    'nil_ls',
+    'pyright',
+    'rust_analyzer',
+})
 
 ---
 -- Autocompletion config
@@ -42,3 +47,6 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
   })
 })
+
+
+require'Comment'.setup()

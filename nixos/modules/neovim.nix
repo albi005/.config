@@ -26,15 +26,17 @@
                 nvim-dap
                 nvim-dap-ui
                 comment-nvim
+                undotree
 
-                # LSP
                 lsp-zero-nvim
-                nvim-lspconfig
+                  # LSP
+                  nvim-lspconfig
+                  # Autocomplete
+                  nvim-cmp
                   cmp-nvim-lsp
-
-                # Autocomplete
-                nvim-cmp
                   luasnip
+
+                clangd_extensions-nvim
             ];
         };
     };
