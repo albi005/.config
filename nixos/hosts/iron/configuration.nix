@@ -126,7 +126,6 @@
                 image = "menza";
                 volumes = [ "/home/albi/www/Menza:/data" ];
                 environment = {
-                    ASPNETCORE_ENVIRONMENT = "Production";
                     ConnectionStrings__Database="Data Source=/data/menza.db";
                     Firebase__ServiceAccount="/data/service-account.json";
                 };
@@ -137,7 +136,6 @@
                 image = "dishelps";
                 volumes = [ "/home/albi/www/DisHelps:/data" ];
                 environment = {
-                    ASPNETCORE_ENVIRONMENT = "Production";
                     ConnectionStrings__Database = "Data Source=/data/dishelps.db";
                 };
                 ports = [ "10005:8080" ];
@@ -146,11 +144,19 @@
                 image = "keletikuria";
                 volumes = [ "/home/albi/www/KeletiKuria:/data" ];
                 environment = {
-                    ASPNETCORE_ENVIRONMENT = "Production";
                     ConnectionStrings__Database = "Data Source=/data/keletikuria.db";
                 };
                 environmentFiles = [ /home/albi/secrets/keletikuria.env ];
                 ports = [ "10006:8080" ];
+            };
+            sus2 = {
+                image = "sus2";
+                volumes = [ "/home/albi/www/sus2:/data" ];
+                environment = {
+                    ConnectionStrings__Database = "Data Source=/data/pings.db";
+                    ASPNETCORE_URLS = "http://100.99.26.122:16744";
+                };
+                extraOptions = [ "--network=host" ];
             };
         };
     };
