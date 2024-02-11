@@ -39,5 +39,11 @@
                 clangd_extensions-nvim
             ];
         };
+
+        programs.bash = {
+            bashrcExtra = ''
+                export OMNISHARP_PATH="${pkgs.omnisharp-roslyn}"
+            '';
+        };
     };
 }

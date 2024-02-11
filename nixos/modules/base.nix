@@ -41,11 +41,13 @@ in
             calc
             dotnet-sdk_8
             exiftool
+            fd
             gcc
             git gh
             glow
             go gopls gotools
             inetutils
+            iperf
             lsd
             lua-language-server
             mono
@@ -60,6 +62,7 @@ in
             ripgrep
             rustup
             sl
+            sqlcmd
             tcpdump
             unzip
             wget

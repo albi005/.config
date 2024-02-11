@@ -26,32 +26,6 @@
     systemd.targets.hibernate.enable = false;
     systemd.targets.hybrid-sleep.enable = false;
 
-    users.users.mssql = {
-        isSystemUser = true;
-        group = "mssql";
-    };
-    users.groups.mssql = {};
-
-    virtualisation.oci-containers = {
-        backend = "docker";
-        containers = {
-            dfv = {
-                image = "mcr.microsoft.com/mssql/server:2022-latest";
-                volumes = [
-                    "/home/albi/Desktop/dfvdb/data:/var/opt/mssql/data"
-                    "/home/albi/Desktop/dfvdb/log:/var/opt/mssql/log"
-                    "/home/albi/Desktop/dfvdb/secrets:/var/opt/mssql/secrets"
-                ];
-                user = "root";
-                environment = {
-                    ACCEPT_EULA = "Y";
-                    MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
-                };
-                ports = [ "127.0.0.1:1433:1433" ];
-            };
-        };
-    };
-
     services = {
         jellyseerr.enable = true;
 
@@ -115,6 +89,16 @@
     };
     users.groups.media = {
         gid = 989;
+    };
+
+    virtualisation.oci-containers = {
+        backend = "docker";
+        containers = {
+            flaresolverr = {
+                image = "ghcr.io/flaresolverr/flaresolverr:latest";
+                ports = [ "127.0.0.1:8191:8191" ];
+            };
+        };
     };
 }
 
