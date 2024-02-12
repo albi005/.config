@@ -1,0 +1,31 @@
+configuration{
+    modi: "run,drun,window";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "alacritty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 﩯  Window";
+    display-Network: " 󰤨  Network";
+    sidebar-mode: true;
+}
+
+@theme "catppuccin-mocha"
+
+* {
+    font: "CaskaydiaCove Nerd Font 12";
+    transparent: #00000000;
+}
+
+window {
+    background-color: #181825df;
+    border: none;
+}
+
+mainbox, inputbar, entry, listview, element, element selected, button, button selected {
+    background-color: @transparent;
+}
