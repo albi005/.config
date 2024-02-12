@@ -4,6 +4,8 @@
         ./hardware-configuration.nix
         ../../modules/base.nix
         ../../modules/desktop.nix
+        ../../modules/hyprland.nix
+        ../../modules/nvidia1.nix
     ];
 
     networking.hostName = "redstone";
@@ -19,18 +21,18 @@
 
     # Tell Xorg to use the nvidia driver (also valid for Wayland)
     services.xserver.videoDrivers = ["nvidia"];
-
-    hardware.nvidia = {
-        # Modesetting is needed for most Wayland compositors
-        modesetting.enable = false;
-
-        # Use the open source version of the kernel module
-        # Only available on driver 515.43.04+
-        open = false;
-
-        # Enable the nvidia settings menu
-        nvidiaSettings = false;
-    };
+    #
+    # hardware.nvidia = {
+    #     # Modesetting is needed for most Wayland compositors
+    #     modesetting.enable = true;
+    #
+    #     # Use the open source version of the kernel module
+    #     # Only available on driver 515.43.04+
+    #     open = false;
+    #
+    #     # Enable the nvidia settings menu
+    #     nvidiaSettings = true;
+    # };
 
     services = {
         jellyseerr.enable = true;
@@ -91,22 +93,37 @@
     };
     users.groups.media = {};
 
-    services.tailscale.useRoutingFeatures = "both";
-
-    systemd.services.nzxt = {
-        description = "NZXT Kraken and Smart Device V1 setup";
-        wantedBy = [ "default.target" ];
-        serviceConfig = {
-            Type = "oneshot";
-            ExecStart = [
-                "${pkgs.liquidctl}/bin/liquidctl initialize all"
-                "${pkgs.liquidctl}/bin/liquidctl --match Kraken set sync color off"
-                "${pkgs.liquidctl}/bin/liquidctl --match Smart set led color off"
-            ];
+    virtualisation.oci-containers = {
+        backend = "docker";
+        containers = {
+            sus2 = {
+                image = "sus2";
+                volumes = [ "/home/albi/www/sus2:/data" ];
+                environment = {
+                    ConnectionStrings__Database = "Data Source=/data/pings.db";
+                    ASPNETCORE_URLS = "http://100.74.100.33:16744";
+                };
+                extraOptions = [ "--network=host" ];
+            };
         };
     };
 
-    systemd.targets.sleep.enable = false;
+    services.tailscale.useRoutingFeatures = "both";
+
+    # systemd.services.nzxt = {
+    #     description = "NZXT Kraken and Smart Device V1 setup";
+    #     wantedBy = [ "default.target" ];
+    #     serviceConfig = {
+    #         Type = "oneshot";
+    #         ExecStart = [
+    #             "${pkgs.liquidctl}/bin/liquidctl initialize all"
+    #             "${pkgs.liquidctl}/bin/liquidctl --match Kraken set sync color off"
+    #             "${pkgs.liquidctl}/bin/liquidctl --match Smart set led color off"
+    #         ];
+    #     };
+    # };
+
+    systemd.targets.sleep.enable = true;
     systemd.targets.suspend.enable = false;
     systemd.targets.hibernate.enable = false;
     systemd.targets.hybrid-sleep.enable = false;

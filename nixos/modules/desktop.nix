@@ -45,6 +45,10 @@
         wireshark
     ];
 
+    nixpkgs.config.permittedInsecurePackages = [
+        "electron-25.9.0"
+    ];
+
     programs.dconf.enable = true; # https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
     home-manager.users.albi = import ./desktop.home.nix;
 
