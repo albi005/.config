@@ -5,6 +5,7 @@
       ./hardware-configuration.nix
       ../../modules/base.nix
       ../../modules/desktop.nix
+      ../../modules/hyprland.nix
     ];
 
     networking.hostName = "water"; # Define your hostname.
