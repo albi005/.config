@@ -14,6 +14,8 @@
 !/nvim/**
 
 !/hypr/**
+hypr/host.conf
+
 !/waybar/**
 !/eww/**
 !/clipcat/**
@@ -27,3 +29,4 @@
 JetBrains
 
 result
+

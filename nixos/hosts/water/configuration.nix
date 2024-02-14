@@ -13,4 +13,10 @@
     environment.systemPackages = with pkgs; [
         cloudflare-warp
     ];
+
+    home-manager.users.albi = { ... }: {
+        home.file.".config/hypr/host.conf".text = ''
+             
+        '';
+    };
 }

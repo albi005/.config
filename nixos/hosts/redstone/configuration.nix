@@ -101,7 +101,7 @@
                 volumes = [ "/home/albi/www/sus2:/data" ];
                 environment = {
                     ConnectionStrings__Database = "Data Source=/data/pings.db";
-                    ASPNETCORE_URLS = "http://100.74.100.33:16744";
+                    ASPNETCORE_URLS = "http://*:16744";
                 };
                 extraOptions = [ "--network=host" ];
             };

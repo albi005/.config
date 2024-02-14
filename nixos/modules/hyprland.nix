@@ -56,15 +56,12 @@
     # Disable GNOME stuff
     services.xserver.enable = lib.mkForce false;
     services.xserver = {
-
         displayManager.gdm.enable = lib.mkForce false;
         desktopManager.gnome.enable = lib.mkForce false;
+    };
 
-        layout = "us,hu";
-        xkbOptions = "caps:swapescape";
-
-        # Disable mouse acceleration
-        libinput.mouse.accelProfile = "flat";
+    home-manager.users.albi = { ... }: {
+        home.file.".config/hypr/host.conf".text = lib.mkDefault "";
     };
 }
 
