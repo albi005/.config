@@ -17,7 +17,9 @@
 
     home-manager.users.albi = { ... }: {
         home.file.".config/hypr/host.conf".text = ''
-             
+            input {
+                kb_options = caps:swapescape
+            }
         '';
     };
 }
