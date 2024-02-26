@@ -27,8 +27,25 @@
                     ACCEPT_EULA = "Y";
                     MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
                 };
-                ports = [ "100.67.9.2:1433:1433" ];
+                ports = [ "192.168.0.82:1433:1433" "100.67.9.2:1433:1433" ];
             };
+        };
+    };
+    systemd.services.docker-dfv = {
+        wants = [ "tailscaled.service" ];
+        after = [ "tailscaled.service" ];
+    };
+
+    services.openssh.enable = true;
+
+    services.vsftpd.enable = true;
+    services.vsftpd.writeEnable = true;
+    services.vsftpd.localUsers = true;
+
+    fileSystems = {
+        "/shared/Laptop" = {
+            device = "/dev/disk/by-uuid/18086CF45A9D036C";
+            fsType = "ntfs-3g";
         };
     };
 
@@ -48,6 +65,24 @@
                 "create mask" = "0770";
                 "directory mask" = "0770";
             };
+            Laptop = {
+                path = "/shared/Laptop";
+                "writeable" = "no";
+            };
+        };
+    };
+
+    power.ups = {
+        enable = true;
+        ups.main = {
+            port = "auto";
+            driver = "usbhid-ups";
+            description = "The singular PSU connected";
+        };
+        upsmon.monitor.main = {
+            system = "main";
+            user = "main";
+            passwordFile = "why";
         };
     };
 
