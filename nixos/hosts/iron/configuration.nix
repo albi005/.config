@@ -166,8 +166,7 @@
         restic = {
             backups = {
                 netherite = {
-                    backupPrepareCommand = 
-                        ''
+                    backupPrepareCommand = ''
                         rm -fr /var/lib/backup
                         install -d -m 700 -o root -g root /var/lib/backup
                         cd /var/lib/backup
@@ -190,11 +189,15 @@
                         mkdir -p wakapi
                         ${pkgs.sqlite}/bin/sqlite3 /var/lib/wakapi/wakapi_db.db ".backup 'wakapi/wakapi_db.db'"
                         cp /var/lib/wakapi/config.yml wakapi/
-                        '';
+                    '';
 
                     paths = [
                         "/home/albi/secrets/"
                         "/var/lib/backup/"
+                        "/var/lib/couchdb/.shards/"
+                        "/var/lib/couchdb/shards/"
+                        "/var/lib/couchdb/*.couch"
+                        "/var/lib/couchdb/local.ini"
                     ];
                     repository = "rest:http://netherite:31415/iron";
                     passwordFile = "/home/albi/secrets/restic.key";
