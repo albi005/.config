@@ -23,6 +23,16 @@
     systemd.targets.hybrid-sleep.enable = false;
 
     services = {
+        restic = {
+            server = {
+                enable = true;
+                appendOnly = true;
+                extraFlags = [ "--no-auth" ];
+                listenAddress = "100.118.32.33:31415";
+                prometheus = true; # TODO: idk
+            };
+        };
+
         jellyseerr.enable = true;
 
         sonarr.enable = true;

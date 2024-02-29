@@ -86,6 +86,10 @@ in
         nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
     };
 
+    # https://discourse.nixos.org/t/19963/2
+    # https://github.com/NixOS/nixpkgs/issues/180175
+    systemd.services.NetworkManager-wait-online.enable = false;
+
     programs.direnv.enable = true;
 
     programs.tmux = {
