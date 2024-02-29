@@ -21,20 +21,12 @@
 
     # Tell Xorg to use the nvidia driver (also valid for Wayland)
     services.xserver.videoDrivers = ["nvidia"];
-    #
-    # hardware.nvidia = {
-    #     # Modesetting is needed for most Wayland compositors
-    #     modesetting.enable = true;
-    #
-    #     # Use the open source version of the kernel module
-    #     # Only available on driver 515.43.04+
-    #     open = false;
-    #
-    #     # Enable the nvidia settings menu
-    #     nvidiaSettings = true;
-    # };
 
     services = {
+        restic = {
+            backups = {};
+        };
+
         jellyseerr.enable = true;
 
         sonarr.enable = true;
@@ -110,18 +102,18 @@
 
     services.tailscale.useRoutingFeatures = "both";
 
-    # systemd.services.nzxt = {
-    #     description = "NZXT Kraken and Smart Device V1 setup";
-    #     wantedBy = [ "default.target" ];
-    #     serviceConfig = {
-    #         Type = "oneshot";
-    #         ExecStart = [
-    #             "${pkgs.liquidctl}/bin/liquidctl initialize all"
-    #             "${pkgs.liquidctl}/bin/liquidctl --match Kraken set sync color off"
-    #             "${pkgs.liquidctl}/bin/liquidctl --match Smart set led color off"
-    #         ];
-    #     };
-    # };
+    systemd.services.nzxt = {
+        description = "NZXT Kraken and Smart Device V1 setup";
+        wantedBy = [ "default.target" ];
+        serviceConfig = {
+            Type = "oneshot";
+            ExecStart = [
+                "${pkgs.liquidctl}/bin/liquidctl initialize all"
+                "${pkgs.liquidctl}/bin/liquidctl --match Kraken set sync color off"
+                "${pkgs.liquidctl}/bin/liquidctl --match Smart set led color off"
+            ];
+        };
+    };
 
     systemd.targets.sleep.enable = true;
     systemd.targets.suspend.enable = false;
