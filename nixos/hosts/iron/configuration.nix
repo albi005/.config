@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, config, ... }:
 {
     imports = [
         ./hardware-configuration.nix
@@ -8,7 +8,7 @@
 
     networking.hostName = "iron";
 
-    boot.loader.grub.enable = true;
+    boot.loader.systemd-boot.enable = false;
 
     system.autoUpgrade = {
         enable = true;
@@ -34,6 +34,7 @@
 
     services.vaultwarden = {
         enable = true;
+        backupDir = "/var/backup/vaultwarden";
         config = {
             DOMAIN = "https://p.alb1.hu";
             SIGNUPS_ALLOWED = true;
@@ -162,21 +163,45 @@
     };
 
     services = {
-        # jellyseerr.enable = true;
-        #
-        # sonarr.enable = true;
-        # sonarr.group = "media";
-        #
-        # radarr.enable = true;
-        # radarr.group = "media";
-        #
-        # prowlarr.enable = true;
-        #
-        # jellyfin.enable = true;
-        # jellyfin.group = "media";
-        #
-        # qbittorrent.enable = true;
-        # qbittorrent.group = "media";
+        restic = {
+            backups = {
+                netherite = {
+                    backupPrepareCommand = 
+                        ''
+                        rm -fr /var/lib/backup
+                        install -d -m 700 -o root -g root /var/lib/backup
+                        cd /var/lib/backup
+
+                        ${pkgs.systemd}/bin/systemctl start backup-vaultwarden.service
+
+                        mkdir -p dishelps
+                        ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/DisHelps/dishelps.db ".backup 'dishelps/dishelps.db'"
+
+                        mkdir -p keletikuria
+                        ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/KeletiKuria/keletikuria.db ".backup 'keletikuria/keletikuria.db'"
+
+                        mkdir -p menza
+                        ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/Menza/menza.db ".backup 'menza/menza.db'"
+                        cp /home/albi/www/Menza/service-account.json menza/
+
+                        mkdir -p sus2
+                        ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/sus2/pings.db ".backup 'sus2/pings.db'"
+
+                        mkdir -p wakapi
+                        ${pkgs.sqlite}/bin/sqlite3 /var/lib/wakapi/wakapi_db.db ".backup 'wakapi/wakapi_db.db'"
+                        cp /var/lib/wakapi/config.yml wakapi/
+                        '';
+
+                    paths = [
+                        "/home/albi/secrets/"
+                        "/var/lib/backup/"
+                    ];
+                    repository = "rest:http://netherite:31415/iron";
+                    passwordFile = "/home/albi/secrets/restic.key";
+                    initialize = true;
+                };
+            };
+        };
 
         nginx = {
             enable = true;
@@ -200,5 +225,4 @@
     services.tailscale.useRoutingFeatures = "both";
 
     users.users.albi.extraGroups = [ "couchdb" ];
-    users.groups.media = { };
 }

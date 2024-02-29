@@ -59,6 +59,7 @@ in
             onefetch
             pstree
             python3 nodePackages_latest.pyright
+            restic
             ripgrep
             rustup
             sl
