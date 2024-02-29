@@ -78,7 +78,7 @@ in
     networking = {
         networkmanager.enable = true;
         firewall = {
-            enable = false;
+            enable = true;
             trustedInterfaces = [ "tailscale0" ];
         };
 
