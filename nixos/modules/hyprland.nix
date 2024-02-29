@@ -17,6 +17,7 @@
         libsForQt5.polkit-kde-agent
         clipcat
         filezilla
+        brightnessctl
 
         # 
         coreutils
