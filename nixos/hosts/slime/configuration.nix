@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
     imports = [
         ./hardware-configuration.nix
@@ -6,6 +6,7 @@
     ];
 
     networking.hostName = "slime";
+    networking.firewall.enable = lib.mkForce false;
     
     users.users.a = {
         isNormalUser = true;
