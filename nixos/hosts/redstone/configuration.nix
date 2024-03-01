@@ -24,7 +24,26 @@
 
     services = {
         restic = {
-            backups = {};
+            backups = {
+                netherite = {
+                    backupPrepareCommand = ''
+                        rm -fr /var/lib/backup
+                        install -d -m 700 -o root -g root /var/lib/backup
+                        cd /var/lib/backup
+
+                        mkdir -p sus2
+                        ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/sus2/pings.db ".backup 'sus2/pings.db'"
+                    '';
+
+                    paths = [
+                        "/home/albi/secrets/"
+                        "/var/lib/backup/"
+                    ];
+                    repository = "rest:http://netherite:31415/redstone";
+                    passwordFile = "/home/albi/secrets/restic.key";
+                    initialize = true;
+                };
+            };
         };
 
         jellyseerr.enable = true;
@@ -121,10 +140,10 @@
     systemd.targets.hybrid-sleep.enable = false;
 
     fileSystems = {
-        "/mnt/hdd" = {
-            device = "/dev/disk/by-uuid/560AFE250AFE01B3";
-            fsType = "ntfs3";
-        };
+        # "/mnt/hdd" = {
+        #     device = "/dev/disk/by-uuid/560AFE250AFE01B3";
+        #     fsType = "ntfs3";
+        # };
         "/mnt/win11" = {
             device = "/dev/disk/by-uuid/8014EE8214EE7A94";
             fsType = "ntfs3";

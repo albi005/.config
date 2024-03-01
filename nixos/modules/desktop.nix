@@ -24,6 +24,7 @@
         cinnamon.nemo-with-extensions
         dbeaver
         ffmpeg-full
+        filelight
         gimp
         gnome.file-roller
         gnome.gnome-disk-utility
@@ -39,6 +40,7 @@
         libreoffice
         libsForQt5.kruler
         obsidian
+        qdirstat
         remmina
         sqlitebrowser
         vscode
