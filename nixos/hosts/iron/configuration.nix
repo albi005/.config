@@ -166,6 +166,7 @@
             server = {
                 enable = true;
                 appendOnly = true;
+                extraFlags = [ "--no-auth" ];
                 listenAddress = "100.99.26.122:31415";
             };
             backups = {
