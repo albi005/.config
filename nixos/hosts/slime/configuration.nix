@@ -37,11 +37,29 @@
         after = [ "tailscaled.service" ];
     };
 
-    services.openssh.enable = true;
-
-    services.vsftpd.enable = true;
-    services.vsftpd.writeEnable = true;
-    services.vsftpd.localUsers = true;
+    services = {
+        restic = {
+            backups = {
+                iron = {
+                    backupPrepareCommand = ''
+                        mkdir -p dfvdb
+                        ${pkgs.sqlcmd}/bin/sqlcmd -S 100.67.9.2 \
+                               -U sa -P '<YourStrong!Passw0rd>' \
+                               -Q "backup database DFV9_2016_08_30 to disk = '/var/opt/mssql/data/DFV9_2016_08_30.bak'"
+                    '';
+                    paths = [
+                        "/home/albi/secrets/"
+                        "/var/lib/dfvdb/data/DFV9_2016_08_30.bak"
+                        "/shared/Megosztott"
+                        "/shared/Kozos"
+                    ];
+                    repository = "rest:http://iron.tail36baa.ts.net:31415/slime";
+                    passwordFile = "/home/albi/secrets/restic.key";
+                    initialize = true;
+                };
+            };
+        };
+    };
 
     fileSystems = {
         "/shared/Laptop" = {
@@ -89,15 +107,14 @@
 
     system.autoUpgrade = {
         enable = true;
-        channel = "nixos-unstable";
         flags = [ "-I" "nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix" ];
         dates = "03:00";
         allowReboot = true;
         rebootWindow = {
             lower = "01:00";
-            upper = "05:00";
+            upper = "04:00";
         };
-        randomizedDelaySec = "45min";
+        randomizedDelaySec = "30min";
     };
 
     nix.gc = {

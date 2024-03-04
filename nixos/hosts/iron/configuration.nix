@@ -12,7 +12,6 @@
 
     system.autoUpgrade = {
         enable = true;
-        channel = "nixos-unstable";
         flags = [ "-I" "nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix" ];
         dates = "03:00";
         allowReboot = true;
@@ -164,6 +163,11 @@
 
     services = {
         restic = {
+            server = {
+                enable = true;
+                appendOnly = true;
+                listenAddress = "100.99.26.122:31415";
+            };
             backups = {
                 netherite = {
                     backupPrepareCommand = ''
