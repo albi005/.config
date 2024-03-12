@@ -32,7 +32,7 @@
         gjs
         sassc
 
-        eww-wayland
+        eww
 
         pavucontrol
         playerctl

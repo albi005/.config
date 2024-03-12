@@ -54,8 +54,6 @@
         radarr.enable = true;
         radarr.group = "media";
 
-        prowlarr.enable = true;
-
         jellyfin.enable = true;
         jellyfin.group = "media";
 
@@ -146,7 +144,7 @@
         # };
         "/mnt/win11" = {
             device = "/dev/disk/by-uuid/8014EE8214EE7A94";
-            fsType = "ntfs3";
+            fsType = "ntfs-3g";
         };
     };
 }

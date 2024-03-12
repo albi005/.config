@@ -18,11 +18,21 @@ require('lspconfig').lua_ls.setup(lua_opts)
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 -- Add servers to ~/.config/nixos/modules/neovim.nix
 lsp_zero.setup_servers({
-    'clangd',
     'nil_ls',
     'pyright',
     'rust_analyzer',
 })
+
+-- Fix "Multiple different client offset_encodings detected" 
+-- https://www.reddit.com/r/neovim/comments/12qbcua/comment/jgpqxsp
+local cmp_nvim_lsp = require "cmp_nvim_lsp"
+require("lspconfig").clangd.setup {
+  capabilities = cmp_nvim_lsp.default_capabilities(),
+  cmd = {
+    "clangd",
+    "--offset-encoding=utf-16",
+  },
+}
 
 local omnisharp_path = os.getenv'OMNISHARP_PATH'
 if omnisharp_path == nil then

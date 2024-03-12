@@ -6,8 +6,10 @@
         displayManager.gdm.enable = true;
         desktopManager.gnome.enable = true;
 
-        layout = "us,hu";
-        xkbOptions = "caps:swapescape";
+        xkb = {
+            layout = "us,hu";
+            options = "caps:swapescape";
+        };
 
         # Disable mouse acceleration
         libinput.mouse.accelProfile = "flat";

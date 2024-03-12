@@ -63,6 +63,7 @@ in
             ripgrep
             rustup
             sl
+            smartmontools
             sqlcmd
             tcpdump
             unzip
