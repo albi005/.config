@@ -41,7 +41,7 @@ in
             calc
             cloc #Count Lines Of Code
             dotnet-sdk_8
-            dua #disk usage analyzer tui
+            dua #Disk Usage Analyzer tui
             exiftool
             fastfetch
             fd
