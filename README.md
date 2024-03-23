@@ -54,18 +54,21 @@ ctrl+{htns} harpoon open
 gx open url
 gf open file
 gv select last selection
-
-n	gd				definition
-n	K				hover
-n	<leader>vws		workspace_symbol
-n	<leader>vd		open_float
-n	[d				goto_next
-n	]d				goto_prev
-n	<leader>vca		code_action
-n	<leader>vrr		references
-n	<leader>vrn		rename
-i	<C-h>			signature_help
 ```
+
+- `K`: Displays **hover information** about the symbol under the cursor
+- `gd`: Jumps to the **definition of** the **symbol** under the cursor
+- `gD`: Jumps to the **declaration** of the symbol under the cursor
+- `gi`: Lists all the **implementations** for the symbol under the cursor
+- `go`: Jumps to the **definition of** the **type** of the symbol under the cursor
+- `gr`: Lists all the **references** to the symbol under the cursor
+- `gs`: Displays **signature** information about the symbol under the cursor
+- `<F2>`: **Renames** all references to the symbol under the cursor
+- `<F3>`: **Format** code in current buffer
+- `<F4>`: Show **code actions**
+- `gl`: Show diagnostics
+- `[d`: previous diagnostic
+- `]d`: next diagnostic
 
 ### tmux cheat sheet
 

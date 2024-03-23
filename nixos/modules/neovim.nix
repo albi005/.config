@@ -16,17 +16,18 @@
         programs.neovim = {
             enable = true;
             plugins = with pkgs.vimPlugins; [
-                telescope-nvim
-                harpoon
                 catppuccin-nvim
-                vim-wakatime
-                nvim-treesitter.withAllGrammars
-                copilot-lua
+                comment-nvim
                 copilot-cmp
+                copilot-lua
+                harpoon
+                nvim-autopairs
                 nvim-dap
                 nvim-dap-ui
-                comment-nvim
+                nvim-treesitter.withAllGrammars
+                telescope-nvim
                 undotree
+                vim-wakatime
 
                 lsp-zero-nvim
                   # LSP
