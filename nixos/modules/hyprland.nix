@@ -49,6 +49,15 @@
 
         # more screenshot stuff
         grimblast
+
+        # Notification daemon
+        # https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
+        dunst
+
+        # Authentication agent
+        # https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent
+        kdePackages.polkit-kde-agent-1
+        lxqt.lxqt-policykit
     ];
 
     # TODO: QT style?

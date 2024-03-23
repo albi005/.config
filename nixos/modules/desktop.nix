@@ -39,6 +39,7 @@
         google-chrome
         headsetcontrol
         jetbrains.rider
+        kitty
         libreoffice
         libsForQt5.kruler
         obsidian
@@ -59,6 +60,7 @@
     fonts.packages = with pkgs; [
         (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
         corefonts
+        cascadia-code
     ];
 
     # Enable CUPS to print documents.
