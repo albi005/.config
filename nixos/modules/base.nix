@@ -66,6 +66,7 @@ in
             smartmontools
             sqlcmd
             tcpdump
+            typescript
             unzip
             wget
             xclip

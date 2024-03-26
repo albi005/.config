@@ -20,6 +20,7 @@ require('lspconfig').lua_ls.setup(lua_opts)
 lsp_zero.setup_servers({
     'nil_ls',
     'pyright',
+    'tsserver',
     'rust_analyzer',
 })
 
