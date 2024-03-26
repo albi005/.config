@@ -37,8 +37,6 @@
         pavucontrol
         playerctl
 
-        gnome.nautilus
-
         # TODO: Remove unneeded screenshot stuff
         # Screenshot stuff, https://github.com/jtheoof/swappy
         wl-clipboard

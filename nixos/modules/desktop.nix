@@ -30,14 +30,10 @@
         gimp
         gnome.file-roller
         gnome.gnome-disk-utility
-        gnome.gnome-tweaks
         gnome.totem
-        gnomeExtensions.clipboard-indicator
-        gnomeExtensions.headsetcontrol
-        gnomeExtensions.openweather
-        gnomeExtensions.twitchlive-panel
         google-chrome
         headsetcontrol
+        jetbrains.idea-ultimate
         jetbrains.rider
         kitty
         libreoffice
