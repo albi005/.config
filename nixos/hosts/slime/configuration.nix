@@ -28,7 +28,7 @@
                     ACCEPT_EULA = "Y";
                     MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
                 };
-                ports = [ "192.168.0.82:1433:1433" "100.67.9.2:1433:1433" ];
+                ports = [ "1433:1433" ];
             };
         };
     };
