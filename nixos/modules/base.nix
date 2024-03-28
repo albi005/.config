@@ -98,8 +98,16 @@ in
     programs.tmux = {
         enable = true;
         keyMode = "vi";
-        plugins = [ pkgs.tmuxPlugins.sensible ];
-        extraConfig = "set-option -ga terminal-overrides ',alacritty:Tc'";
+        plugins = with pkgs.tmuxPlugins; [
+            sensible
+            catppuccin
+        ];
+        extraConfig = ''
+            set-option -ga terminal-overrides ',alacritty:Tc'
+
+            #https://wezfurlong.org/wezterm/shell-integration.html#user-vars
+            set -g allow-passthrough on
+        '';
     };
 
     services.tailscale.enable = true;

@@ -56,6 +56,8 @@
         # https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent
         kdePackages.polkit-kde-agent-1
         lxqt.lxqt-policykit
+
+        nwg-look # gtk theme config gui
     ];
 
     # TODO: QT style?
@@ -68,6 +70,7 @@
         desktopManager.gnome.enable = lib.mkForce false;
     };
 
+    # create an empty file that can be overwritten to set host specific options
     home-manager.users.albi = { ... }: {
         home.file.".config/hypr/host.conf".text = lib.mkDefault "";
     };

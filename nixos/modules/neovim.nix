@@ -27,7 +27,9 @@
                 nvim-treesitter.withAllGrammars
                 telescope-nvim
                 undotree
+                vim-illuminate #highlight symbol under the cursor
                 vim-wakatime
+                which-key-nvim
 
                 lsp-zero-nvim
                   # LSP

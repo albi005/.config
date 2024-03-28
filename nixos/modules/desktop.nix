@@ -38,26 +38,40 @@
         kitty
         libreoffice
         libsForQt5.kruler
+        loupe #image viewer
         obsidian
         qdirstat
         remmina
         sqlitebrowser
         vscode
+        wezterm
         wireshark
+
+        catppuccin-cursors.mochaDark
+        papirus-icon-theme
+        #lxappearance # Segmentation fault (core dumped)
     ];
 
-    nixpkgs.config.permittedInsecurePackages = [
-        "electron-25.9.0"
-    ];
+    # https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
+    programs.dconf.enable = true;
 
-    programs.dconf.enable = true; # https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
     home-manager.users.albi = import ./desktop.home.nix;
 
-    fonts.packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-        corefonts
-        cascadia-code
-    ];
+    fonts = {
+        packages = with pkgs; [
+            (nerdfonts.override { fonts = [ "CascadiaCode" "NerdFontsSymbolsOnly" ]; })
+            cantarell-fonts #GNOME font
+            cascadia-code
+            corefonts #Microsoft web fonts
+            roboto
+            roboto-slab
+        ];
+        fontconfig.defaultFonts = {
+            sansSerif = ["Roboto"];
+            serif = ["Roboto Slab"];
+            monospace = ["Cascadia Code"];
+        };
+    };
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
