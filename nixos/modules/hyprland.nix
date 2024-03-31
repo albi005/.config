@@ -13,11 +13,13 @@
         wofi
         font-awesome
         xfce.thunar
-        rofi
+        rofi-wayland
         libsForQt5.polkit-kde-agent
         clipcat
         filezilla
         brightnessctl
+
+        glib #gsettings
 
         # 
         coreutils
@@ -58,6 +60,8 @@
         lxqt.lxqt-policykit
 
         nwg-look # gtk theme config gui
+
+        catppuccin-cursors.mochaDark
     ];
 
     # TODO: QT style?

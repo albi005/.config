@@ -9,13 +9,15 @@
 
         shellAliases = {
             c = "clear";
-            cl = "c && l";
             c-bash = "nvim ~/.profile && source ~/.profile";
-            c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
             c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
+            c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
+            c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
             c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
+            cfg = "cd ~/.config";
+            cl = "c && l";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
-            cfg = "cd ~/.config; v";
+            e = "python3 $HOME/.config/scripts/print-env.py";
             l = "lsd -Al --group-directories-first --date '+%Y-%m-%d %H:%M'";
             ports = "sudo netstat -tulpn";
             rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
@@ -25,10 +27,10 @@
         };
 
         bashrcExtra = ''
-              export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
-              export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
-              export NODE_PATH=~/.npm-packages/lib/node_modules;
-            '';
+            export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
+            export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
+            export NODE_PATH=~/.npm-packages/lib/node_modules;
+        '';
     };
 
     home.file.".npmrc".text = ''

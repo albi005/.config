@@ -58,7 +58,7 @@ in
             nodejs
             onefetch
             pstree
-            python3 nodePackages_latest.pyright
+            python3
             restic
             ripgrep
             rustup

@@ -1,8 +1,12 @@
--- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/tutorial.md#complete-code
+-- https://github.com/folke/neodev.nvim#readme
+require'neodev'.setup{
+    library = { plugins = { "nvim-dap-ui" }, types = true },
+}
 
----
+-- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/tutorial.md#complete-code
+----
 -- LSP setup
----
+----
 local lsp_zero = require('lsp-zero')
 
 lsp_zero.on_attach(function(client, bufnr)
@@ -18,10 +22,11 @@ require('lspconfig').lua_ls.setup(lua_opts)
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 -- Add servers to ~/.config/nixos/modules/neovim.nix
 lsp_zero.setup_servers({
+    'bashls',
     'nil_ls',
     'pyright',
-    'tsserver',
     'rust_analyzer',
+    'tsserver',
 })
 
 -- Fix "Multiple different client offset_encodings detected" 
@@ -82,9 +87,9 @@ require'lspconfig'.omnisharp.setup{
     file_types = { 'cs', 'cshtml', 'razor', 'cool', 'vb' },
 }
 
----
+----
 -- Autocompletion config
----
+----
 local cmp = require('cmp')
 local cmp_action = lsp_zero.cmp_action()
 

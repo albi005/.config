@@ -3,32 +3,27 @@
 *
 !*/
 
-!/.gitignore
-
+# include
 !/alacritty/**
+!/clipcat/**
+!/eww/**
+!/git/**
+!/hypr/**
 !/kitty/**
+!/nixos/**
+!/nvim/**
+!/rofi/**
+!/waybar/**
 !/wezterm/**
 
-!/git/**
-
-!/nixos/**
-
-!/nvim/**
-
-!/hypr/**
-hypr/host.conf
-
-!/waybar/**
-!/eww/**
-!/clipcat/**
-!/rofi/**
-
+!/.gitignore
 !/README.md
-
 !/init.sh
 !/initinit.sh
+!/mimeapps.list
 
+# ignore
 JetBrains
-
+hypr/host.conf
 result
 
