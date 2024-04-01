@@ -1,0 +1,105 @@
+[
+  {
+    "height": 24,
+    "layer": "top",
+    "position": "bottom",
+    "modules-left": [
+      "custom/launcher",
+      "custom/playerctl#backward",
+      "custom/playerctl#play",
+      "custom/playerctl#foward",
+      "custom/playerlabel"
+    ],
+    "modules-center": [
+        "hyprland/workspaces",
+    ],
+    "modules-right": [
+      "tray",
+      "battery",
+      "pulseaudio",
+      "network",
+      "clock"
+    ],
+
+    "battery": {
+      "format": "{icon}  {capacity}%",
+      "format-alt": "{icon} {time}",
+      "format-charging": "  {capacity}%",
+      "format-icons": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "format-plugged": " {capacity}% ",
+      "states": {
+        "critical": 15,
+        "good": 95,
+        "warning": 30
+      }
+    },
+    "clock": {
+      "format": "{:%Y.%m.%d  %R}",
+      "format-alt": " {:%d/%m}",
+      "tooltip": "true",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "custom/launcher": {
+      "format": "",
+      "tooltip": "false"
+    },
+    "custom/playerctl#backward": {
+      "format": "󰒮 ",
+      "on-click": "playerctl previous",
+      "on-scroll-down": "playerctl volume .05-",
+      "on-scroll-up": "playerctl volume .05+"
+    },
+    "custom/playerctl#foward": {
+      "format": "󰒭 ",
+      "on-click": "playerctl next",
+      "on-scroll-down": "playerctl volume .05-",
+      "on-scroll-up": "playerctl volume .05+"
+    },
+    "custom/playerctl#play": {
+      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}}  {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+      "format": "{icon}",
+      "format-icons": {
+        "Paused": "<span>󰐊 </span>",
+        "Playing": "<span>󰏤 </span>",
+        "Stopped": "<span>󰐊 </span>"
+      },
+      "on-click": "playerctl play-pause",
+      "on-scroll-down": "playerctl volume .05-",
+      "on-scroll-up": "playerctl volume .05+",
+      "return-type": "json"
+    },
+    "custom/randwall": {
+      "format": "󰏘"
+    },
+    "network": {
+      "format-disconnected": "󰖪 0% ",
+      "format-ethernet": "",
+      "format-linked": "{ifname} (No IP)",
+      "format-wifi": "  {signalStrength}%",
+      "tooltip-format": "Connected to {essid} {ifname} via {gwaddr}"
+    },
+    "pulseaudio": {
+      "format": "{icon} {volume}%",
+      "format-icons": {
+        "default": [
+          "󰕿",
+          "󰖀",
+          "󰕾"
+        ]
+      },
+      "format-muted": "󰝟",
+      "on-click": "pavucontrol",
+      "scroll-step": 5
+    },
+    "tray": {
+      "icon-size": 20,
+      "spacing": 8
+    }
+  }
+]

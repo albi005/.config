@@ -3,11 +3,11 @@
     gtk = {
         enable = true;
         theme = {
-            name = "Catppuccin-Macchiato-Compact-Pink-Dark";
+            name = "Catppuccin-Mocha-Compact-Blue-Dark";
             package = pkgs.catppuccin-gtk.override {
-                accents = [ "pink" ];
+                accents = [ "blue" ];
                 size = "compact";
-                variant = "macchiato";
+                variant = "mocha";
             };
         };
         iconTheme = {
@@ -22,14 +22,13 @@
         # };
     };
 
-    # THIS WORKS, DONT TOUCH
-    # hyprctl setcursor 'Catppuccin-Mocha-Dark-Cursors' 16
+    # hyprctl setcursor 'Catppuccin-Mocha-Light-Cursors' 24
     home.pointerCursor = {
         gtk.enable = true;
         x11.enable = true;
-        package = pkgs.catppuccin-cursors.mochaDark;
-        name = "Catppuccin-Mocha-Dark-Cursors";
-        size = 16;
+        package = pkgs.catppuccin-cursors.mochaLight;
+        name = "Catppuccin-Mocha-Light-Cursors";
+        size = 24;
     };
 
     # symlink the `~/.config/gtk-4.0/` folder

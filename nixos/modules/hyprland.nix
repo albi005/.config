@@ -6,6 +6,9 @@
     services.gvfs.enable = true;
     services.samba.enable = true;
 
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
     environment.systemPackages = with pkgs; [
         hyprpicker
         waybar
@@ -20,6 +23,9 @@
         brightnessctl
 
         glib #gsettings
+
+        libnotify #https://youtu.be/61wGzIv12Ds?t=162
+        networkmanagerapplet
 
         # 
         coreutils
@@ -60,8 +66,6 @@
         lxqt.lxqt-policykit
 
         nwg-look # gtk theme config gui
-
-        catppuccin-cursors.mochaDark
     ];
 
     # TODO: QT style?
