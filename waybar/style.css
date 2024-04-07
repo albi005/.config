@@ -24,6 +24,7 @@ window {
     padding: 0 4;
     color: rgba(250,250,250,.7);
     transition: all 0.2s ease-in-out;
+    opacity: .6;
 }
 #workspaces button.active {
     background-color: #89b4fa;

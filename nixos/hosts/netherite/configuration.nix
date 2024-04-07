@@ -1,13 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
     imports = [
         ./hardware-configuration.nix
         ../../modules/base.nix
         ../../modules/desktop.nix
         ../../modules/hyprland.nix
+        ../../modules/virt.nix
         ../../pkgs/qbittorrent.nix
     ];
 
+    networking.firewall.enable = lib.mkForce false;
     networking.hostName = "netherite";
 
     fileSystems = {
@@ -103,6 +105,24 @@
             flaresolverr = {
                 image = "ghcr.io/flaresolverr/flaresolverr:latest";
                 ports = [ "127.0.0.1:8191:8191" ];
+            };
+        };
+    };
+
+    users.users.a = {
+        isNormalUser = true;
+        createHome = false;
+    };
+
+    services.samba = {
+        enable = true;
+        openFirewall = true;
+        shares = {
+            Kozos = {
+                path = "/mnt/win11";
+                "writeable" = "yes";
+                "create mask" = "0770";
+                "directory mask" = "0770";
             };
         };
     };

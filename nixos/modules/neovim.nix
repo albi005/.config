@@ -17,11 +17,15 @@
     {
         programs.neovim = {
             enable = true;
+            extraLuaPackages = luaPkgs: with luaPkgs; [
+                luautf8
+                nvim-nio#required by nvim-dap-ui
+            ];
             plugins = with pkgs.vimPlugins; [
                 catppuccin-nvim
                 comment-nvim
-                copilot-cmp
-                copilot-lua
+                copilot-lua copilot-cmp
+                friendly-snippets
                 harpoon
                 lualine-nvim
                 neodev-nvim #nvim api types
@@ -31,7 +35,6 @@
                 nvim-dap-virtual-text
                 nvim-treesitter.withAllGrammars
                 nvim-web-devicons
-                pkgs.luajitPackages.nvim-nio#required by nvim-dap-ui
                 telescope-nvim
                 undotree
                 vim-illuminate #highlight symbol under the cursor

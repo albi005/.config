@@ -2,7 +2,7 @@
   {
     "height": 24,
     "layer": "top",
-    "position": "bottom",
+    "position": "top",
     "modules-left": [
       "custom/launcher",
       "custom/playerctl#backward",

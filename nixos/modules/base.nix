@@ -71,6 +71,7 @@ in
             wget
             xclip
             xz
+            yarn
             yt-dlp
             zip
         ];

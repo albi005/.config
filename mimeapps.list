@@ -17,3 +17,6 @@ x-scheme-handler/https=firefox.desktop
 x-scheme-handler/webcal=firefox.desktop
 x-scheme-handler/file=nvim.desktop
 inode/directory=nvim.desktop
+
+[Added Associations]
+text/plain=google-chrome.desktop;
