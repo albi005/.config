@@ -45,62 +45,7 @@
                 };
             };
         };
-
-        jellyseerr.enable = true;
-
-        sonarr.enable = true;
-        sonarr.group = "media";
-
-        radarr.enable = true;
-        radarr.group = "media";
-
-        jellyfin.enable = true;
-        jellyfin.group = "media";
-
-        nginx = {
-            enable = true;
-            virtualHosts = 
-                let listen = [ {
-                    addr = "100.74.100.33";
-                    port = 80;
-                    ssl = false;
-                } ];
-            in
-            {
-                "jellyseer.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:5055";
-                    locations."/".proxyWebsockets = true;
-                    inherit listen;
-                };
-                "sonarr.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:8989";
-                    locations."/".proxyWebsockets = true;
-                    inherit listen;
-                };
-                "radarr.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:7878";
-                    locations."/".proxyWebsockets = true;
-                    inherit listen;
-                };
-                "prowlarr.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:9696";
-                    locations."/".proxyWebsockets = true;
-                    inherit listen;
-                };
-                "jellyfin.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:8096";
-                    locations."/".proxyWebsockets = true;
-                    inherit listen;
-                };
-                "torrent.alb1.hu" = {
-                    locations."/".proxyPass = "http://localhost:10069";
-                    locations."/".proxyWebsockets = true;
-                    inherit listen;
-                };
-            };
-        };
     };
-    users.groups.media = {};
 
     virtualisation.oci-containers = {
         backend = "docker";
