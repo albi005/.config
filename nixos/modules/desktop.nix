@@ -43,6 +43,7 @@
         qdirstat
         remmina
         sqlitebrowser
+        thunderbird
         vscode
         wezterm
         wireshark

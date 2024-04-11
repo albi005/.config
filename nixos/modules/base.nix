@@ -78,6 +78,7 @@ in
     };
 
     programs.nix-ld.enable = true;
+    programs.java.enable = true;
 
     networking = {
         networkmanager.enable = true;
