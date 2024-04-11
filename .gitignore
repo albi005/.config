@@ -13,6 +13,7 @@
 !/nixos/**
 !/nvim/**
 !/rofi/**
+!/scripts/**
 !/waybar/**
 !/wezterm/**
 
@@ -26,4 +27,4 @@
 JetBrains
 hypr/host.conf
 result
-
+.direnv
