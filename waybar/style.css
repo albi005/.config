@@ -10,7 +10,7 @@ window {
     font-weight: 400;
     font-size: 13px;
     background: rgba(30, 30, 46, 0.2); /* catppuccin mocha base */
-    font-family: Cascadia Code;
+    font-family: monospace;
     font-feature-settings: "zero";
 }
 

@@ -40,6 +40,7 @@ in
             bottom
             calc
             dotnet-sdk_8
+            dua #disk usage analyzer tui
             exiftool
             fd
             file #file info

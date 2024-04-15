@@ -23,6 +23,8 @@
 
     users.users.albi.packages = with pkgs; [
         alacritty
+        beeper #All your chats in one app
+        bluetuith #bluetooth manager tui
         cinnamon.nemo-with-extensions
         dbeaver
         ffmpeg-full
@@ -76,6 +78,8 @@
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
+
+    hardware.bluetooth.enable = true;
 
     # Enable sound with pipewire.
     sound.enable = true;
