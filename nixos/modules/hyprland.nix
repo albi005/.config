@@ -4,7 +4,6 @@
     programs.kdeconnect.enable = true;
     security.polkit.enable = true;
     services.gvfs.enable = true;
-    services.samba.enable = true;
 
     xdg.portal.enable = true;
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

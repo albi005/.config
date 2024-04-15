@@ -42,6 +42,7 @@ in
             dotnet-sdk_8
             exiftool
             fd
+            file #file info
             gcc
             git gh
             glow
@@ -54,6 +55,7 @@ in
             neofetch
             nil
             nixd
+            nixfmt-rfc-style
             nmap
             nodejs
             onefetch
