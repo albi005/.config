@@ -35,8 +35,6 @@
         gnome.totem
         google-chrome
         headsetcontrol
-        jetbrains.idea-ultimate
-        jetbrains.rider
         kitty
         libreoffice
         libsForQt5.kruler
