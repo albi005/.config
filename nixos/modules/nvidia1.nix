@@ -15,20 +15,23 @@ let
     export __VK_LAYER_NV_optimus=
     exec "$@"
   '';
-  # sink-intel-service = {
-  #   enable = true;
-  #   wantedBy = ["graphical.target"];
-  #   after = ["graphical.target"];
-  #   description = "source nvidia sink intel";
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     User = "root";
-  #     RemainAfterExit = "yes";
-  #     ExecStart = "${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0 && xrandr --auto";
-  #   };
-  # };
 in
+# sink-intel-service = {
+#   enable = true;
+#   wantedBy = ["graphical.target"];
+#   after = ["graphical.target"];
+#   description = "source nvidia sink intel";
+#   serviceConfig = {
+#     Type = "oneshot";
+#     User = "root";
+#     RemainAfterExit = "yes";
+#     ExecStart = "${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0 && xrandr --auto";
+#   };
+# };
 {
+  # Fix virtual console being blurry
+  # https://reddit.com/r/archlinux/comments/oe8u2q/fix_tty_resolution_with_nvidia_driver/
+  boot.loader.systemd-boot.consoleMode = "max";
 
   # NVIDIA drivers are unfree.
   nixpkgs.config.allowUnfree = pkgs.lib.mkForce true;
@@ -51,22 +54,18 @@ in
 
       # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
       nvidiaBusId = "PCI:1:0:0";
-
     };
 
     powerManagement = {
       enable = true;
       finegrained = true;
     };
-
   };
-
 
   environment.systemPackages = [
     nvidia-offload
     no-offload
   ];
-
 
   # specialisation = {
   #
@@ -106,6 +105,7 @@ in
   #         Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
   #         Option         "AllowIndirectGLXProtocol" "off"
   #         Option         "TripleBuffer" "on"
+
   #       '';
   #     };
   #
@@ -163,6 +163,3 @@ in
   # };
   #
 }
-
-
-
