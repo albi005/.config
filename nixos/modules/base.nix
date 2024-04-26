@@ -39,6 +39,7 @@ in
         systemPackages = with pkgs; [
             bottom
             calc
+            cloc #Count Lines Of Code
             dotnet-sdk_8
             dua #disk usage analyzer tui
             exiftool

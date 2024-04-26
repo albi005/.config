@@ -22,6 +22,10 @@
     # Tell Xorg to use the nvidia driver (also valid for Wayland)
     services.xserver.videoDrivers = ["nvidia"];
 
+    users.users.albi.packages = with pkgs; [
+        jetbrains.clion
+    ];
+
     services = {
         restic = {
             backups = {

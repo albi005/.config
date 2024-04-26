@@ -96,6 +96,8 @@
         #media-session.enable = true;
     };
 
+    services.udev.packages = [ pkgs.headsetcontrol ];
+
     time.timeZone = "Europe/Budapest";
 
     i18n = {
