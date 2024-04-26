@@ -43,6 +43,7 @@ in
             dotnet-sdk_8
             dua #disk usage analyzer tui
             exiftool
+            fastfetch
             fd
             file #file info
             gcc
@@ -54,7 +55,6 @@ in
             lsd
             lua-language-server
             mono
-            neofetch
             nil
             nixd
             nixfmt-rfc-style
