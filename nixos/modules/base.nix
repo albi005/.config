@@ -129,6 +129,10 @@ in
     };
     home-manager.users.albi = import ./base.home.nix;
 
+    services.journald.extraConfig = ''
+        SystemMaxUse=100M
+    '';
+
     # blank tty after 60 seconds
     boot.kernelParams = [ "consoleblank=60" ];
 

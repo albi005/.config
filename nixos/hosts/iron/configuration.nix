@@ -16,17 +16,17 @@
         dates = "03:00";
         allowReboot = true;
         rebootWindow = {
-            lower = "01:00";
-            upper = "05:00";
+            lower = "04:00";
+            upper = "04:30";
         };
-        randomizedDelaySec = "45min";
+        randomizedDelaySec = "15min";
     };
 
     nix.gc = {
         automatic = true;
         dates = "03:30";
         options = "--delete-older-than 30d";
-        randomizedDelaySec = "45min";
+        randomizedDelaySec = "15min";
     };
 
     virtualisation.docker.enable = true;
@@ -149,15 +149,15 @@
                 environmentFiles = [ /home/albi/secrets/keletikuria.env ];
                 ports = [ "10006:8080" ];
             };
-            sus2 = {
-                image = "sus2";
-                volumes = [ "/home/albi/www/sus2:/data" ];
-                environment = {
-                    ConnectionStrings__Database = "Data Source=/data/pings.db";
-                    ASPNETCORE_URLS = "http://100.99.26.122:16744";
-                };
-                extraOptions = [ "--network=host" ];
-            };
+            # sus2 = {
+            #     image = "sus2";
+            #     volumes = [ "/home/albi/www/sus2:/data" ];
+            #     environment = {
+            #         ConnectionStrings__Database = "Data Source=/data/pings.db";
+            #         ASPNETCORE_URLS = "http://100.99.26.122:16744";
+            #     };
+            #     extraOptions = [ "--network=host" ];
+            # };
         };
     };
 
