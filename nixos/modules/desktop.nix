@@ -47,6 +47,7 @@
         vscode
         wezterm
         wireshark
+        zed-editor
 
         catppuccin-cursors.mochaDark
         papirus-icon-theme
