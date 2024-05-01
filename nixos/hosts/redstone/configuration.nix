@@ -24,6 +24,7 @@
 
     users.users.albi.packages = with pkgs; [
         jetbrains.clion
+        jetbrains.idea-ultimate
     ];
 
     services = {

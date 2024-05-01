@@ -1,22 +1,22 @@
 { config, pkgs, ... }:
 {
-    services.xserver = {
-        enable = true;
-
-        displayManager.gdm.enable = true;
-        desktopManager.gnome.enable = true;
-
-        xkb = {
-            layout = "us,hu";
-            options = "caps:swapescape";
-        };
-
-        # Disable mouse acceleration
-        libinput.mouse.accelProfile = "flat";
-    };
-
-    # Disable default GNOME apps
-    services.gnome.core-utilities.enable = false;
+    # services.xserver = {
+    #     enable = true;
+    #
+    #     displayManager.gdm.enable = true;
+    #     desktopManager.gnome.enable = true;
+    #
+    #     xkb = {
+    #         layout = "us,hu";
+    #         options = "caps:swapescape";
+    #     };
+    #
+    #     # Disable mouse acceleration
+    #     libinput.mouse.accelProfile = "flat";
+    # };
+    #
+    # # Disable default GNOME apps
+    # services.gnome.core-utilities.enable = false;
 
     programs.firefox.enable = true;
     programs.wireshark.enable = true;
