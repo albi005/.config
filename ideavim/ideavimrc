@@ -32,3 +32,4 @@ map <F5> <Action>(Debug)
 map <C-H> <Action>(Replace)
 map <SPACE><SPACE> :w<CR><Action>(IdeaVim.ReloadVimRc.reload)
 map <SPACE>y <Action>($Copy)
+set ideajoin

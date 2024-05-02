@@ -69,6 +69,7 @@ in
             sl
             smartmontools
             sqlcmd
+            systemctl-tui
             tcpdump
             typescript
             unzip

@@ -21,6 +21,7 @@
             l = "lsd -Al --group-directories-first --date '+%Y.%m.%d %H:%M'";
             ports = "sudo netstat -tulpn";
             rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
+            st = "systemctl-tui";
             tree = "l --tree --group-directories-first";
             try = "nix-shell -p ";
             v = "nvim .";
