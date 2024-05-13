@@ -13,6 +13,7 @@
 
     environment.systemPackages = with pkgs; [
         cloudflare-warp
+        jetbrains.clion
     ];
 
     home-manager.users.albi = { ... }: {
