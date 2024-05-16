@@ -1,6 +1,6 @@
 -- https://youtu.be/w7i4amO_zaE?t=1386
 vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

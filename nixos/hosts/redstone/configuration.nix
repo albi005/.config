@@ -52,20 +52,20 @@
         };
     };
 
-    virtualisation.oci-containers = {
-        backend = "docker";
-        containers = {
-            sus2 = {
-                image = "sus2";
-                volumes = [ "/home/albi/www/sus2:/data" ];
-                environment = {
-                    ConnectionStrings__Database = "Data Source=/data/pings.db";
-                    ASPNETCORE_URLS = "http://*:16744";
-                };
-                extraOptions = [ "--network=host" ];
-            };
-        };
-    };
+    # virtualisation.oci-containers = {
+    #     backend = "docker";
+    #     containers = {
+    #         sus2 = {
+    #             image = "sus2";
+    #             volumes = [ "/home/albi/www/sus2:/data" ];
+    #             environment = {
+    #                 ConnectionStrings__Database = "Data Source=/data/pings.db";
+    #                 ASPNETCORE_URLS = "http://*:16744";
+    #             };
+    #             extraOptions = [ "--network=host" ];
+    #         };
+    #     };
+    # };
 
     services.tailscale.useRoutingFeatures = "both";
 
