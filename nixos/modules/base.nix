@@ -39,7 +39,9 @@ in
         systemPackages = with pkgs; [
             bottom
             calc
+            cava #tui audio visualizer
             cloc #Count Lines Of Code
+            cmatric #Matrix like effect in your terminal
             dotnet-sdk_8
             dua #Disk Usage Analyzer tui
             exiftool
