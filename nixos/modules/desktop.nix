@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+    imports = [
+        ./hyprland.nix
+    ];
     # services.xserver = {
     #     enable = true;
     #

@@ -79,9 +79,14 @@ in
             yarn
             yt-dlp
             zip
+            zoxide
         ];
     };
 
+    programs.bash.shellInit = ''
+        # https://github.com/ajeetdsouza/zoxide#installation
+        eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+    '';
     programs.nix-ld.enable = true;
     programs.java.enable = true;
 

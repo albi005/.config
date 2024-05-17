@@ -33,3 +33,12 @@ map <C-H> <Action>(Replace)
 map <SPACE><SPACE> :w<CR><Action>(IdeaVim.ReloadVimRc.reload)
 map <SPACE>y <Action>($Copy)
 set ideajoin
+
+" Use ctrl-c as an ide shortcut in normal and visual modes
+sethandler <C-C> n-v:ide i:vim
+
+" Use ctrl-v as an ide shortcut
+sethandler <C-V> a:ide
+
+" use ctrl a as an ide shortcut in normal mode
+sethandler <C-A> n:ide

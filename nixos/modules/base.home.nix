@@ -18,6 +18,7 @@
             cl = "c && l";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
             e = "python3 $HOME/.config/scripts/print-env.py";
+	    f = "fastfetch";
             l = "lsd -Al --group-directories-first --date '+%Y.%m.%d %H:%M'";
             ports = "sudo netstat -tulpn";
             rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
