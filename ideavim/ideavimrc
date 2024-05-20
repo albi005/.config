@@ -40,5 +40,5 @@ sethandler <C-C> n-v:ide i:vim
 " Use ctrl-v as an ide shortcut
 sethandler <C-V> a:ide
 
-" use ctrl a as an ide shortcut in normal mode
-sethandler <C-A> n:ide
+" use ctrl a as an ide shortcut in visual mode
+sethandler <C-A> v:ide

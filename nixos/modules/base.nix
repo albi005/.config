@@ -41,7 +41,7 @@ in
             calc
             cava #tui audio visualizer
             cloc #Count Lines Of Code
-            cmatric #Matrix like effect in your terminal
+            cmatrix #Matrix like effect in your terminal
             dotnet-sdk_8
             dua #Disk Usage Analyzer tui
             exiftool
@@ -51,6 +51,7 @@ in
             gcc
             git gh
             glow
+            gnumake #make
             go gopls gotools
             inetutils
             iperf
