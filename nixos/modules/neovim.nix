@@ -9,6 +9,8 @@
             nixd
             nodePackages.pyright
             nodePackages.bash-language-server
+            nodePackages.typescript-language-server
+            typescript
             bashdb #bash debug adapter
         ];
     };

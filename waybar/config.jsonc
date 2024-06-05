@@ -8,10 +8,11 @@
       "custom/playerctl#backward",
       "custom/playerctl#play",
       "custom/playerctl#foward",
-      "custom/playerlabel"
+      "custom/playerlabel",
+      "hyprland/language"
     ],
     "modules-center": [
-        "hyprland/workspaces",
+        "hyprland/workspaces"
     ],
     "modules-right": [
       "tray",
@@ -76,6 +77,11 @@
     },
     "custom/randwall": {
       "format": "󰏘"
+    },
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "",
+        "format-hu": " 🇭🇺 HU 🇭🇺 "
     },
     "network": {
       "format-disconnected": "󰖪 0% ",

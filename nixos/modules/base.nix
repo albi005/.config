@@ -55,9 +55,11 @@ in
             go gopls gotools
             inetutils
             iperf
+            jq #command-line JSON processor
             lsd
             lua-language-server
             mono
+            netscanner #nmap tui
             nil
             nixd
             nixfmt-rfc-style
