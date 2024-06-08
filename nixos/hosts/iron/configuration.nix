@@ -69,11 +69,11 @@
     users.groups.cloudflared = { };
 
     systemd.services.wakapi = {
+        # https://github.com/muety/wakapi/blob/master/etc/wakapi.service
         description = "Wakapi";
         after = [ "network.target" ];
         wantedBy = [ "default.target" ];
         serviceConfig = {
-# https://github.com/muety/wakapi/blob/master/etc/wakapi.service
             ExecStart = "${pkgs.wakapi}/bin/wakapi";
             WorkingDirectory = "/var/lib/wakapi";
             StateDirectory = "wakapi";
@@ -130,7 +130,7 @@
                     Firebase__ServiceAccount="/data/service-account.json";
                 };
                 environmentFiles = [ /home/albi/secrets/menza.env ];
-                ports = [ "10002:80" ];
+                ports = [ "10002:8080" ];
             };
             dishelps = {
                 image = "dishelps";
@@ -167,7 +167,7 @@
                 enable = true;
                 appendOnly = true;
                 extraFlags = [ "--no-auth" ];
-                listenAddress = "100.99.26.122:31415";
+                listenAddress = "31415";
             };
             backups = {
                 netherite = {
@@ -231,6 +231,4 @@
     };
 
     services.tailscale.useRoutingFeatures = "both";
-
-    users.users.albi.extraGroups = [ "couchdb" ];
 }
