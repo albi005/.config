@@ -4,9 +4,12 @@ pkgs.mkShell {
         (pkgs.python3.withPackages (python-pkgs: with python-pkgs; [
             requests
             environs
+            nbtlib
+            tabulate
+            debugpy
         ]))
     ];
     shellHook = ''
-        export OPEN_DEBUG_PATH=${pkgs.vscode-extensions.ms-vscode.cpptools}/share/vscode/extensions/ms-vscode.cpptools/debugAdapters/bin/OpenDebugAD7;
+        #export 
     '';
 }

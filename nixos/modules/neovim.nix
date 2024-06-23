@@ -7,7 +7,7 @@
             neovim
             nil
             nixd
-            nodePackages.pyright
+            pyright
             nodePackages.bash-language-server
             nodePackages.typescript-language-server
             typescript

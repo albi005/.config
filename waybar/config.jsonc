@@ -1,7 +1,7 @@
 [
   {
     "height": 24,
-    "layer": "top",
+    "layer": "bottom",
     "position": "top",
     "modules-left": [
       "custom/launcher",

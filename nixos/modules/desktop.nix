@@ -29,7 +29,8 @@
         beeper #All your chats in one app
         bluetuith #bluetooth manager tui
         cinnamon.nemo-with-extensions
-        dbeaver
+        dbeaver-bin
+        desktop-file-utils #needed by something
         ffmpeg-full
         filelight
         gimp
