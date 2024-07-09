@@ -2,16 +2,16 @@
 {
   environment = {
     systemPackages = with pkgs; [
+      bashdb # bash debug adapter
       gopls
       lua-language-server
       neovim
       nil
       nixd
-      pyright
       nodePackages.bash-language-server
       nodePackages.typescript-language-server
+      pyright
       typescript
-      bashdb # bash debug adapter
     ];
   };
 

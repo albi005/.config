@@ -13,6 +13,7 @@
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ]; # xdg-desktop-portal-wlr but better
 
   environment.systemPackages = with pkgs; [
+    ags # js based widgets
     brightnessctl # brightnessctl s 50
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     font-awesome
@@ -20,6 +21,7 @@
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
     hyprpaper # wallpaper daemon
     hyprpicker # color picker
+    libdbusmenu-gtk3 # needed by ags
     libnotify # used by some apps to send notifications
     lxqt.lxqt-policykit # polkit frontend https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent https://reddit.com/r/NixOS/comments/171mexa/comment/k3rpftn
     nwg-look # gtk theme config gui
@@ -39,11 +41,12 @@
     desktop-file-utils # needed by something
     ffmpeg-full
     gimp # paint
-    gnome.gnome-disk-utility # disk manager
-    gnome.totem # archive manager
+    gnome-disk-utility # disk manager
     google-chrome
     headsetcontrol # arctis nova 7 battery check
+    imhex # hex editor
     kitty # terminal emulator
+    krita # painting application
     libreoffice
     libsForQt5.kruler # screen ruler
     loupe # image viewer
@@ -51,6 +54,7 @@
     remmina # remote desktop client
     sqlitebrowser
     thunderbird # email client
+    totem # archive manager
     vscode
     wezterm # terminal emulator
     wofi-emoji # emoji selector
@@ -75,10 +79,10 @@
             size = "compact";
             variant = "mocha";
           };
-          name = "catppuccin-mocha-green-compact+default";
+          name = "catppuccin-mocha-green-compact";
         };
         iconTheme = {
-          package = pkgs.gnome.adwaita-icon-theme;
+          package = pkgs.adwaita-icon-theme;
           name = "Adwaita";
         };
       };
@@ -105,13 +109,13 @@
 
   fonts = {
     packages = with pkgs; [
-      nerdfonts.override
+      (nerdfonts.override
       {
         fonts = [
           "CascadiaCode"
           "NerdFontsSymbolsOnly"
         ];
-      }
+      })
       cantarell-fonts # GNOME font
       cascadia-code
       corefonts # Microsoft web fonts

@@ -30,6 +30,7 @@ x-scheme-handler/nntp=thunderbird.desktop
 x-scheme-handler/snews=thunderbird.desktop
 x-scheme-handler/webcal=thunderbird.desktop
 x-scheme-handler/webcals=thunderbird.desktop
+x-scheme-handler/tg=org.telegram.desktop.desktop
 
 [Added Associations]
 application/rss+xml=thunderbird.desktop;
@@ -43,3 +44,4 @@ x-scheme-handler/nntp=thunderbird.desktop;
 x-scheme-handler/snews=thunderbird.desktop;
 x-scheme-handler/webcal=thunderbird.desktop;
 x-scheme-handler/webcals=thunderbird.desktop;
+x-scheme-handler/tg=org.telegram.desktop.desktop;

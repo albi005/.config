@@ -14,11 +14,14 @@
         jetbrains.idea-ultimate
         jetbrains.rider
         prismlauncher
+        cura
     ];
 
     environment.systemPackages = with pkgs; [
         vlc
     ];
+
+    services.hardware.openrgb.enable = true;
 
     virtualisation.docker.enable = true;
 
@@ -62,15 +65,6 @@
                 "radarr.alb1.hu" = tailscaleToLocalhost 7878;
                 "prowlarr.alb1.hu" = tailscaleToLocalhost 9696;
                 "torrent.alb1.hu" = tailscaleToLocalhost 9797;
-                "turtle.alb1.hu" = {
-                    root = "/var/lib/turtle";
-                    listen = [{ addr = "127.0.0.1"; port = 80; ssl = false; }];
-                    extraConfig = ''
-                        autoindex on;
-                        default_type text/plain;
-                        index install.lua;
-                    '';
-                };
             };
         };
     };
