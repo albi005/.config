@@ -5,15 +5,12 @@
       ./hardware-configuration.nix
       ../../modules/base.nix
       ../../modules/desktop.nix
-      ../../modules/hyprland.nix
     ];
 
     networking.hostName = "water"; # Define your hostname.
     networking.networkmanager.wifi.macAddress = "permanent";
 
     environment.systemPackages = with pkgs; [
-        cloudflare-warp
-        jetbrains.clion
     ];
 
     home-manager.users.albi = { ... }: {
