@@ -12,6 +12,8 @@
 
     environment.systemPackages = with pkgs; [
         prismlauncher
+        jetbrains.rider
+        jetbrains.idea-ultimate
     ];
 
     # use function keys instead of media keys by default

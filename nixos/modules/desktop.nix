@@ -7,6 +7,7 @@
   programs.kdeconnect.enable = true; # phone link
   programs.wireshark.enable = true; # network protocol analyzer
   security.polkit.enable = true; # gui sudo
+  services.gnome.gnome-keyring.enable = true; # security credential store
   services.gvfs.enable = true; # GNOME Virtual file system
   services.printing.enable = true;
   xdg.portal.enable = true; # file pickers, screen sharing and other stuff https://wiki.hyprland.org/Useful-Utilities/Must-have/#xdg-desktop-portal
@@ -40,6 +41,7 @@
     dbeaver-bin # database manager
     desktop-file-utils # needed by something
     ffmpeg-full
+    file-roller # archive manager
     gimp # paint
     gnome-disk-utility # disk manager
     google-chrome
@@ -54,7 +56,7 @@
     remmina # remote desktop client
     sqlitebrowser
     thunderbird # email client
-    totem # archive manager
+    totem # videos
     vscode
     wezterm # terminal emulator
     wofi-emoji # emoji selector

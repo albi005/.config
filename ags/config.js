@@ -238,10 +238,10 @@ App.config({
             centerWidget: Workspaces(0),
             endWidget: Right(),
         })),
-        Bar(1, Widget.CenterBox({
-            startWidget: Media(),
-            centerWidget: Workspaces(1),
-        })),
+        // Bar(1, Widget.CenterBox({
+        //     startWidget: Media(),
+        //     centerWidget: Workspaces(1),
+        // })),
     ],
 })
 
