@@ -11,7 +11,7 @@
 
     users.users.albi.packages = with pkgs; [
         # jetbrains.clion
-        # jetbrains.idea-ultimate
+        jetbrains.idea-ultimate
         jetbrains.rider
         prismlauncher
         jetbrains-toolbox

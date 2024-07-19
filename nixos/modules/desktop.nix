@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, inputs, ... }:
 {
   hardware.bluetooth.enable = true; # use with bluetuith
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
@@ -37,7 +37,7 @@
     alacritty # terminal emulator
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
-    cinnamon.nemo-with-extensions # file manager
+    nemo-with-extensions # file manager
     dbeaver-bin # database manager
     desktop-file-utils # needed by something
     ffmpeg-full
@@ -58,7 +58,7 @@
     thunderbird # email client
     totem # videos
     vscode
-    wezterm # terminal emulator
+    inputs.wezterm-git.packages.${pkgs.system}.default # terminal emulator
     wofi-emoji # emoji selector
     zed-editor # vscode in rust
   ];

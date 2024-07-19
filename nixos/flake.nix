@@ -8,6 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wezterm-git.url = "github:wez/wezterm?dir=nix";
   };
 
   outputs =

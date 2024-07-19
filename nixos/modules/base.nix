@@ -14,8 +14,8 @@
       # Use systemd-boot by default
       enable = lib.mkDefault true;
   
-  # Fix virtual console being blurry
-  # https://reddit.com/r/archlinux/comments/oe8u2q/fix_tty_resolution_with_nvidia_driver/
+      # Fix virtual console being blurry
+      # https://reddit.com/r/archlinux/comments/oe8u2q/fix_tty_resolution_with_nvidia_driver/
       consoleMode = "max";
     };
 
@@ -78,12 +78,12 @@
       onefetch # neofetch for git
       pstree # processs tree
       python3
-      restic
+      restic # backups
       ripgrep # rg, find text in files
       rustup
-      sl
+      sl # train
       smartmontools
-      sqlcmd
+      sqlcmd # sql server
       systemctl-tui
       tcpdump
       typescript
@@ -92,6 +92,7 @@
       xclip
       xz
       yarn
+      yazi # file manager tui
       yt-dlp
       zip
       zoxide
@@ -192,6 +193,16 @@
           export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
           export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
           export NODE_PATH=~/.npm-packages/lib/node_modules;
+
+          # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
+          function y() {
+              local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+              yazi "$@" --cwd-file="$tmp"
+              if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+                  builtin cd -- "$cwd"
+              fi
+              rm -f -- "$tmp"
+          }
         '';
       };
 
@@ -206,9 +217,29 @@
         api_key = b9753890-9f75-498f-9155-d19f2190de78
       '';
 
+      programs.yazi = {
+        enable = true;
+        enableBashIntegration = true;
+        shellWrapperName = "y";
+
+        settings = {
+          manager = {
+            show_hidden = true;
+            sort_dir_first = true;
+          };
+        };
+      };
+
       # DONT'T TOUCH
       home.stateVersion = "23.05";
     };
+
+  services.nginx = {
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+  };
 
   time.timeZone = "Europe/Budapest";
 
