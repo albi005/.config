@@ -133,7 +133,6 @@
 
   # Enable sound with pipewire
   # https://youtu.be/61wGzIv12Ds?t=181 - "Nixos and Hyprland - Best Match Ever" by Vimjoyer
-  sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

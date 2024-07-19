@@ -10,11 +10,12 @@
     networking.hostName = "netherite";
 
     users.users.albi.packages = with pkgs; [
-        jetbrains.clion
-        jetbrains.idea-ultimate
+        # jetbrains.clion
+        # jetbrains.idea-ultimate
         jetbrains.rider
         prismlauncher
-        cura
+        jetbrains-toolbox
+        #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
     ];
 
     environment.systemPackages = with pkgs; [

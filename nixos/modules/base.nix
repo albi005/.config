@@ -1,12 +1,6 @@
 { lib, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
 {
-  imports = [
-    (import "${home-manager}/nixos")
-    ./neovim.nix
-  ];
+  imports = [ ./neovim.nix ];
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
@@ -16,8 +10,14 @@ in
 
   # https://nixos.org/manual/nixos/unstable/#sec-installation-manual-installing (scroll down)
   boot.loader = {
-    # Use systemd-boot by default
-    systemd-boot.enable = lib.mkDefault true;
+    systemd-boot = {
+      # Use systemd-boot by default
+      enable = lib.mkDefault true;
+  
+  # Fix virtual console being blurry
+  # https://reddit.com/r/archlinux/comments/oe8u2q/fix_tty_resolution_with_nvidia_driver/
+      consoleMode = "max";
+    };
 
     # Set to false when running on garbage
     # https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI
@@ -181,7 +181,7 @@ in
           f = "fastfetch";
           l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
           ports = "sudo netstat -tulpn";
-          rb = "sudo nixos-rebuild switch -I nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix";
+          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos";
           st = "systemctl-tui";
           tree = "l --tree --group-directories-first";
           try = "nix-shell -p ";

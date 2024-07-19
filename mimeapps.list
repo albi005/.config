@@ -31,6 +31,8 @@ x-scheme-handler/snews=thunderbird.desktop
 x-scheme-handler/webcal=thunderbird.desktop
 x-scheme-handler/webcals=thunderbird.desktop
 x-scheme-handler/tg=org.telegram.desktop.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+x-scheme-handler/jetbrains-gateway=jetbrains-gateway.desktop
 
 [Added Associations]
 application/rss+xml=thunderbird.desktop;
