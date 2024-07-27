@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -49,10 +49,11 @@
     };
   };
 
-  # services.couchdb = {
-  #     enable = true;
-  #     port = 10004;
-  # };
+  services.couchdb = {
+      package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.couchdb3;
+      enable = true;
+      port = 10004;
+  };
 
   systemd.services.cloudflared = {
     description = "cloudflared";
