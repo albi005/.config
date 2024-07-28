@@ -162,6 +162,7 @@
     ];
     packages = [ ];
   };
+
   home-manager.users.albi =
     { config, pkgs, ... }:
     {
