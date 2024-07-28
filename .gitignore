@@ -31,3 +31,4 @@ hypr/host.conf
 result
 .direnv
 ags/types
+__pycache__

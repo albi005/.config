@@ -7,6 +7,8 @@ pkgs.mkShell {
             nbtlib
             tabulate
             debugpy
+            flask
+            pystemd
         ]))
     ];
     shellHook = ''

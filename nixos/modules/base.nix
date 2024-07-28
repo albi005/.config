@@ -1,6 +1,9 @@
 { lib, pkgs, ... }:
 {
-  imports = [ ./neovim.nix ];
+  imports = [
+    ./neovim.nix
+    ./status.nix
+  ];
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
@@ -13,7 +16,7 @@
     systemd-boot = {
       # Use systemd-boot by default
       enable = lib.mkDefault true;
-  
+
       # Fix virtual console being blurry
       # https://reddit.com/r/archlinux/comments/oe8u2q/fix_tty_resolution_with_nvidia_driver/
       consoleMode = "max";
