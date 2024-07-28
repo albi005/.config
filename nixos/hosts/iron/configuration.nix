@@ -10,6 +10,9 @@
 
   boot.loader.systemd-boot.enable = false;
 
+  services.statusApi.enable = true;
+  services.statusApi.host = "100.99.26.122";
+
   system.autoUpgrade = {
     enable = true;
     dates = "03:00";
