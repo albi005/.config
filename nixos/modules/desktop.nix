@@ -10,6 +10,7 @@
   services.gnome.gnome-keyring.enable = true; # security credential store
   services.gvfs.enable = true; # GNOME Virtual file system
   services.printing.enable = true;
+  services.upower.enable = true; # required by ags battery widget
   xdg.portal.enable = true; # file pickers, screen sharing and other stuff https://wiki.hyprland.org/Useful-Utilities/Must-have/#xdg-desktop-portal
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ]; # xdg-desktop-portal-wlr but better
 
