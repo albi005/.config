@@ -13,32 +13,6 @@
   services.statusApi.enable = true;
   services.statusApi.host = "100.99.26.122";
 
-  system.autoUpgrade = {
-    enable = true;
-    dates = "03:00";
-    flake = "/home/albi/.config/nixos";
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--update-input"
-      "home-manager"
-      "-L" # print build logs
-    ];
-    allowReboot = true;
-    rebootWindow = {
-      lower = "04:00";
-      upper = "04:30";
-    };
-    randomizedDelaySec = "15min";
-  };
-
-  nix.gc = {
-    automatic = true;
-    dates = "03:30";
-    options = "--delete-older-than 30d";
-    randomizedDelaySec = "15min";
-  };
-
   virtualisation.docker.enable = true;
 
   services.vaultwarden = {

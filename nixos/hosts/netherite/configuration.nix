@@ -5,42 +5,36 @@
     ../../modules/base.nix
     ../../modules/desktop.nix
     ../../pkgs/qbittorrent.nix
+    ../../modules/dotnet.nix
   ];
+
+  virtualisation.docker.rootless.enable = true;
+  virtualisation.docker.rootless.setSocketVariable = true;
 
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
 
   networking.hostName = "netherite";
 
+  hardware.sane.enable = true; # scanner daemon
+  users.users.albi.extraGroups = [
+    "scanner"
+    "lp"
+  ];
+
   users.users.albi.packages = with pkgs; [
     # jetbrains.clion
     jetbrains.idea-ultimate
     jetbrains.rider
-    prismlauncher
+    jetbrains.webstorm
+    prismlauncher # minecraft launcher
     jetbrains-toolbox
+    naps2 # scanner gui
+    devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
   ];
 
   environment.systemPackages = with pkgs; [ vlc ];
-
-  system.autoUpgrade = {
-    enable = true;
-    dates = "03:00";
-    flake = "/home/albi/.config/nixos";
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--update-input"
-      "home-manager"
-      "-L" # print build logs
-    ];
-    allowReboot = true;
-    rebootWindow = {
-      lower = "04:00";
-      upper = "04:30";
-    };
-    randomizedDelaySec = "15min";
-  };
 
   services.hardware.openrgb.enable = true;
 

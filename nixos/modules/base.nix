@@ -52,7 +52,7 @@
       cava # tui audio visualizer
       cloc # Count Lines Of Code
       cmatrix # Matrix like effect in your terminal
-      dotnet-sdk_8
+      dig # dns tools
       dua # Disk Usage Analyzer tui
       exiftool
       fastfetch
@@ -106,8 +106,11 @@
     # https://github.com/ajeetdsouza/zoxide#installation
     eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
   '';
-  programs.nix-ld.enable = true;
+
+  programs.nix-ld.enable = true; # enables running unpatched dynamic binaries
+  programs.nix-ld.package = pkgs.nix-ld-rs;
   programs.java.enable = true;
+  services.tailscale.enable = true; # p2p vpn
 
   networking = {
     networkmanager.enable = true;
@@ -145,8 +148,6 @@
       set -g allow-passthrough on
     '';
   };
-
-  services.tailscale.enable = true;
 
   # Ignore missing disks
   systemd.enableEmergencyMode = false;
@@ -260,6 +261,32 @@
       LC_TELEPHONE = "hu_HU.UTF-8";
       LC_TIME = "hu_HU.UTF-8";
     };
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "03:33";
+    flake = "/home/albi/.config/nixos";
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--update-input"
+      "nixpkgs-stable"
+      "--update-input"
+      "home-manager"
+      "--update-input"
+      "wezterm-git"
+      "--no-write-lock-file"
+      "-L" # print build logs
+    ];
+    allowReboot = true;
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "03:30";
+    options = "--delete-older-than 30d";
+    randomizedDelaySec = "15min";
   };
 
   services.journald.extraConfig = ''
