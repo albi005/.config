@@ -134,7 +134,7 @@ function Bar(monitor = 0, child) {
     return Widget.Window({
         name: `bar-${monitor}`, // name has to be unique
         class_name: "bar",
-        layer: "background",
+        layer: "bottom",
         monitor,
         anchor: ["top", "left", "right"],
         exclusivity: "exclusive",
