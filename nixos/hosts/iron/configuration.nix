@@ -11,7 +11,7 @@
   boot.loader.systemd-boot.enable = false;
 
   services.statusApi.enable = true;
-  services.statusApi.host = "100.99.26.122";
+  services.statusApi.host = "100.69.0.2";
 
   virtualisation.docker.enable = true;
 
@@ -138,7 +138,7 @@
       #     volumes = [ "/home/albi/www/sus2:/data" ];
       #     environment = {
       #         ConnectionStrings__Database = "Data Source=/data/pings.db";
-      #         ASPNETCORE_URLS = "http://100.99.26.122:16744";
+      #         ASPNETCORE_URLS = "http://100.69.0.2:16744";
       #     };
       #     extraOptions = [ "--network=host" ];
       # };
@@ -201,7 +201,7 @@
         let
           listen = [
             {
-              addr = "100.99.26.122";
+              addr = "100.69.0.2";
               port = 80;
               ssl = false;
             }
