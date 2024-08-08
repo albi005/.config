@@ -50,7 +50,7 @@
             mkdir -p dfvdb
             ${pkgs.sqlcmd}/bin/sqlcmd -S 100.67.9.2 \
                    -U sa -P '<YourStrong!Passw0rd>' \
-                   -Q "backup database DFV9_2016_08_30 to disk = '/var/opt/mssql/data/DFV9_2016_08_30.bak'"
+                   -Q "backup database DFV9_2016_08_30 to disk = '/var/opt/mssql/data/DFV9_2016_08_30.bak' WITH INIT, COPY_ONLY"
           '';
           paths = [
             "/home/albi/secrets/"
@@ -112,26 +112,4 @@
 
   services.statusApi.enable = true;
   services.statusApi.host = "100.67.9.2";
-
-  system.autoUpgrade = {
-    enable = true;
-    flags = [
-      "-I"
-      "nixos-config=/home/albi/.config/nixos/hosts/$HOSTNAME/configuration.nix"
-    ];
-    dates = "03:00";
-    allowReboot = true;
-    rebootWindow = {
-      lower = "01:00";
-      upper = "04:00";
-    };
-    randomizedDelaySec = "30min";
-  };
-
-  nix.gc = {
-    automatic = true;
-    dates = "03:30";
-    options = "--delete-older-than 30d";
-    randomizedDelaySec = "45min";
-  };
 }
