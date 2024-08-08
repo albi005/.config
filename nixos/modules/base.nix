@@ -268,15 +268,7 @@
     dates = "03:33";
     flake = "/home/albi/.config/nixos";
     flags = [
-      "--update-input"
-      "nixpkgs"
-      "--update-input"
-      "nixpkgs-stable"
-      "--update-input"
-      "home-manager"
-      "--update-input"
-      "wezterm-git"
-      "--no-write-lock-file"
+      "--recreate-lock-file" # update everything
       "-L" # print build logs
     ];
     allowReboot = true;
@@ -284,9 +276,8 @@
 
   nix.gc = {
     automatic = true;
-    dates = "03:30";
+    dates = "04:11";
     options = "--delete-older-than 30d";
-    randomizedDelaySec = "15min";
   };
 
   services.journald.extraConfig = ''
