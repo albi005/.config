@@ -269,6 +269,7 @@
     flake = "/home/albi/.config/nixos";
     flags = [
       "--recreate-lock-file" # update everything
+      "--commit-lock-file"
       "-L" # print build logs
     ];
     allowReboot = true;
