@@ -98,14 +98,9 @@
       yazi # file manager tui
       yt-dlp
       zip
-      zoxide
+      zoxide # fancy cd
     ];
   };
-
-  programs.bash.shellInit = ''
-    # https://github.com/ajeetdsouza/zoxide#installation
-    eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
-  '';
 
   programs.nix-ld.enable = true; # enables running unpatched dynamic binaries
   programs.nix-ld.package = pkgs.nix-ld-rs;
@@ -188,6 +183,7 @@
           l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
           ports = "sudo netstat -tulpn";
           rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos";
+          rsync = "rsync --progress";
           st = "systemctl-tui";
           tree = "l --tree --group-directories-first";
           try = "nix-shell -p ";
@@ -208,6 +204,9 @@
               fi
               rm -f -- "$tmp"
           }
+
+          # https://github.com/ajeetdsouza/zoxide#installation
+          eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
         '';
       };
 

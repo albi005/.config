@@ -17,6 +17,7 @@
   environment.systemPackages = with pkgs; [
     ags # js based widgets
     brightnessctl # brightnessctl s 50
+    cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     font-awesome
     glib # gsettings
@@ -31,7 +32,7 @@
     playerctl # media player controller
     rofi-wayland # start menu
     waybar # top bar
-    wl-clipboard-rs # Command-line copy/paste utilities for Wayland, written in Rust
+    wl-clipboard # command-line copy/paste utilities for wayland
   ];
 
   users.users.albi.packages = with pkgs; [
@@ -39,7 +40,7 @@
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
     nemo-with-extensions # file manager
-    dbeaver-bin # database manager
+    inputs.dbeaver-last.legacyPackages.x86_64-linux.pkgs.dbeaver-bin
     desktop-file-utils # needed by something
     ffmpeg-full
     file-roller # archive manager
