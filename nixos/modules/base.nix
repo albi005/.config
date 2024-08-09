@@ -59,7 +59,6 @@
       fd # find file by name
       file # file info
       gcc
-      git
       gh
       glow # .md tui
       gnumake # make
@@ -102,9 +101,11 @@
     ];
   };
 
+  programs.direnv.enable = true;
+  programs.git.enable = true;
+  programs.java.enable = true;
   programs.nix-ld.enable = true; # enables running unpatched dynamic binaries
   programs.nix-ld.package = pkgs.nix-ld-rs;
-  programs.java.enable = true;
   services.tailscale.enable = true; # p2p vpn
 
   networking = {
@@ -126,8 +127,6 @@
   # https://discourse.nixos.org/t/19963/2
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = false;
-
-  programs.direnv.enable = true;
 
   programs.tmux = {
     enable = true;
@@ -275,6 +274,11 @@
     ];
     allowReboot = true;
   };
+
+  # allow root to access the git repo of the nix flake
+  # fixes "dubious ownership" error when running autoUpgrade
+  # if you have a better fix send me an email <3
+  programs.git.config.safe.directory = "/home/albi/.config/.git";
 
   nix.gc = {
     automatic = true;
