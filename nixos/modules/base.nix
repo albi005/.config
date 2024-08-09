@@ -182,11 +182,13 @@
           f = "fastfetch";
           l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
           ports = "sudo netstat -tulpn";
-          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos";
+          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop, use versions from lock file
+          rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server, use latest version of everything without updating the lock file
           rsync = "rsync --progress";
           st = "systemctl-tui";
           tree = "l --tree --group-directories-first";
           try = "nix-shell -p ";
+          update = "nix flake update /home/albi/.config/nixos";
           v = "nvim .";
         };
 
@@ -269,7 +271,7 @@
     flags = [
       "--recreate-lock-file" # update everything
       "--no-write-lock-file"
-      "-L" # print build logs
+      "--print-build-logs"
     ];
     allowReboot = true;
   };
