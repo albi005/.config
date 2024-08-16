@@ -34,6 +34,24 @@
             }
           ];
         };
+        water = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/water/configuration.nix
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+
+            {
+              _module.args = {
+                inherit inputs;
+              };
+            }
+          ];
+        };
         iron = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
