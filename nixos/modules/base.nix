@@ -274,6 +274,7 @@
       "--print-build-logs"
     ];
     allowReboot = true;
+    persistent = false;
   };
 
   # allow root to access the git repo of the nix flake
