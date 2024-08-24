@@ -185,6 +185,7 @@
           rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server, use latest version of everything without updating the lock file
           rsync = "rsync --progress";
           st = "systemctl-tui";
+          sus = "systemctl suspend";
           tree = "l --tree --group-directories-first";
           try = "nix-shell -p ";
           update = "nix flake update /home/albi/.config/nixos";

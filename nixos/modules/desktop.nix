@@ -1,4 +1,9 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   hardware.bluetooth.enable = true; # use with bluetuith
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
@@ -19,7 +24,7 @@
     brightnessctl # brightnessctl s 50
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
-    font-awesome
+    font-awesome # TODO: remove font-awesome?
     glib # gsettings
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
     hyprpaper # wallpaper daemon
@@ -113,8 +118,7 @@
 
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override
-      {
+      (nerdfonts.override {
         fonts = [
           "CascadiaCode"
           "NerdFontsSymbolsOnly"
@@ -143,6 +147,15 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+  # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
+  nixpkgs.overlays = [
+    (final: prev: {
+      ags = prev.ags.overrideAttrs (old: {
+        buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
+      });
+    })
+  ];
 
   services.udev.packages = [ pkgs.headsetcontrol ];
 }

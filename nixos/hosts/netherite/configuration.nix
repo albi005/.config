@@ -104,7 +104,7 @@
     serviceConfig = {
       TimeoutStartSec = 0;
       Type = "notify";
-      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run --token $CLOUDFLARED_TOKEN";
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run";
       Restart = "on-failure";
       RestartSec = "5s";
       EnvironmentFile = "/home/albi/secrets/cloudflared.env";

@@ -1,12 +1,13 @@
 import { MediaControls } from "./MediaControls.js"
 import { MediaLabel } from "./MediaLabel.js"
 import { Clock } from "./Clock.js"
+import { NotificationPopups } from "./NotificationPopup.js"
 
 const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
 const audio = await Service.import("audio")
 const battery = await Service.import("battery")
-//const systemtray = await Service.import("systemtray")
+const systemtray = await Service.import("systemtray")
 
 /** @param {number} monitor */
 function Workspaces(monitor) {
@@ -102,30 +103,29 @@ function BatteryLabel() {
     })
 }
 
+function SysTray() {
+    const items = systemtray.bind("items")
+        .as(items => items.map(item => Widget.Button({
+            child: Widget.Icon({ icon: item.bind("icon") }),
+            on_primary_click: (_, event) => item.activate(event),
+            on_secondary_click: (_, event) => item.openMenu(event),
+            tooltip_markup: item.bind("tooltip_markup"),
+        })))
 
-// function SysTray() {
-//     const items = systemtray.bind("items")
-//         .as(items => items.map(item => Widget.Button({
-//             child: Widget.Icon({ icon: item.bind("icon") }),
-//             on_primary_click: (_, event) => item.activate(event),
-//             on_secondary_click: (_, event) => item.openMenu(event),
-//             tooltip_markup: item.bind("tooltip_markup"),
-//         })))
-//
-//     return Widget.Box({
-//         children: items,
-//     })
-// }
+    return Widget.Box({
+        children: items,
+    })
+}
 
 function Right() {
     return Widget.Box({
         hpack: "end",
         spacing: 8,
         children: [
+            SysTray(),
             Volume(),
             BatteryLabel(),
             Clock(),
-            // SysTray(),
         ],
     })
 }
@@ -147,19 +147,20 @@ App.config({
     style: "./style.css",
     windows: [
         Bar(1, Widget.CenterBox({
-            startWidget: MediaLabel(),
             centerWidget: Workspaces(1),
             endWidget: Right(),
         })),
         Bar(0, Widget.CenterBox({
-            startWidget: Widget.Box({ children: [MediaControls(), Notification()] }),
+            startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
             centerWidget: Workspaces(0),
             endWidget: Right(),
         })),
         Bar(2, Widget.CenterBox({
+            startWidget: MediaLabel(),
             centerWidget: Workspaces(2),
             endWidget: Right(),
         })),
+        NotificationPopups(),
     ],
 })
 
