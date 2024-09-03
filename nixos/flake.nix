@@ -1,5 +1,5 @@
 {
-  description = "NixOS flake";
+  description = "albi's nix config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -15,80 +15,31 @@
 
   outputs =
     inputs@{ nixpkgs, home-manager, ... }:
+    let
+      mkHost =
+        hostname:
+        nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          modules = [
+            home-manager.nixosModules.home-manager
+
+            ./hosts/${hostname}/configuration.nix
+
+            {
+              _module.args = {
+                inputs = inputs;
+                stable = inputs.nixpkgs-stable.legacyPackages.${system};
+              };
+            }
+          ];
+        };
+    in
     {
       nixosConfigurations = {
-        netherite = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/netherite/configuration.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
-
-            {
-              _module.args = {
-                inherit inputs;
-              };
-            }
-          ];
-        };
-        water = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/water/configuration.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
-
-            {
-              _module.args = {
-                inherit inputs;
-              };
-            }
-          ];
-        };
-        iron = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/iron/configuration.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
-
-            {
-              _module.args = {
-                inherit inputs;
-              };
-            }
-          ];
-        };
-        slime = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/slime/configuration.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
-
-            {
-              _module.args = {
-                inherit inputs;
-              };
-            }
-          ];
-        };
+        netherite = mkHost "netherite";
+        iron = mkHost "iron";
+        water = mkHost "water";
+        slime = mkHost "slime";
       };
     };
 }

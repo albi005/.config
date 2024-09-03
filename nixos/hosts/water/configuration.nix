@@ -16,7 +16,6 @@
     environment.systemPackages = with pkgs; [
         impala # tui for iwd
         jetbrains.idea-ultimate
-        jetbrains.webstorm
     ];
 
     # use function keys instead of media keys by default

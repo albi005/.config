@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  inputs,
+  stable,
   ...
 }:
 {
@@ -9,6 +9,7 @@
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
+  programs.hyprland.portalPackage = stable.xdg-desktop-portal-hyprland; # FIX: hyprland portal not building
   programs.kdeconnect.enable = true; # phone link
   programs.wireshark.enable = true; # network protocol analyzer
   security.polkit.enable = true; # gui sudo
@@ -25,7 +26,7 @@
     font-awesome # TODO: remove font-awesome?
     glib # gsettings
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
-    hyprpaper # wallpaper daemon
+    stable.hyprpaper # wallpaper daemon
     imagemagick # 'convert' command for images
     hyprpicker # color picker
     libdbusmenu-gtk3 # needed by ags

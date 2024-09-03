@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }:
+{ pkgs, config, inputs, stable, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -27,7 +27,7 @@
   };
 
   services.couchdb = {
-      package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.couchdb3;
+      package = stable.couchdb3;
       enable = true;
       port = 10004;
   };

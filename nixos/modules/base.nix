@@ -54,8 +54,8 @@
       cmatrix # Matrix like effect in your terminal
       dig # dns tools
       dua # Disk Usage Analyzer tui
-      exiftool
-      fastfetch
+      exiftool # image metadata reader
+      fastfetch # neofetch
       fd # find file by name
       file # file info
       gcc
@@ -66,14 +66,10 @@
       gopls
       gotools
       inetutils
-      iperf
+      iperf # speed test between hosts
       jq # command-line JSON processor
-      lsd
-      lua-language-server
-      mono
+      lsd # ls but in rust
       netscanner # nmap tui
-      nil
-      nixd
       nixfmt-rfc-style
       nmap
       nodejs
@@ -84,7 +80,7 @@
       ripgrep # rg, find text in files
       rustup
       sl # train
-      smartmontools
+      smartmontools # ssd health
       sqlcmd # sql server
       systemctl-tui
       tcpdump
@@ -93,7 +89,7 @@
       wget
       xclip
       xz
-      yarn
+      yarn # yet another javascript package manager
       yazi # file manager tui
       yt-dlp
       zip
@@ -143,7 +139,7 @@
     '';
   };
 
-  # Ignore missing disks
+  # don't give up because of missing disks at startup
   systemd.enableEmergencyMode = false;
 
   users.users.albi = {
@@ -239,6 +235,8 @@
       # DONT'T TOUCH
       home.stateVersion = "23.05";
     };
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
   services.nginx = {
     recommendedGzipSettings = true;

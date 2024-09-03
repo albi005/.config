@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  stable,
   ...
 }:
 {
@@ -31,7 +32,7 @@
     qemu
     quickemu
     vlc
-    inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.bencodetools
+    stable.bencodetools
   ];
 
   users.users.albi.packages = with pkgs; [
@@ -66,7 +67,7 @@
     radarr.group = "media";
 
     prowlarr.enable = true;
-    prowlarr.package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.prowlarr;
+    prowlarr.package = stable.prowlarr;
 
     qbittorrent.enable = true;
     qbittorrent.group = "media";
