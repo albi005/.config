@@ -15,8 +15,8 @@ mkdir -p hosts/$HOSTNAME
 cp /etc/nixos/hardware-configuration.nix hosts/$HOSTNAME
 cp template.nix hosts/$HOSTNAME/configuration.nix
 sed -i "s/HOSTNAME/$HOSTNAME/g" hosts/$HOSTNAME/configuration.nix
-nvim --clean hosts/$HOSTNAME/configuration.nix
+nvim --clean flake.nix hosts/$HOSTNAME/configuration.nix
+git add .
 
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-sudo nix-channel --update
-sudo nixos-rebuild switch -I nixos-config=$HOME/.config/nixos/hosts/$HOSTNAME/configuration.nix
+nix --extra-experimental-features "nix-command flakes" flake update ~/.config/nixos
+sudo nixos-rebuild switch --flake ~/.config/nixos
