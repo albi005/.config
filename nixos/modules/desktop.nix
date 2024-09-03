@@ -16,8 +16,6 @@
   services.gvfs.enable = true; # GNOME Virtual file system
   services.printing.enable = true;
   services.upower.enable = true; # required by ags battery widget
-  xdg.portal.enable = true; # file pickers, screen sharing and other stuff https://wiki.hyprland.org/Useful-Utilities/Must-have/#xdg-desktop-portal
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ]; # xdg-desktop-portal-wlr but better
 
   environment.systemPackages = with pkgs; [
     ags # js based widgets
@@ -45,7 +43,7 @@
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
     nemo-with-extensions # file manager
-    inputs.dbeaver-last.legacyPackages.x86_64-linux.pkgs.dbeaver-bin
+    # inputs.dbeaver-last.legacyPackages.x86_64-linux.pkgs.dbeaver-bin
     desktop-file-utils # needed by something
     ffmpeg-full
     file-roller # archive manager
@@ -65,7 +63,7 @@
     thunderbird # email client
     totem # videos
     vscode
-    inputs.wezterm-git.packages.${pkgs.system}.default # terminal emulator
+    # inputs.wezterm-git.packages.${pkgs.system}.default # terminal emulator
     wofi-emoji # emoji selector
     zed-editor # vscode in rust
   ];

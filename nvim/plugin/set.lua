@@ -1,5 +1,5 @@
 -- https://youtu.be/w7i4amO_zaE?t=1386
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.relativenumber = false
 
 vim.opt.tabstop = 4
@@ -21,8 +21,8 @@ vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
+vim.opt.scrolloff = 6
+vim.opt.signcolumn = "auto"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 500

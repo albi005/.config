@@ -143,13 +143,30 @@ function Bar(monitor = 0, child) {
     })
 }
 
-App.config({
-    style: "./style.css",
-    windows: [
-        Bar(1, Widget.CenterBox({
-            centerWidget: Workspaces(1),
-            endWidget: Right(),
-        })),
+const hostname = Utils.exec("hostname")
+
+/**
+ * @param {string} hostname
+ */
+function getWindows(hostname) {
+    switch (hostname) {
+        case 'water':
+            return [
+                Bar(0, Widget.CenterBox(
+                    {
+                        startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
+                        centerWidget: Workspaces(0),
+                        endWidget: Right(),
+                    }
+                ))
+            ];
+    }
+    return [
+        // Bar(1, Widget.CenterBox({
+        //     startWidget: MediaLabel(),
+        //     centerWidget: Workspaces(1),
+        //     endWidget: Right(),
+        // })),
         Bar(0, Widget.CenterBox({
             startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
             centerWidget: Workspaces(0),
@@ -160,8 +177,15 @@ App.config({
             centerWidget: Workspaces(2),
             endWidget: Right(),
         })),
-        NotificationPopups(),
-    ],
-})
+    ];
+}
+
+const windows = getWindows(hostname);
+windows.push(NotificationPopups());
+
+App.config({
+    style: "./style.css",
+    windows,
+});
 
 export { }

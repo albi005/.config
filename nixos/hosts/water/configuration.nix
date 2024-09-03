@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports =
     [
@@ -9,11 +9,14 @@
 
     networking.hostName = "water"; # Define your hostname.
     networking.networkmanager.wifi.macAddress = "permanent";
+    networking.networkmanager.enable = lib.mkForce false;
+    networking.wireless.iwd.enable = true; # no deps wifi daemon
+    virtualisation.docker.enable = true;
 
     environment.systemPackages = with pkgs; [
-        prismlauncher
-        jetbrains.rider
+        impala # tui for iwd
         jetbrains.idea-ultimate
+        jetbrains.webstorm
     ];
 
     # use function keys instead of media keys by default
