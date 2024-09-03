@@ -26,6 +26,7 @@
     glib # gsettings
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
     hyprpaper # wallpaper daemon
+    imagemagick # 'convert' command for images
     hyprpicker # color picker
     libdbusmenu-gtk3 # needed by ags
     libnotify # used by some apps to send notifications

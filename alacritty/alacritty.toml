@@ -11,7 +11,7 @@ size = 11
 
 [window]
 dynamic_padding = false
-opacity = 0.8
+opacity = 0.9
 blur = true
 
 [colors]

@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -22,6 +27,13 @@
     "lp"
   ];
 
+  environment.systemPackages = with pkgs; [
+    qemu
+    quickemu
+    vlc
+    inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.bencodetools
+  ];
+
   users.users.albi.packages = with pkgs; [
     # jetbrains.clion
     jetbrains.idea-ultimate
@@ -32,9 +44,8 @@
     naps2 # scanner gui
     devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
+    inputs.zen-browser.packages."${system}".specific
   ];
-
-  environment.systemPackages = with pkgs; [ vlc ];
 
   services.hardware.openrgb.enable = true;
 
@@ -55,6 +66,7 @@
     radarr.group = "media";
 
     prowlarr.enable = true;
+    prowlarr.package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.prowlarr;
 
     qbittorrent.enable = true;
     qbittorrent.group = "media";
@@ -117,6 +129,8 @@
     isSystemUser = true;
   };
   users.groups.cloudflared = { };
+
+  services.strongswan.enable = true;
 
   services.restic = {
     server = {
