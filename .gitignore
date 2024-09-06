@@ -26,9 +26,10 @@
 !/mimeapps.list
 
 # ignore
+.direnv
 JetBrains
+__pycache__
+ags/README.md
+ags/types
 hypr/host.conf
 result
-.direnv
-ags/types
-__pycache__

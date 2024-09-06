@@ -9,7 +9,6 @@
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
-  programs.hyprland.portalPackage = stable.xdg-desktop-portal-hyprland; # FIX: hyprland portal not building
   programs.kdeconnect.enable = true; # phone link
   programs.wireshark.enable = true; # network protocol analyzer
   security.polkit.enable = true; # gui sudo
@@ -23,10 +22,9 @@
     brightnessctl # brightnessctl s 50
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
-    font-awesome # TODO: remove font-awesome?
     glib # gsettings
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
-    stable.hyprpaper # wallpaper daemon
+    hyprpaper # wallpaper daemon
     imagemagick # 'convert' command for images
     hyprpicker # color picker
     libdbusmenu-gtk3 # needed by ags
@@ -45,7 +43,7 @@
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
     nemo-with-extensions # file manager
-    # inputs.dbeaver-last.legacyPackages.x86_64-linux.pkgs.dbeaver-bin
+    dbeaver-bin # database client
     desktop-file-utils # needed by something
     ffmpeg-full
     file-roller # archive manager
@@ -65,7 +63,7 @@
     thunderbird # email client
     totem # videos
     vscode
-    # inputs.wezterm-git.packages.${pkgs.system}.default # terminal emulator
+    wezterm # terminal emulator
     wofi-emoji # emoji selector
     zed-editor # vscode in rust
   ];

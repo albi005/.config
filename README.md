@@ -80,6 +80,9 @@ C-b w    window tree
 C-b d    deattach
 ```
 
+## Notes
+- Before editing the `ags` config run `ags init` to set up JavaScript types
+
 ## Bookmarks
 
 - https://github.com/hyprland-community/awesome-hyprland

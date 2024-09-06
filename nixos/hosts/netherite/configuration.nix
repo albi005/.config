@@ -29,16 +29,12 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    qemu
-    quickemu
     vlc
-    stable.bencodetools
   ];
 
   users.users.albi.packages = with pkgs; [
-    # jetbrains.clion
     jetbrains.idea-ultimate
-    jetbrains.rider
+    # jetbrains.rider
     jetbrains.webstorm
     prismlauncher # minecraft launcher
     jetbrains-toolbox
@@ -47,8 +43,6 @@
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
     inputs.zen-browser.packages."${system}".specific
   ];
-
-  services.hardware.openrgb.enable = true;
 
   virtualisation.docker.enable = true;
 
@@ -67,7 +61,6 @@
     radarr.group = "media";
 
     prowlarr.enable = true;
-    prowlarr.package = stable.prowlarr;
 
     qbittorrent.enable = true;
     qbittorrent.group = "media";
