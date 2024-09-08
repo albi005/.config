@@ -2,26 +2,41 @@
 #! nix-shell -i python3 --pure
 #! nix-shell -p pkgs.fd "(pkgs.python3.withPackages (python-pkgs: with python-pkgs; [ nbtlib tabulate ]))"
 
+from dataclasses import dataclass
+from tabulate import tabulate
+from typing import Optional
+import datetime
+import nbtlib
 import os
 import subprocess
-import nbtlib
-import datetime
-from tabulate import tabulate
+import json
+
+@dataclass
+class Level:
+    seed: int = 0
+    name: str = ""
+    dirName: str = ""
+    lastPlayed: datetime.datetime = datetime.datetime.fromtimestamp(0)
+    versionId: Optional[int] = None
+    versionName: Optional[str] = None
+    path: str = ""
 
 bad = []
-def getTag(path: str):
+def getTag(path: str) -> Optional[Level]:
     try:
         data: nbtlib.Compound = nbtlib.load(path)['Data']
     except:
         bad.append(path)
-        return []
+        return None
 
-    if data.get('Version'):
-        version = data['Version']['Name']
-    else:
-        version = ''
-    lastPlayed = datetime.datetime.fromtimestamp(data['LastPlayed'] / 1000).strftime("%Y-%m-%d %H:%M:%S")
+    version = data.get("Version")
+    versionName = version["Name"] if version else None
+    versionId = int(version["Id"]) if version else None
+    dataVersion = data.get("DataVersion")
+    assert versionId == dataVersion
+    lastPlayed = datetime.datetime.fromtimestamp(data['LastPlayed'] / 1000) #.strftime("%Y-%m-%d %H:%M:%S")
     name = data['LevelName']
+
     if path == "level.dat":
         path = "./level.dat"
     assert path.endswith("/level.dat")
@@ -33,35 +48,66 @@ def getTag(path: str):
     else:
         seed = data['RandomSeed']
 
-    return [name, int(seed), version, lastPlayed, dirName, path]
+    return Level(
+        name = name,
+        seed = int(seed),
+        versionId = versionId,
+        lastPlayed = lastPlayed,
+        dirName = dirName,
+        path = path,
+        versionName = versionName
+    )
 
-# Run fd -H --exclude 'level.dat_old' --exclude 'level.dat_mcr' level.dat
+os.chdir("/mnt/560AFE250AFE01B3/games/Minecraft")
+fd_cmd = "fd --hidden --glob level.dat" # list path to every level.dat file
 
-lines = subprocess.check_output(["fd", "-H", "--exclude", "level.dat_old", "--exclude", "level.dat_mcr", "level.dat"]).decode("utf-8").split("\n")
-tags = []
+lines = subprocess.check_output(fd_cmd.split(" ")).decode("utf-8").split("\n")
+assert lines[-1] == ""
+lines = lines[:-1]
+
+levels: list[Level] = []
+
+# res = []
+# lines = sorted(lines)
+# for line in lines:
+#     try:
+#         src = nbtlib.load(line)["Data"].unpack(json=True)
+#         dst = []
+#         def check(s):
+#             if not s in src:
+#                 dst.append(s)
+#             # dst.append(src.get(s))
+#             # dst[s] = src.get(s)
+#         check("Version")
+#         check("LevelName")
+#         check("DataVersion")
+#         res.append(dst)
+#     except:
+#         bad.append(line)
+# print(json.dumps(res, indent=True))
+# exit()
+
 for line in lines:
     if not line: continue
-    tag = getTag(line)
-    if not tag: continue
-    tags.append(tag)
+    level = getTag(line)
+    if not level: continue
+    levels.append(level)
 
-tags.sort(key=lambda tag: [tag[1], tag[3]])
+levels.sort(key=lambda tag: [tag.lastPlayed])
 
-print(tabulate(tags, ["Name", "Seed", "Version", "Last Played", "Dir", "Path"]))
+print(tabulate(levels, headers='keys')) # type: ignore
 for path in bad:
     print(path)
 
 print()
-print(f"Count: {len(tags)}")
+print(f"Count: {len(levels)}")
 print()
 
-duplicates: dict[str, list[str]] = dict()
-for tag in tags:
-    path = tag[5]
-    lastPlayed = tag[3]
-    if lastPlayed not in duplicates:
-        duplicates[lastPlayed] = list()
-    duplicates[lastPlayed].append(path)
+duplicates: dict[datetime.datetime, list[str]] = dict()
+for level in levels:
+    if level.lastPlayed not in duplicates:
+        duplicates[level.lastPlayed] = list()
+    duplicates[level.lastPlayed].append(level.path)
 for item in duplicates.items():
     if len(item[1]) > 1:
         print(item)
@@ -69,10 +115,10 @@ print()
 
 i = 0
 ignored = []
-for tag in tags:
-    seed = tag[1]
-    path = tag[5]
-    lastPlayed = tag[3]
+for level in levels:
+    seed = level.seed
+    path = level.path
+    lastPlayed = level.lastPlayed
     if seed == 2996658:
         if "Hmm" in path or "Copy" in path or "Jurassic" in path:
             ignored.append(path)
@@ -86,3 +132,4 @@ for tag in tags:
 print()
 for i in ignored:
     print(i)
+pass
