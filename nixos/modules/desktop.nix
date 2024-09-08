@@ -23,10 +23,11 @@
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     glib # gsettings
+    gparted # disk partitioner
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
     hyprpaper # wallpaper daemon
-    imagemagick # 'convert' command for images
     hyprpicker # color picker
+    imagemagick # 'convert' command for images
     libdbusmenu-gtk3 # needed by ags
     libnotify # used by some apps to send notifications
     lxqt.lxqt-policykit # polkit frontend https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent https://reddit.com/r/NixOS/comments/171mexa/comment/k3rpftn
@@ -145,6 +146,10 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+  # Make electron apps use wayland
+  # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
   nixpkgs.overlays = [

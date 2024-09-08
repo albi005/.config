@@ -34,10 +34,11 @@
     in
     {
       nixosConfigurations = {
-        netherite = mkHost "netherite";
         iron = mkHost "iron";
-        water = mkHost "water";
+        netherite = mkHost "netherite";
+        redstone = mkHost "redstone";
         slime = mkHost "slime";
+        water = mkHost "water";
       };
     };
 }
