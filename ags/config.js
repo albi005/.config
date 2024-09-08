@@ -151,6 +151,7 @@ const hostname = Utils.exec("hostname")
 function getWindows(hostname) {
     switch (hostname) {
         case 'water':
+        case 'netherite':
             return [
                 Bar(0, Widget.CenterBox(
                     {
