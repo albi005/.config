@@ -26,6 +26,7 @@ require'lspconfig'.lua_ls.setup(lua_opts)
 -- Add servers to ~/.config/nixos/modules/neovim.nix
 lsp_zero.setup_servers{
     'bashls',
+    'gopls',
     'nil_ls',
     'pyright',
     'rust_analyzer',

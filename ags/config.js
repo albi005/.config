@@ -150,34 +150,33 @@ const hostname = Utils.exec("hostname")
  */
 function getWindows(hostname) {
     switch (hostname) {
-        case 'water':
-        case 'netherite':
+        case 'redstone':
             return [
-                Bar(0, Widget.CenterBox(
-                    {
-                        startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
-                        centerWidget: Workspaces(0),
-                        endWidget: Right(),
-                    }
-                ))
+                // Bar(1, Widget.CenterBox({
+                //     startWidget: MediaLabel(),
+                //     centerWidget: Workspaces(1),
+                //     endWidget: Right(),
+                // })),
+                Bar(0, Widget.CenterBox({
+                    startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
+                    centerWidget: Workspaces(0),
+                    endWidget: Right(),
+                })),
+                Bar(2, Widget.CenterBox({
+                    startWidget: MediaLabel(),
+                    centerWidget: Workspaces(2),
+                    endWidget: Right(),
+                })),
             ];
     }
     return [
-        // Bar(1, Widget.CenterBox({
-        //     startWidget: MediaLabel(),
-        //     centerWidget: Workspaces(1),
-        //     endWidget: Right(),
-        // })),
-        Bar(0, Widget.CenterBox({
-            startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
-            centerWidget: Workspaces(0),
-            endWidget: Right(),
-        })),
-        Bar(2, Widget.CenterBox({
-            startWidget: MediaLabel(),
-            centerWidget: Workspaces(2),
-            endWidget: Right(),
-        })),
+        Bar(0, Widget.CenterBox(
+            {
+                startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
+                centerWidget: Workspaces(0),
+                endWidget: Right(),
+            }
+        ))
     ];
 }
 

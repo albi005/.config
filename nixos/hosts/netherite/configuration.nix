@@ -14,6 +14,7 @@
     ../../modules/dotnet.nix
   ];
 
+  virtualisation.docker.enable = true;
   virtualisation.docker.rootless.enable = true;
   virtualisation.docker.rootless.setSocketVariable = true;
 
@@ -44,27 +45,25 @@
     inputs.zen-browser.packages."${system}".specific
   ];
 
-  virtualisation.docker.enable = true;
-
   users.groups.media.gid = 1337;
 
   services = {
-    jellyfin.enable = true;
-    jellyfin.group = "media";
+    # jellyfin.enable = true;
+    # jellyfin.group = "media";
+    #
+    # jellyseerr.enable = true;
+    #
+    # sonarr.enable = true;
+    # sonarr.group = "media";
+    #
+    # radarr.enable = true;
+    # radarr.group = "media";
+    #
+    # prowlarr.enable = true;
 
-    jellyseerr.enable = true;
-
-    sonarr.enable = true;
-    sonarr.group = "media";
-
-    radarr.enable = true;
-    radarr.group = "media";
-
-    prowlarr.enable = true;
-
-    qbittorrent.enable = true;
-    qbittorrent.group = "media";
-    qbittorrent.port = 9797;
+    # qbittorrent.enable = true;
+    # qbittorrent.group = "media";
+    # qbittorrent.port = 9797;
 
     nginx = {
       enable = true;
