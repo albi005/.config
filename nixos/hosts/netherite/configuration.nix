@@ -42,65 +42,7 @@
     naps2 # scanner gui
     devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
-    inputs.zen-browser.packages."${system}".specific
   ];
-
-  users.groups.media.gid = 1337;
-
-  services = {
-    # jellyfin.enable = true;
-    # jellyfin.group = "media";
-    #
-    # jellyseerr.enable = true;
-    #
-    # sonarr.enable = true;
-    # sonarr.group = "media";
-    #
-    # radarr.enable = true;
-    # radarr.group = "media";
-    #
-    # prowlarr.enable = true;
-
-    # qbittorrent.enable = true;
-    # qbittorrent.group = "media";
-    # qbittorrent.port = 9797;
-
-    nginx = {
-      enable = true;
-      virtualHosts =
-        let
-          tailscaleToLocalhost = port: {
-            locations."/".proxyPass = "http://localhost:${builtins.toString port}";
-            locations."/".proxyWebsockets = true;
-            listen = [
-              {
-                addr = "100.69.0.1";
-                port = 80;
-                ssl = false;
-              }
-            ];
-          };
-        in
-        {
-          "jellyfin.alb1.hu" = tailscaleToLocalhost 8096;
-          "jellyseer.alb1.hu" = tailscaleToLocalhost 5055;
-          "sonarr.alb1.hu" = tailscaleToLocalhost 8989;
-          "radarr.alb1.hu" = tailscaleToLocalhost 7878;
-          "prowlarr.alb1.hu" = tailscaleToLocalhost 9696;
-          "torrent.alb1.hu" = tailscaleToLocalhost 9797;
-        };
-    };
-  };
-
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers = {
-      flaresolverr = {
-        image = "ghcr.io/flaresolverr/flaresolverr:latest";
-        ports = [ "127.0.0.1:8191:8191" ];
-      };
-    };
-  };
 
   systemd.services.cloudflared = {
     description = "cloudflared";

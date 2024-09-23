@@ -77,6 +77,7 @@
       pstree # processs tree
       python3
       restic # backups
+      rustic # restic but in rust
       ripgrep # rg, find text in files
       rustup
       sl # train

@@ -2,6 +2,7 @@
   lib,
   pkgs,
   stable,
+  inputs,
   ...
 }:
 {
@@ -43,7 +44,6 @@
     alacritty # terminal emulator
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
-    nemo-with-extensions # file manager
     dbeaver-bin # database client
     desktop-file-utils # needed by something
     ffmpeg-full
@@ -58,6 +58,7 @@
     libreoffice
     libsForQt5.kruler # screen ruler
     loupe # image viewer
+    nemo-with-extensions # file manager
     obsidian # notes
     remmina # remote desktop client
     sqlitebrowser
@@ -67,6 +68,7 @@
     wezterm # terminal emulator
     wofi-emoji # emoji selector
     zed-editor # vscode in rust
+    inputs.zen-browser.packages."${system}".specific # arc but based on firefox
   ];
 
   home-manager.users.albi =

@@ -151,19 +151,14 @@ function getWindows(hostname) {
     switch (hostname) {
         case 'redstone':
             return [
-                // Bar(1, Widget.CenterBox({
-                //     startWidget: MediaLabel(),
-                //     centerWidget: Workspaces(1),
-                //     endWidget: Right(),
-                // })),
                 Bar(0, Widget.CenterBox({
                     startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),
                     centerWidget: Workspaces(0),
                     endWidget: Right(),
                 })),
-                Bar(2, Widget.CenterBox({
+                Bar(1, Widget.CenterBox({
                     startWidget: MediaLabel(),
-                    centerWidget: Workspaces(2),
+                    centerWidget: Workspaces(1),
                     endWidget: Right(),
                 })),
             ];

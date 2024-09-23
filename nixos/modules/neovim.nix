@@ -1,6 +1,12 @@
 { pkgs, ... }:
 {
   environment = {
+    variables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      BASHDB_PATH = "${pkgs.bashdb}";
+      OMNISHARP_PATH = "${pkgs.omnisharp-roslyn}";
+    };
     systemPackages = with pkgs; [
       bashdb # bash debug adapter
       gopls
@@ -56,13 +62,6 @@
 
           clangd_extensions-nvim
         ];
-      };
-
-      programs.bash = {
-        bashrcExtra = ''
-          export OMNISHARP_PATH="${pkgs.omnisharp-roslyn}"
-          export BASHDB_PATH="${pkgs.bashdb}"
-        '';
       };
     };
 }
