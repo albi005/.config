@@ -93,12 +93,11 @@ function BatteryLabel() {
         class_name: "battery",
         visible: battery.bind("available"),
         children: [
-            Widget.Icon({ icon }),
-            Widget.LevelBar({
-                widthRequest: 140,
-                vpack: "center",
-                value,
+            Widget.Icon({
+                icon,
+                css: "padding-right: 6px"
             }),
+            Widget.Label({ label: value.as(p => Math.floor(p * 100) + "%") }),
         ],
     })
 }

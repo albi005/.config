@@ -36,11 +36,13 @@ highlight {
     min-height: 1px;
 }
 
-.clock {
-    /* font-family: Cascadia Code; */
-    /* font-feature-settings: "zero"; */
+.battery {
     font-size: 13px;
-    /* font-weight: 400; */
+    color: #f5f5f5;
+}
+
+.clock {
+    font-size: 13px;
     color: #f5f5f5;
     padding: 0px 10px 0px 20px;
     margin-left: 16px;
