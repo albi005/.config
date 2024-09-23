@@ -92,7 +92,8 @@
       wget
       xclip
       xz
-      yazi # file manager tui
+      yarn # yet another javascript package manager
+      yazi # file explorer tui
       yt-dlp
       zip
       zoxide # fancy cd
