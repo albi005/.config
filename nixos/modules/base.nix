@@ -183,6 +183,7 @@
           rsync = "rsync --progress";
           st = "systemctl-tui";
           sus = "systemctl suspend";
+          td = "tree --depth";
           tree = "l --tree --group-directories-first";
           try = "nix-shell -p ";
           update = "nix flake update /home/albi/.config/nixos";

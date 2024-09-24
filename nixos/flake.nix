@@ -26,7 +26,10 @@
             {
               _module.args = {
                 inputs = inputs;
-                stable = inputs.nixpkgs-stable.legacyPackages.${system};
+                stable = import inputs.nixpkgs-stable {
+                  system = system;
+                  config.allowUnfree = true;
+                };
               };
             }
           ];

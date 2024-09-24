@@ -15,8 +15,8 @@
   ];
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.rootless.enable = true;
-  virtualisation.docker.rootless.setSocketVariable = true;
+  # virtualisation.docker.rootless.enable = true;
+  # virtualisation.docker.rootless.setSocketVariable = true;
 
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
@@ -35,7 +35,7 @@
 
   users.users.albi.packages = with pkgs; [
     jetbrains.idea-ultimate
-    # jetbrains.rider
+    stable.jetbrains.rider
     jetbrains.webstorm
     prismlauncher # minecraft launcher
     jetbrains-toolbox
