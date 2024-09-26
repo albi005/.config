@@ -36,6 +36,7 @@
     pavucontrol # pulseaudio volume control
     playerctl # media player controller
     rofi-wayland # start menu
+    sqldeveloper
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
@@ -158,6 +159,14 @@
     (final: prev: {
       ags = prev.ags.overrideAttrs (old: {
         buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
+      });
+
+      sqldeveloper = prev.sqldeveloper.overrideAttrs (old: rec {
+        version = "20.4.1.407.0006";
+        src = pkgs.fetchurl {
+          url = "https://db.bme.hu/r/sqldeveloper/sqldeveloper-20.4.1.407.0006-no-jre.zip";
+          sha256 = "sha256-lBE1st51/9J+8ne35FON5Ni9xAUN0qh68FzjGyu32V8=";
+        };
       });
     })
   ];

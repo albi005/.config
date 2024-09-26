@@ -17,6 +17,7 @@
   virtualisation.docker.enable = true;
   # virtualisation.docker.rootless.enable = true;
   # virtualisation.docker.rootless.setSocketVariable = true;
+  virtualisation.vmware.host.enable = true;
 
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";

@@ -69,6 +69,7 @@
       iperf # speed test between hosts
       jq # command-line JSON processor
       lsd # ls but in rust
+      maven
       netscanner # nmap tui
       nixfmt-rfc-style
       nmap
@@ -77,8 +78,8 @@
       pstree # processs tree
       python3
       restic # backups
-      rustic # restic but in rust
       ripgrep # rg, find text in files
+      rustic # restic but in rust
       rustup
       sl # train
       smartmontools # ssd health
