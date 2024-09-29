@@ -106,6 +106,8 @@
   programs.nix-ld.package = pkgs.nix-ld-rs;
   services.tailscale.enable = true; # p2p vpn
 
+  systemd.services.tailscaled.before = [ "nginx.service" ]; # make nginx wait for tailscale
+
   networking = {
     networkmanager.enable = true;
     firewall = {
@@ -275,22 +277,24 @@
       "--print-build-logs"
     ];
     allowReboot = true;
-    persistent = false;
+    persistent = false; # don't run at startup
   };
 
   # allow root to access the git repo of the nix flake
   # fixes "dubious ownership" error when running autoUpgrade
   # if you have a better fix send me an email <3
+  # btw this only happens when the working tree is clean
   programs.git.config.safe.directory = "/home/albi/.config/.git";
 
   nix.gc = {
     automatic = true;
     dates = "04:11";
     options = "--delete-older-than 30d";
+    persistent = false;
   };
 
   services.journald.extraConfig = ''
-    SystemMaxUse=100M
+    SystemMaxUse=300M
   '';
 
   # blank tty after 60 seconds

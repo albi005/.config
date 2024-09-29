@@ -34,10 +34,11 @@
         plugins = with pkgs.vimPlugins; [
           catppuccin-nvim
           comment-nvim
-          copilot-lua
           copilot-cmp
+          copilot-lua
           friendly-snippets
           harpoon
+          indent-blankline-nvim
           lualine-nvim
           neodev-nvim # nvim api types
           nvim-autopairs

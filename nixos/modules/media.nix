@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   imports = [
     ../pkgs/qbittorrent.nix
@@ -8,6 +8,14 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
   boot.zfs.extraPools = [ "zpool" ];
+
+  # wait for zfs mounts before starting media services
+  systemd.targets.zfs.before = [
+    "qbittorrent.service"
+    "jellyfin.service"
+    "radarr.service"
+    "sonarr.service"
+  ];
 
   users.groups.media.gid = 1337;
   users.groups.media.members = [ "albi" ];
