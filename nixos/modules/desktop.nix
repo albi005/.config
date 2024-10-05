@@ -11,6 +11,7 @@
   programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
   programs.kdeconnect.enable = true; # phone link
+  programs.seahorse.enable = true; # gnome encryption key and password manager
   programs.wireshark.enable = true; # network protocol analyzer
   security.polkit.enable = true; # gui sudo
   services.gnome.gnome-keyring.enable = true; # security credential store
@@ -43,6 +44,7 @@
 
   users.users.albi.packages = with pkgs; [
     alacritty # terminal emulator
+    albert # app launcher, like spotlight on macos
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
     dbeaver-bin # database client

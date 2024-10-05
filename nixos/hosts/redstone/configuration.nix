@@ -14,6 +14,7 @@
     jetbrains.clion
     jetbrains.idea-ultimate
     vlc
+    prismlauncher
   ];
 
   environment.systemPackages = [
