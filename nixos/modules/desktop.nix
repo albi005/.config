@@ -141,6 +141,32 @@
     };
   };
 
+  services.greetd.enable = true;
+  programs.regreet = {
+    enable = true;
+    theme = {
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "green" ];
+        size = "compact";
+        variant = "mocha";
+      };
+      name = "catppuccin-mocha-green-compact";
+    };
+    iconTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+    cursorTheme = {
+      package = pkgs.catppuccin-cursors.mochaLight;
+      name = "catppuccin-mocha-light-cursors";
+    };
+    settings = {
+      # won't work until a new regreet release
+      # https://github.com/rharish101/ReGreet/issues/82
+      appearance.greeting_msg = "yo";
+    };
+  };
+
   # Enable sound with pipewire
   # https://youtu.be/61wGzIv12Ds?t=181 - "Nixos and Hyprland - Best Match Ever" by Vimjoyer
   security.rtkit.enable = true;
