@@ -5,6 +5,7 @@
     ../../modules/base.nix
     ../../modules/desktop.nix
     ../../modules/media.nix
+    ../../modules/dotnet.nix
   ];
 
   networking.hostName = "redstone";
@@ -13,6 +14,7 @@
   users.users.albi.packages = with pkgs; [
     jetbrains.clion
     jetbrains.idea-ultimate
+    jetbrains.rider
     vlc
     prismlauncher
   ];
