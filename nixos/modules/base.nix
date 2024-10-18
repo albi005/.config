@@ -189,7 +189,7 @@
           td = "tree --depth";
           tree = "l --tree --group-directories-first";
           try = "nix-shell -p ";
-          update = "nix flake update /home/albi/.config/nixos";
+          update = "nix flake update --flake /home/albi/.config/nixos";
           v = "nvim .";
         };
 
