@@ -6,6 +6,7 @@
 # include
 !/ags/**
 !/alacritty/**
+!/albert/**
 !/clipcat/**
 !/eww/**
 !/git/**

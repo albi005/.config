@@ -60,6 +60,7 @@
     krita # painting application
     libreoffice
     libsForQt5.kruler # screen ruler
+    goldendict-ng # dictionary used by albert
     loupe # image viewer
     nemo-with-extensions # file manager
     obsidian # notes
@@ -121,6 +122,7 @@
   qt.platformTheme = "gnome";
 
   fonts = {
+    enableDefaultPackages = true;
     packages = with pkgs; [
       (nerdfonts.override {
         fonts = [

@@ -19,6 +19,12 @@
   # virtualisation.docker.rootless.setSocketVariable = true;
   virtualisation.vmware.host.enable = true;
 
+  # needed by schpincer
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
 
@@ -32,6 +38,7 @@
 
   environment.systemPackages = with pkgs; [
     vlc
+    jdk11
   ];
 
   users.users.albi.packages = with pkgs; [
