@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser.url = "github:ch4og/zen-browser-flake";
+    sqldeveloper = {
+      url = "https://db.bme.hu/r/sqldeveloper/sqldeveloper-20.4.1.407.0006-no-jre.zip";
+      flake = false;
+    };
   };
 
   outputs =
@@ -29,6 +33,18 @@
                 stable = import inputs.nixpkgs-stable {
                   system = system;
                   config.allowUnfree = true;
+
+                  config.permittedInsecurePackages = [
+                    "oraclejdk-8u281"
+                  ];
+                  overlays = [
+                    (final: prev: {
+                      sqldeveloper = prev.sqldeveloper.overrideAttrs (old: {
+                        version = "20.4.1.407.0006";
+                        src = inputs.sqldeveloper;
+                      });
+                    })
+                  ];
                 };
               };
             }

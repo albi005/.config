@@ -1,6 +1,3 @@
-# https://alacritty.org/config-alacritty.html
-
-import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
 
 [font]
 normal = { family = "Caskaydia Cove Nerd Font", style = "Regular" }
@@ -16,3 +13,8 @@ blur = true
 
 [colors]
 transparent_background_colors = false
+
+[general]
+# https://alacritty.org/config-alacritty.html
+
+import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]

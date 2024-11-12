@@ -11,6 +11,10 @@
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
 
+  programs.java.package = pkgs.jdk11;
+
+  services.teamviewer.enable = true;
+
   users.users.albi.packages = with pkgs; [
     jetbrains.clion
     jetbrains.idea-ultimate
@@ -57,6 +61,16 @@
         "${pkgs.liquidctl}/bin/liquidctl --match Smart set led color off"
       ];
     };
+  };
+
+  # fix trident z rgb for openrgb https://reddit.com/r/OpenRGB/comments/n8xwju
+  boot.kernelParams = [
+    "acpi_enforce_resources=lax"
+  ];
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+    package = pkgs.openrgb-with-all-plugins;
   };
 
   # https://nixos.wiki/wiki/Nvidia
