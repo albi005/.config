@@ -1,6 +1,7 @@
 [General]
 hotkey=Alt+Space
 memoryDecay=0.64
+show_enabled_plugins_first=false
 telemetry=false
 
 [applications]

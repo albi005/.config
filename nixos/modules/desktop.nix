@@ -81,6 +81,19 @@
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.conf".text = lib.mkDefault "";
 
+      home.file.".config/hypr/hyprpaper.conf".text =
+        let
+          wallpaperPath = pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
+            sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
+          };
+        in
+        ''
+          preload = ${wallpaperPath}
+          wallpaper = ,${wallpaperPath}
+          splash = false
+        '';
+
       # https://github.com/catppuccin/nix/blob/main/modules/home-manager/gtk.nix
       # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
       # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation

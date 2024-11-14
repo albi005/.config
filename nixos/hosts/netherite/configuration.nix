@@ -25,6 +25,7 @@
     package = pkgs.mariadb;
   };
 
+  services.teamviewer.enable = true;
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
 

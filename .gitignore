@@ -33,5 +33,6 @@ __pycache__
 ags/README.md
 ags/types
 hypr/host.conf
+hypr/hyprpaper.conf
 result
 recyclarr
