@@ -3,7 +3,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
-    ../../pkgs/qbittorrent.nix
   ];
 
   networking.hostName = "iron";
@@ -138,15 +137,6 @@
         ports = [ "10007:8080" ];
         environmentFiles = [ /home/albi/secrets/startsch.env ];
       };
-      # sus2 = {
-      #     image = "sus2";
-      #     volumes = [ "/home/albi/www/sus2:/data" ];
-      #     environment = {
-      #         ConnectionStrings__Database = "Data Source=/data/pings.db";
-      #         ASPNETCORE_URLS = "http://100.69.0.2:16744";
-      #     };
-      #     extraOptions = [ "--network=host" ];
-      # };
     };
   };
 
