@@ -133,6 +133,11 @@
         environmentFiles = [ /home/albi/secrets/keletikuria.env ];
         ports = [ "10006:8080" ];
       };
+      startsch = {
+        image = "startsch";
+        ports = [ "10007:8080" ];
+        environmentFiles = [ /home/albi/secrets/startsch.env ];
+      };
       # sus2 = {
       #     image = "sus2";
       #     volumes = [ "/home/albi/www/sus2:/data" ];
@@ -217,5 +222,5 @@
     };
   };
 
-  services.tailscale.useRoutingFeatures = "both";
+  services.tailscale.useRoutingFeatures = "server";
 }
