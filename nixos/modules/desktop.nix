@@ -71,7 +71,6 @@
     vscode
     wezterm # terminal emulator
     wofi-emoji # emoji selector
-    zed-editor # vscode in rust
     inputs.zen-browser.packages."${system}".specific # arc but based on firefox
   ];
 
@@ -145,7 +144,6 @@
       })
       cantarell-fonts # GNOME font
       cascadia-code
-      corefonts # Microsoft web fonts
       roboto
       roboto-slab
     ];

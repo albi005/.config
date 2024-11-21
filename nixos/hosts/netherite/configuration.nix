@@ -25,6 +25,31 @@
     package = pkgs.mariadb;
   };
 
+  services.postgresql = {
+    authentication = '''';
+    enable = true;
+    enableTCPIP = true;
+    ensureDatabases = [ "startsch" "albi" ];
+    ensureUsers = [
+      {
+        name = "startsch";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "albi";
+        ensureDBOwnership = true;
+      }
+    ];
+  };
+  users = {
+    users.startsch = {
+      group = "startsch";
+      uid = 2001;
+      isSystemUser = true;
+    };
+    groups.startsch.gid = 2001;
+  };
+
   services.teamviewer.enable = true;
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
@@ -40,17 +65,20 @@
   environment.systemPackages = with pkgs; [
     vlc
     jdk11
+    uppaal
   ];
 
   users.users.albi.packages = with pkgs; [
     jetbrains.idea-ultimate
     stable.jetbrains.rider
     jetbrains.webstorm
+    jetbrains.phpstorm
     prismlauncher # minecraft launcher
     jetbrains-toolbox
     naps2 # scanner gui
     devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
+    php # authsch
   ];
 
   systemd.services.cloudflared = {
