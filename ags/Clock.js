@@ -14,7 +14,7 @@ function runEveryMinute(callback) {
 }
 
 runEveryMinute(async () => {
-    date.setValue(await Utils.execAsync('date "+%Y.%m.%d  %R"'));
+    date.setValue(await Utils.execAsync('date "+%c"'));
 });
 
 export function Clock() {
