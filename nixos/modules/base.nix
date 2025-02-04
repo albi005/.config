@@ -50,9 +50,9 @@
       bottom
       bun # js but based
       calc
-      corepack # pnpm pnpx yarn yarnpkg
       cloc # Count Lines Of Code
       cmatrix # Matrix like effect in your terminal
+      corepack # pnpm pnpx yarn yarnpkg
       dig # dns tools
       dua # Disk Usage Analyzer tui
       exiftool # image metadata reader

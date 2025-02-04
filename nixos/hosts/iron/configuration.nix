@@ -1,4 +1,10 @@
-{ pkgs, config, inputs, stable, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  stable,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -15,7 +21,7 @@
   virtualisation.docker.enable = true;
 
   services.vaultwarden = {
-    enable = true;
+    enable = false;
     backupDir = "/var/backup/vaultwarden";
     config = {
       DOMAIN = "https://p.alb1.hu";
@@ -26,9 +32,9 @@
   };
 
   services.couchdb = {
-      package = stable.couchdb3;
-      enable = true;
-      port = 10004;
+    package = stable.couchdb3;
+    enable = true;
+    port = 10004;
   };
 
   systemd.services.cloudflared = {
@@ -136,11 +142,35 @@
         image = "startsch";
         ports = [ "10007:8080" ];
         environmentFiles = [ /home/albi/secrets/startsch.env ];
+        user = "2001:2001";
+        environment = {
+          ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
+        };
+        volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
       };
     };
   };
 
+  users.users.startsch = {
+    group = "startsch";
+    uid = 2001;
+    isSystemUser = true;
+  };
+  users.groups.startsch.gid = 2001;
+
   services = {
+    postgresql = {
+      enable = true;
+      ensureDatabases = [
+        "startsch"
+      ];
+      ensureUsers = [
+        {
+          name = "startsch";
+          ensureDBOwnership = true;
+        }
+      ];
+    };
     restic = {
       server = {
         enable = true;
@@ -149,7 +179,7 @@
         listenAddress = "31415";
       };
       backups = {
-        netherite = {
+        redstone = {
           backupPrepareCommand = ''
             rm -fr /var/lib/backup
             install -d -m 700 -o root -g root /var/lib/backup
@@ -167,6 +197,9 @@
             ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/Menza/menza.db ".backup 'menza/menza.db'"
             cp /home/albi/www/Menza/service-account.json menza/
 
+            mkdir -p startsch
+            ${pkgs.sudo}/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dump startsch > startsch/startsch.sql
+
             mkdir -p sus2
             ${pkgs.sqlite}/bin/sqlite3 /home/albi/www/sus2/pings.db ".backup 'sus2/pings.db'"
 
@@ -183,7 +216,7 @@
             "/var/lib/couchdb/*.couch"
             "/var/lib/couchdb/local.ini"
           ];
-          repository = "rest:http://netherite:31415/iron";
+          repository = "rest:http://redstone:31415/iron";
           passwordFile = "/home/albi/secrets/restic.key";
           initialize = true;
         };
