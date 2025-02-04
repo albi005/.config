@@ -4,6 +4,13 @@
     ../pkgs/qbittorrent.nix
   ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "aspnetcore-runtime-wrapped-6.0.36"
+    "dotnet-sdk-7.0.410"
+    "dotnet-sdk-6.0.428"
+    "aspnetcore-runtime-6.0.36"
+  ];
+
   # https://openzfs.github.io/openzfs-docs/Getting%20Started/NixOS/index.html
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;

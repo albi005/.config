@@ -6,6 +6,9 @@ telemetry=false
 
 [applications]
 enabled=true
+terminal=Alacritty
+use_exec=true
+use_keywords=true
 
 [calculator_qalculate]
 enabled=true
@@ -15,9 +18,11 @@ enabled=false
 
 [clipboard]
 enabled=true
+persistent=true
 
 [datetime]
 enabled=true
+show_date_on_empty_query=false
 
 [docs]
 enabled=false

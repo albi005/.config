@@ -5,7 +5,6 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
       BASHDB_PATH = "${pkgs.bashdb}";
-      OMNISHARP_PATH = "${pkgs.omnisharp-roslyn}";
     };
     systemPackages = with pkgs; [
       bashdb # bash debug adapter

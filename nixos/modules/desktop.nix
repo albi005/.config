@@ -37,7 +37,6 @@
     pavucontrol # pulseaudio volume control
     playerctl # media player controller
     rofi-wayland # start menu
-    stable.sqldeveloper
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
@@ -60,18 +59,18 @@
     krita # painting application
     libreoffice
     libsForQt5.kruler # screen ruler
-    goldendict-ng # dictionary used by albert
     loupe # image viewer
     nemo-with-extensions # file manager
     obsidian # notes
     remmina # remote desktop client
+    sioyek # fancy pdf reader
     sqlitebrowser
     thunderbird # email client
     totem # videos
     vscode
     wezterm # terminal emulator
     wofi-emoji # emoji selector
-    inputs.zen-browser.packages."${system}".specific # arc but based on firefox
+    inputs.zen-browser.packages."${system}".default # arc but based on firefox
   ];
 
   home-manager.users.albi =
@@ -136,19 +135,15 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "CascadiaCode"
-          "NerdFontsSymbolsOnly"
-        ];
-      })
+      nerd-fonts.caskaydia-cove
+      nerd-fonts.symbols-only
       cantarell-fonts # GNOME font
       cascadia-code
       roboto
       roboto-slab
     ];
     fontconfig.defaultFonts = {
-      sansSerif = [ "Roboto" ];
+      sansSerif = [ "Cantarell" ];
       serif = [ "Roboto Slab" ];
       monospace = [ "Cascadia Code" ];
     };

@@ -56,12 +56,6 @@
 
   networking.hostName = "netherite";
 
-  hardware.sane.enable = true; # scanner daemon
-  users.users.albi.extraGroups = [
-    "scanner"
-    "lp"
-  ];
-
   environment.systemPackages = with pkgs; [
     vlc
     jdk11
@@ -75,7 +69,6 @@
     jetbrains.phpstorm
     prismlauncher # minecraft launcher
     jetbrains-toolbox
-    naps2 # scanner gui
     devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
     php # authsch

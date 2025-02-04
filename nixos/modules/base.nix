@@ -48,7 +48,9 @@
 
     systemPackages = with pkgs; [
       bottom
+      bun # js but based
       calc
+      corepack # pnpm pnpx yarn yarnpkg
       cloc # Count Lines Of Code
       cmatrix # Matrix like effect in your terminal
       dig # dns tools
@@ -90,7 +92,6 @@
       wget
       xclip
       xz
-      yarn # yet another javascript package manager
       yazi # file manager tui
       yt-dlp
       zip

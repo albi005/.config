@@ -1,24 +1,61 @@
-{ pkgs, stable, ... }:
+{ pkgs, stable, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/desktop.nix
-    ../../modules/media.nix
     ../../modules/dotnet.nix
+    ../../modules/media.nix
+    ../../modules/scanning.nix
   ];
 
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
-
-  programs.java.package = pkgs.jdk11;
+  networking.firewall.allowedTCPPorts = [80];
 
   services.teamviewer.enable = true;
+  services.postgresql = {
+    enable = true;
+    enableTCPIP = true;
+    ensureDatabases = [ "albi" ];
+    ensureUsers = [
+      {
+        name = "albi";
+        ensureDBOwnership = true;
+      }
+    ];
+  };
 
   users.users.albi.packages = with pkgs; [
-    jetbrains.clion
+    # jetbrains.clion
     jetbrains.idea-ultimate
-    jetbrains.rider
+    # jetbrains.phpstorm
+    # jetbrains.ruby-mine # pek-next
+    # jetbrains.rust-rover
+    jetbrains.webstorm
+    # ruby
+    # php
+    # https://github.com/NixOS/nixpkgs/issues/358171
+    (jetbrains.rider.overrideAttrs (attrs: {
+      postInstall =
+        (attrs.postInstall or "")
+        + lib.optionalString (stdenv.hostPlatform.isLinux) ''
+          (
+            cd $out/rider
+
+            ls -d $PWD/plugins/cidr-debugger-plugin/bin/lldb/linux/*/lib/python3.8/lib-dynload/* |
+            xargs patchelf \
+              --replace-needed libssl.so.10 libssl.so \
+              --replace-needed libcrypto.so.10 libcrypto.so \
+              --replace-needed libcrypt.so.1 libcrypt.so
+
+            for dir in lib/ReSharperHost/linux-*; do
+              rm -rf $dir/dotnet
+              ln -s ${dotnet-sdk_7.unwrapped}/share/dotnet $dir/dotnet 
+            done
+          )
+        '';
+    }))
     vlc
     prismlauncher
   ];
@@ -26,6 +63,27 @@
   environment.systemPackages = [
     stable.bencodetools
   ];
+
+  systemd.services.cloudflared = {
+    description = "cloudflared";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      TimeoutStartSec = 0;
+      Type = "notify";
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run --token $CLOUDFLARED_TOKEN";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      EnvironmentFile = "/home/albi/secrets/cloudflared.env";
+      User = "cloudflared";
+      Group = "cloudflared";
+    };
+  };
+  users.users.cloudflared = {
+    group = "cloudflared";
+    isSystemUser = true;
+  };
+  users.groups.cloudflared = { };
 
   services = {
     restic = {
@@ -46,6 +104,12 @@
           passwordFile = "/home/albi/secrets/restic.key";
           initialize = true;
         };
+      };
+      server = {
+        enable = true;
+        appendOnly = true;
+        extraFlags = [ "--no-auth" ];
+        listenAddress = "31415";
       };
     };
   };
