@@ -12,6 +12,7 @@ use_keywords=true
 
 [calculator_qalculate]
 enabled=true
+precision=32
 
 [chromium]
 enabled=false

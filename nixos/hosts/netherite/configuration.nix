@@ -15,13 +15,10 @@
   ];
 
   virtualisation.docker.enable = true;
-  # virtualisation.docker.rootless.enable = true;
-  # virtualisation.docker.rootless.setSocketVariable = true;
-  virtualisation.vmware.host.enable = true;
 
   # needed by schpincer
   services.mysql = {
-    enable = true;
+    enable = false;
     package = pkgs.mariadb;
   };
 
@@ -59,6 +56,7 @@
   environment.systemPackages = with pkgs; [
     vlc
     jdk11
+    gaphor
     uppaal
   ];
 
@@ -67,8 +65,8 @@
     stable.jetbrains.rider
     jetbrains.webstorm
     jetbrains.phpstorm
+    jetbrains.rust-rover
     prismlauncher # minecraft launcher
-    jetbrains-toolbox
     devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
     php # authsch
