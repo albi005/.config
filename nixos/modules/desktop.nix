@@ -8,7 +8,7 @@
 {
   hardware.bluetooth.enable = true; # use with bluetuith
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
-  programs.firefox.enable = true;
+  # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
   programs.java.enable = true;
   programs.java.package = pkgs.jdk11;
@@ -39,6 +39,10 @@
     pavucontrol # pulseaudio volume control
     playerctl # media player controller
     rofi-wayland # start menu
+<<<<<<< HEAD
+=======
+    # stable.sqldeveloper
+>>>>>>> 8375090 (Update water)
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
@@ -59,7 +63,7 @@
     imhex # hex editor
     #kitty # terminal emulator
     #krita # painting application
-    libreoffice
+    # libreoffice
     libsForQt5.kruler # screen ruler
     loupe # image viewer
     nemo-with-extensions # file manager

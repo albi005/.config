@@ -113,6 +113,11 @@
 
   programs.direnv.enable = true;
   programs.git.enable = true;
+<<<<<<< HEAD
+=======
+  programs.java.enable = true;
+  programs.java.package = pkgs.jdk21;
+>>>>>>> 8375090 (Update water)
   programs.nix-ld.enable = true; # enables running unpatched dynamic binaries
   programs.nix-ld.package = pkgs.nix-ld-rs;
   services.tailscale.enable = true; # p2p vpn
