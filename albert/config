@@ -2,7 +2,7 @@
 hotkey=Alt+Space
 memoryDecay=0.64
 show_enabled_plugins_first=false
-telemetry=false
+telemetry=true
 
 [applications]
 enabled=true
@@ -86,7 +86,7 @@ global_handler_enabled=false
 use_derived=false
 
 [python.goldendict]
-enabled=true
+enabled=false
 trigger="def "
 
 [python.jetbrains_projects]
