@@ -22,7 +22,11 @@
   services.upower.enable = true; # required by ags battery widget
 
   environment.systemPackages = with pkgs; [
-    ags # js based widgets
+    #ags # js based widgets # TODO: Migrate to ags2/astal
+    (ags_1.overrideAttrs (old: {
+      # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
+      buildInputs = old.buildInputs ++ [ libdbusmenu-gtk3 ];
+    }))
     brightnessctl # brightnessctl s 50
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
@@ -124,9 +128,12 @@
 
       # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
       xdg.configFile = {
-        "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-        "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-        "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+        "gtk-4.0/assets".source =
+          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source =
+          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+        "gtk-4.0/gtk-dark.css".source =
+          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
       };
     };
 
@@ -171,8 +178,6 @@
       name = "catppuccin-mocha-light-cursors";
     };
     settings = {
-      # won't work until a new regreet release
-      # https://github.com/rharish101/ReGreet/issues/82
       appearance.greeting_msg = "yo";
     };
   };
@@ -191,15 +196,6 @@
   # Make electron apps use wayland
   # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  nixpkgs.overlays = [
-    (final: prev: {
-      # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
-      ags = prev.ags.overrideAttrs (old: {
-        buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
-      });
-    })
-  ];
 
   services.udev.packages = [ pkgs.headsetcontrol ];
 }

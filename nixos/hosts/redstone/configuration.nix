@@ -13,7 +13,7 @@
   networking.hostId = "d7e8126d"; # needed by zfs
   networking.firewall.allowedTCPPorts = [80];
 
-  services.teamviewer.enable = true;
+  services.actual.enable = true;
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
@@ -28,40 +28,21 @@
 
   users.users.albi.packages = with pkgs; [
     # jetbrains.clion
-    jetbrains.idea-ultimate
+    # jetbrains.idea-ultimate
     # jetbrains.phpstorm
+    jetbrains.rider
     # jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
-    jetbrains.webstorm
+    # jetbrains.webstorm
     # ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
-    (jetbrains.rider.overrideAttrs (attrs: {
-      postInstall =
-        (attrs.postInstall or "")
-        + lib.optionalString (stdenv.hostPlatform.isLinux) ''
-          (
-            cd $out/rider
-
-            ls -d $PWD/plugins/cidr-debugger-plugin/bin/lldb/linux/*/lib/python3.8/lib-dynload/* |
-            xargs patchelf \
-              --replace-needed libssl.so.10 libssl.so \
-              --replace-needed libcrypto.so.10 libcrypto.so \
-              --replace-needed libcrypt.so.1 libcrypt.so
-
-            for dir in lib/ReSharperHost/linux-*; do
-              rm -rf $dir/dotnet
-              ln -s ${dotnet-sdk_7.unwrapped}/share/dotnet $dir/dotnet 
-            done
-          )
-        '';
-    }))
     vlc
-    prismlauncher
+    # prismlauncher
   ];
 
   environment.systemPackages = [
-    stable.bencodetools
+    # stable.bencodetools
   ];
 
   systemd.services.cloudflared = {
