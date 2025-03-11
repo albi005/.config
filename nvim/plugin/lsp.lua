@@ -22,11 +22,12 @@ lsp_zero.set_sign_icons(require'lualine.components.diagnostics.config'.symbols.i
 local lua_opts = lsp_zero.nvim_lua_ls()
 require'lspconfig'.lua_ls.setup(lua_opts)
 
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 -- Add servers to ~/.config/nixos/modules/neovim.nix
 lsp_zero.setup_servers{
     'bashls',
     'gopls',
+    'html',
     'nil_ls',
     'pyright',
     'rust_analyzer',
@@ -139,11 +140,3 @@ cmp.setup{
 }
 
 require'Comment'.setup()
-
--- https://github.com/zbirenbaum/copilot.lua#readme
--- https://github.com/zbirenbaum/copilot-cmp#readme
-require('copilot_cmp').setup()
-require("copilot").setup({
-  -- suggestion = { enabled = false },
-  -- panel = { enabled = false },
-})

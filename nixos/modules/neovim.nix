@@ -5,6 +5,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
       BASHDB_PATH = "${pkgs.bashdb}";
+      OMNISHARP_PATH = "${pkgs.omnisharp-roslyn}";
     };
     systemPackages = with pkgs; [
       bashdb # bash debug adapter
@@ -16,6 +17,8 @@
       nodePackages.bash-language-server
       nodePackages.typescript-language-server
       pyright
+      roslyn-ls # https://github.com/seblyng/roslyn.nvim#-installation
+      rzls # razor
       typescript
     ];
   };
@@ -46,6 +49,8 @@
           nvim-dap-virtual-text
           nvim-treesitter.withAllGrammars
           nvim-web-devicons
+          roslyn-nvim
+          rzls-nvim
           telescope-nvim
           undotree
           vim-illuminate # highlight symbol under the cursor
