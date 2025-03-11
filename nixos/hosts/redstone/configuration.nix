@@ -1,4 +1,10 @@
-{ pkgs, stable, lib, ... }:
+{
+  pkgs,
+  stable,
+  lib,
+  config,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -11,7 +17,7 @@
 
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
-  networking.firewall.allowedTCPPorts = [80];
+  networking.firewall.allowedTCPPorts = [ 80 ];
 
   services.actual.enable = true;
   services.postgresql = {
@@ -26,8 +32,13 @@
     ];
   };
 
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableKvm = true;
+  virtualisation.virtualbox.host.enableExtensionPack     = true;
+  virtualisation.virtualbox.host.addNetworkInterface = false;
+
   users.users.albi.packages = with pkgs; [
-    # jetbrains.clion
+    jetbrains.clion
     # jetbrains.idea-ultimate
     # jetbrains.phpstorm
     jetbrains.rider

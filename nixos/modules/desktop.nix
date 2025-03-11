@@ -63,7 +63,7 @@
     imhex # hex editor
     #kitty # terminal emulator
     #krita # painting application
-    # libreoffice
+    libreoffice
     libsForQt5.kruler # screen ruler
     loupe # image viewer
     nemo-with-extensions # file manager
@@ -75,6 +75,7 @@
     totem # videos
     vscode
     wezterm # terminal emulator
+    wireshark
     wofi-emoji # emoji selector
     inputs.zen-browser.packages."${system}".default # arc but based on firefox
   ];
@@ -144,12 +145,14 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      nerd-fonts.caskaydia-cove
-      nerd-fonts.symbols-only
       cantarell-fonts # GNOME font
       cascadia-code
+      corefonts
+      nerd-fonts.caskaydia-cove
+      nerd-fonts.symbols-only
       roboto
       roboto-slab
+      vista-fonts # calibri
     ];
     fontconfig.defaultFonts = {
       sansSerif = [ "Cantarell" ];
@@ -179,6 +182,10 @@
     };
     settings = {
       appearance.greeting_msg = "yo";
+      default_session = {
+        command = "Hyprland";
+        user = "albi";
+      };
     };
   };
 

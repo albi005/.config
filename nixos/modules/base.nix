@@ -166,6 +166,7 @@
       "networkmanager"
       "wheel"
       "docker"
+      "vboxusers"
       "wireshark"
     ];
     packages = [ ];
