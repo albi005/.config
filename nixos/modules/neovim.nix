@@ -35,37 +35,38 @@
           ];
         plugins = with pkgs.vimPlugins; [
           catppuccin-nvim
-          comment-nvim
-          copilot-cmp
-          copilot-lua
-          friendly-snippets
+          # comment-nvim
+          # copilot-cmp
+          # copilot-lua
+          # friendly-snippets
           harpoon
-          indent-blankline-nvim
-          lualine-nvim
-          neodev-nvim # nvim api types
-          nvim-autopairs
-          nvim-dap
-          nvim-dap-ui
-          nvim-dap-virtual-text
-          nvim-treesitter.withAllGrammars
-          nvim-web-devicons
-          roslyn-nvim
-          rzls-nvim
+	  plenary-nvim # lua functions you don't want to write, required by harpoon
+          # indent-blankline-nvim
+          # lualine-nvim
+          # neodev-nvim # nvim api types
+          # nvim-autopairs
+          # nvim-dap
+          # nvim-dap-ui
+          # nvim-dap-virtual-text
+          # nvim-treesitter.withAllGrammars
+          # nvim-web-devicons
+          # roslyn-nvim
+          # rzls-nvim
           telescope-nvim
-          undotree
-          vim-illuminate # highlight symbol under the cursor
-          vim-wakatime
+          # undotree
+          # vim-illuminate # highlight symbol under the cursor
+          # vim-wakatime
           which-key-nvim
-
-          lsp-zero-nvim
-          # LSP
-          nvim-lspconfig
-          # Autocomplete
-          nvim-cmp
-          cmp-nvim-lsp
-          luasnip
-
-          clangd_extensions-nvim
+          #
+          # lsp-zero-nvim
+          # # LSP
+          # nvim-lspconfig
+          # # Autocomplete
+          # nvim-cmp
+          # cmp-nvim-lsp
+          # luasnip
+          #
+          # clangd_extensions-nvim
         ];
       };
     };

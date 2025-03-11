@@ -1,17 +1,16 @@
--- needs to be set before any references to <Leader>
-vim.g.mapleader = ' '
+vim.g.mapleader = ' ' -- set what <Leader> means in keybinds
+vim.o.exrc = true -- source .nvim.lua files
 
--- source .nvim.lua files
--- can't go in plugin/ because reasons
-vim.o.exrc = true
+require'init.colors'
 
 -- https://github.com/zbirenbaum/copilot.lua#readme
 -- https://github.com/zbirenbaum/copilot-cmp#readme
 -- require'copilot_cmp'.setup()
-require'copilot'.setup{
-    suggestion = { enabled = false },
-    panel = { enabled = false },
-}
+-- require'copilot'.setup{
+--     suggestion = { enabled = false },
+--     panel = { enabled = false },
+-- }
+--
+-- require'copilot_cmp'.setup()
 
-require'copilot_cmp'.setup()
 
