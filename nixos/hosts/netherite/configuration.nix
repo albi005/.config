@@ -3,7 +3,6 @@
   pkgs,
   inputs,
   stable,
-  stable-prev,
   ...
 }:
 {
@@ -58,7 +57,7 @@
     vlc
     jdk11
     #gaphor # https://github.com/NixOS/nixpkgs/pull/378026
-    stable-prev.gaphor
+    stable.gaphor
     uppaal
   ];
 
