@@ -50,8 +50,8 @@
           # nvim-dap-virtual-text
           # nvim-treesitter.withAllGrammars
           # nvim-web-devicons
-          # roslyn-nvim
-          # rzls-nvim
+          roslyn-nvim
+          rzls-nvim
           telescope-nvim
           # undotree
           # vim-illuminate # highlight symbol under the cursor
@@ -60,10 +60,10 @@
           #
           # lsp-zero-nvim
           # # LSP
-          # nvim-lspconfig
+          nvim-lspconfig
           # # Autocomplete
-          # nvim-cmp
-          # cmp-nvim-lsp
+          nvim-cmp
+          cmp-nvim-lsp
           # luasnip
           #
           # clangd_extensions-nvim

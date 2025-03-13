@@ -1,10 +1,16 @@
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
 # from https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig
 [*.lua]
 indent_style = space
 indent_size = 4
 tab_width = 4
 quote_style = single
-#sue me
+
+# sue me
 call_arg_parentheses = remove 
 space_before_function_open_parenthesis = false
 space_before_function_call_open_parenthesis = false
