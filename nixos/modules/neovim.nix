@@ -6,6 +6,8 @@
       VISUAL = "nvim";
       BASHDB_PATH = "${pkgs.bashdb}";
       OMNISHARP_PATH = "${pkgs.omnisharp-roslyn}";
+      RZLS_PATH = "${pkgs.rzls}";
+      DOTNET_SDK_PATH = "${pkgs.dotnet-sdk_9}";
     };
     systemPackages = with pkgs; [
       bashdb # bash debug adapter
@@ -20,6 +22,7 @@
       roslyn-ls # https://github.com/seblyng/roslyn.nvim#-installation
       rzls # razor
       typescript
+      vscode-langservers-extracted # html
     ];
   };
 
@@ -58,7 +61,7 @@
           # vim-wakatime
           which-key-nvim
           #
-          # lsp-zero-nvim
+          # lsp-zero-nvim # deprecated
           # # LSP
           nvim-lspconfig
           # # Autocomplete
