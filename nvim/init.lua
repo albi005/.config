@@ -60,6 +60,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 require'lspconfig'.lua_ls.setup{}
+require'lspconfig'.nil_ls.setup{} -- Nix LSP, better
+-- require'lspconfig'.nixd.setup{} -- Nix LSP
 require'lspconfig'.html.setup{}
 
 do -- C# and Razor
