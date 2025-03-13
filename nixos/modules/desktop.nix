@@ -58,7 +58,7 @@
     file-roller # archive manager
     #gimp # paint
     gnome-disk-utility # disk manager
-    #google-chrome
+    google-chrome
     headsetcontrol # arctis nova 7 battery check
     imhex # hex editor
     #kitty # terminal emulator

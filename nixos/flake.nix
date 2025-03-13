@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-24-11.url = "github:NixOS/nixpkgs/nixos-24.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +34,10 @@
                     "aspnetcore-runtime-6.0.36"
                     "dotnet-sdk-6.0.428"
                   ];
+                };
+                stable-prev = import inputs.nixpkgs-24-11 {
+                  system = system;
+                  config.allowUnfree = true;
                 };
               };
             }

@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   stable,
+  stable-prev,
   ...
 }:
 {
@@ -56,20 +57,22 @@
   environment.systemPackages = with pkgs; [
     vlc
     jdk11
-    gaphor
+    #gaphor # https://github.com/NixOS/nixpkgs/pull/378026
+    stable-prev.gaphor
     uppaal
   ];
 
   users.users.albi.packages = with pkgs; [
     jetbrains.idea-ultimate
-    stable.jetbrains.rider
-    jetbrains.webstorm
-    jetbrains.phpstorm
-    jetbrains.rust-rover
-    prismlauncher # minecraft launcher
-    devcontainer # docker based dev envs
+    jetbrains.rider
+    # jetbrains.webstorm
+    # jetbrains.phpstorm
+    # jetbrains.rust-rover
+    jetbrains.clion
+    # prismlauncher # minecraft launcher
+    # devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
-    php # authsch
+    # php # authsch
   ];
 
   systemd.services.cloudflared = {
