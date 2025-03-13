@@ -39,8 +39,8 @@
           # copilot-cmp
           # copilot-lua
           # friendly-snippets
-          harpoon
-	  plenary-nvim # lua functions you don't want to write, required by harpoon
+          harpoon2
+	  plenary-nvim # "lua functions you don't want to write", required by harpoon2
           # indent-blankline-nvim
           # lualine-nvim
           # neodev-nvim # nvim api types
