@@ -45,7 +45,7 @@
           harpoon2
 	  plenary-nvim # "lua functions you don't want to write", required by harpoon2
           # indent-blankline-nvim
-          # lualine-nvim
+          lualine-nvim
           # neodev-nvim # nvim api types
           # nvim-autopairs
           # nvim-dap

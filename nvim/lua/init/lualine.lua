@@ -1,6 +1,6 @@
-require 'lualine'.setup {
+require'lualine'.setup{
     options = {
-        theme = "catppuccin"
+        theme = 'catppuccin'
     },
 
     -- Show full path: https://github.com/nvim-lualine/lualine.nvim/issues/271
@@ -9,7 +9,7 @@ require 'lualine'.setup {
             {
                 'filename',
                 file_status = true, -- displays file status (readonly status, modified status)
-                path = 2  -- 0 = just filename, 1 = relative path, 2 = absolute path
+                path = 2 -- 0 = just filename, 1 = relative path, 2 = absolute path
             }
         }
     }
