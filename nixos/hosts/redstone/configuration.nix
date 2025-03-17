@@ -1,8 +1,6 @@
 {
   pkgs,
   stable,
-  lib,
-  config,
   ...
 }:
 {
@@ -32,13 +30,14 @@
     ];
   };
 
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enable = false;
   virtualisation.virtualbox.host.enableKvm = true;
-  virtualisation.virtualbox.host.enableExtensionPack     = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
   users.users.albi.packages = with pkgs; [
     jetbrains.clion
+    gaphor
     # jetbrains.idea-ultimate
     # jetbrains.phpstorm
     jetbrains.rider
@@ -49,6 +48,7 @@
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
     vlc
+    staruml
     # prismlauncher
   ];
 
