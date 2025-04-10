@@ -138,16 +138,16 @@
         environmentFiles = [ /home/albi/secrets/keletikuria.env ];
         ports = [ "10006:8080" ];
       };
-      startsch = {
-        image = "startsch";
-        ports = [ "10007:8080" ];
-        environmentFiles = [ /home/albi/secrets/startsch.env ];
-        user = "2001:2001";
-        environment = {
-          ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
-        };
-        volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
-      };
+      # startsch = {
+      #   image = "startsch";
+      #   ports = [ "10007:8080" ];
+      #   environmentFiles = [ /home/albi/secrets/startsch.env ];
+      #   user = "2001:2001";
+      #   environment = {
+      #     ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
+      #   };
+      #   volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
+      # };
     };
   };
 
