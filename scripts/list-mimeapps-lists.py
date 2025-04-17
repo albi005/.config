@@ -1,3 +1,6 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p python3 -i python3
+
 # Lists all mimeapps.list files that are checked by xdg-mime and xdg-open
 # Paths that exist are written to stdout, while those that don't are written to stderr
 # nvim $(python3 ~/.config/scripts/list-mimeapps-lists.py)

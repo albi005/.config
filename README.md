@@ -1,4 +1,4 @@
-# ~/.config
+# `/home/albi/.config`
 
 ## Install
 1. [Install NixOS](https://nixos.org/download.html#download-nixos)
@@ -6,7 +6,7 @@
    - Select *No desktop*
 2. Log in as albi and run `sh <(curl -L alb1.hu/init)`
 
-### Bootloader edge cases
+### Bootloader-specific settings
 - BIOS instead of UEFI: 
 ```nix
 # Use grub instead of systemd-boot:
@@ -20,6 +20,27 @@ boot.loader.grub.device = "/dev/sda"; # if needed
 ```nix
 boot.loader.efi.canTouchEfiVariables = false;
 ```
+
+## Scripts
+Some scripts you might find useful while working with Linux.
+[All of them are **runnable using the below commands**,
+without having to install python or any python packages,
+**if you have Nix** (`nix-shell`) installed](https://nix.dev/tutorials/first-steps/reproducible-scripts.html).
+The individual scripts contain more information on the specifications used and how they are implemented.
+
+- **`./scripts/print-env.py`**
+  - **Pretty-prints the current environment variables.** Sorts, colors and splits array variables onto new lines.
+- **`./scripts/list-desktop-files.py`**
+  - **Lists `.desktop` files.** These are used to populate app launchers and when opening URLs.
+- **`./scripts/list-mimeapps-lists.py`**
+  - **Lists `mimeapps.list` files.** These are used to set which `.desktop` file is used when opening a URL.
+- **`./scripts/list-minecraft-saves.py`**
+  - Lists Minecraft saves by searching for `level.dat` files. You will most likely have to update the code for your specific use case.
+- **`./scripts/list-non-empty-dirs-from-env-var.py XDG_DATA_DIRS`**
+  - Given the name of an environment variable (`XDG_DATA_DIRS` in the example), lists all non-empty directories referenced by it.
+- **`./scripts/mkmedia.sh`**
+  - Initializes a `/media` directory for *Linux ISOs*, using my preferred directory layout.
+
 
 ## Cheat sheets
 

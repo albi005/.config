@@ -1,3 +1,6 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p python3 -i python3
+
 import os
 
 env_vars = os.environ.items()

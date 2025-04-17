@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell --pure -p pkgs.fd "(pkgs.python3.withPackages (python-pkgs: with python-pkgs; [ nbtlib tabulate ]))" -i python3 
+#!nix-shell --pure -p pkgs.fd "(pkgs.python3.withPackages (python-pkgs: with python-pkgs; [ nbtlib tabulate ]))" -i python3 
 
 from dataclasses import dataclass
 from tabulate import tabulate
@@ -29,7 +29,7 @@ class Level:
     containerDir: str = ""
     versionId: Optional[int] = None
 
-os.chdir("/mnt/560AFE250AFE01B3/games/Minecraft/")
+# os.chdir("/mnt/560AFE250AFE01B3/games/Minecraft/")
 lines = subprocess.run("fd --hidden --absolute-path --glob level.dat", shell=True, text=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.strip().split("\n")
 
 levels: Iterable[Level] = []

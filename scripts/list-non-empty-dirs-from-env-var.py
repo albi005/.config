@@ -1,6 +1,10 @@
-import os
+#!/usr/bin/env nix-shell
+#!nix-shell -p python3 -i python3
 
-KEY = "XDG_DATA_DIRS"
+import os
+import sys
+
+KEY = sys.argv[1]
 xdg_data_dirs = os.environ.get(KEY)
 if not isinstance(xdg_data_dirs, str): raise TypeError(f"{KEY} is not a string")
 

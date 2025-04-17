@@ -1,3 +1,6 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -p python3 -i python3
+
 # Lists all .desktop files that are reachable by xdg-mime and xdg-open
 
 # Based on $(which xdg-mime) desktop_file_to_binary()
