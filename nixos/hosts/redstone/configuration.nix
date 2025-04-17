@@ -18,6 +18,31 @@
   networking.firewall.allowedTCPPorts = [ 80 ];
 
   services.actual.enable = true;
+  services.actual.settings.port = 6001;
+  services.actual.settings.hostname = "127.0.0.1";
+  services.ocis.enable = false;
+
+  services.nginx = {
+    enable = true;
+    virtualHosts =
+      let
+        tailscaleToLocalhost = port: {
+          locations."/".proxyPass = "http://127.0.0.1:${builtins.toString port}";
+          locations."/".proxyWebsockets = true;
+          listen = [
+            {
+              addr = "100.69.0.4";
+              port = 80;
+              ssl = false;
+            }
+          ];
+        };
+      in
+      {
+        "actual.alb1.hu" = tailscaleToLocalhost 6001;
+      };
+  };
+
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
@@ -36,9 +61,9 @@
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
   users.users.albi.packages = with pkgs; [
-    jetbrains.clion
     gaphor
-    # jetbrains.idea-ultimate
+    jetbrains.clion
+    jetbrains.idea-ultimate
     # jetbrains.phpstorm
     jetbrains.rider
     # jetbrains.ruby-mine # pek-next
@@ -50,6 +75,7 @@
     vlc
     staruml
     # prismlauncher
+    tokei
   ];
 
   environment.systemPackages = [
