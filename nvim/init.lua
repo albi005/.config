@@ -130,3 +130,6 @@ end
 -- }
 --
 -- require'copilot_cmp'.setup()
+
+
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y') -- yank motion

@@ -62,7 +62,7 @@
     headsetcontrol # arctis nova 7 battery check
     imhex # hex editor
     #kitty # terminal emulator
-    #krita # painting application
+    krita # paint but actually
     libreoffice
     libsForQt5.kruler # screen ruler
     loupe # image viewer

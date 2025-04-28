@@ -10,11 +10,16 @@
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/desktop.nix
-    ../../pkgs/qbittorrent.nix
     ../../modules/dotnet.nix
   ];
 
   virtualisation.docker.enable = true;
+  # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
+  # virtualisation.vmware.host.enable = true;
+  # virtualisation.virtualbox.host.enableKvm = true;
+  # virtualisation.virtualbox.host.addNetworkInterface = false;
+
+  programs.adb.enable = true;
 
   # needed by schpincer
   services.mysql = {
@@ -26,7 +31,10 @@
     authentication = '''';
     enable = true;
     enableTCPIP = true;
-    ensureDatabases = [ "startsch" "albi" ];
+    ensureDatabases = [
+      "startsch"
+      "albi"
+    ];
     ensureUsers = [
       {
         name = "startsch";
@@ -54,8 +62,6 @@
   networking.hostName = "netherite";
 
   environment.systemPackages = with pkgs; [
-    vlc
-    jdk11
     #gaphor # https://github.com/NixOS/nixpkgs/pull/378026
     stable.gaphor
     uppaal
@@ -95,7 +101,7 @@
   };
   users.groups.cloudflared = { };
 
-  services.strongswan.enable = true;
+  services.tailscale.useRoutingFeatures = "both";
 
   services.restic = {
     server = {
@@ -120,4 +126,26 @@
     #     };
     # };
   };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts =
+      let
+        tailscaleToLocalhost = port: {
+          locations."/".proxyPass = "http://localhost:${builtins.toString port}";
+          locations."/".proxyWebsockets = true;
+          listen = [
+            {
+              addr = "100.69.0.1";
+              port = 80;
+              ssl = false;
+            }
+          ];
+        };
+      in
+      {
+        "netherite" = tailscaleToLocalhost 3006;
+      };
+  };
+
 }
