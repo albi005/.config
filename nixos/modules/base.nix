@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [
     ./neovim.nix
@@ -285,10 +290,10 @@
   system.autoUpgrade = {
     enable = true;
     dates = "03:33";
-    flake = "/home/albi/.config/nixos";
+    flake = "path:${config.users.users.albi.home}/.config/nixos#${config.networking.hostName}";
     flags = [
       "--recreate-lock-file" # update everything
-      "--no-write-lock-file"
+      # "--no-write-lock-file"
       "--print-build-logs"
     ];
     allowReboot = true;
