@@ -11,6 +11,7 @@
     ../../modules/dotnet.nix
     ../../modules/media.nix
     ../../modules/scanning.nix
+    ../../modules/dev.nix
   ];
 
   networking.hostName = "redstone";
@@ -43,6 +44,21 @@
       };
   };
 
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    ensureDatabases = ["albi"];
+    ensureUsers = [
+      {
+        name = "albi";
+        ensurePermissions = {
+          "albi.*" = "ALL PRIVILEGES";
+        };
+      }
+    ];
+
+  };
+
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
@@ -53,6 +69,7 @@
         ensureDBOwnership = true;
       }
     ];
+    package = pkgs.postgresql_17_jit;
   };
 
   virtualisation.virtualbox.host.enable = false;
@@ -68,13 +85,13 @@
     jetbrains.rider
     # jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
-    # jetbrains.webstorm
+    jetbrains.webstorm
     # ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
     vlc
     staruml
-    # prismlauncher
+    prismlauncher
     tokei
   ];
 

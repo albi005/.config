@@ -23,9 +23,10 @@ boot.loader.efi.canTouchEfiVariables = false;
 
 ## Scripts
 Some scripts you might find useful while working with Linux.
-[All of them are **runnable using the below commands**,
-without having to install python or any python packages,
-**if you have Nix** (`nix-shell`) installed](https://nix.dev/tutorials/first-steps/reproducible-scripts.html).
+**If you have Nix** (`nix-shell`) installed,
+all of them are **runnable using the below commands**,
+[without having to install python](https://nix.dev/tutorials/first-steps/reproducible-scripts.html)
+or any python packages.
 The individual scripts contain more information on the specifications used and how they are implemented.
 
 - **`./scripts/print-env.py`**

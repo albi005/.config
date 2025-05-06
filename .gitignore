@@ -32,6 +32,7 @@ JetBrains
 __pycache__
 ags/README.md
 ags/types
+albert/config.lock
 hypr/host.conf
 hypr/hyprpaper.conf
 result
