@@ -198,11 +198,13 @@
           cl = "c && l";
           colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
           e = "python3 $HOME/.config/scripts/print-env.py";
+          ed = "nvim";
           f = "fastfetch";
           l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
+          nano = "nvim";
           ports = "sudo netstat -tulpn";
-          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop, use versions from lock file
-          rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server, use latest version of everything without updating the lock file
+          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
+          rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
           rsync = "rsync --progress";
           st = "systemctl-tui";
           sus = "systemctl suspend";
@@ -211,6 +213,8 @@
           try = "nix-shell -p ";
           update = "nix flake update --flake /home/albi/.config/nixos";
           v = "nvim .";
+          vi = "nvim";
+          vim = "nvim";
         };
 
         bashrcExtra = ''
