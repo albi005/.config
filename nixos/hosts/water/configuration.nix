@@ -10,8 +10,8 @@
 
     networking.hostName = "water"; # Define your hostname.
     networking.networkmanager.wifi.macAddress = "permanent";
-    networking.networkmanager.enable = lib.mkForce false;
-    networking.wireless.iwd.enable = true; # no deps wifi daemon
+    # networking.networkmanager.enable = lib.mkForce false;
+    networking.wireless.iwd.enable = false; # no deps wifi daemon
     # virtualisation.docker.enable = true;
     # services.postgresql.enable = true;
 

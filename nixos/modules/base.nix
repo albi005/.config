@@ -104,6 +104,7 @@
       sqlcmd # sql server
       systemctl-tui
       tcpdump
+      trippy  # tracecroute tui
       typescript
       unzip
       wget
