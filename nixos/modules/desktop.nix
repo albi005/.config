@@ -31,6 +31,7 @@
     brightnessctl # brightnessctl s 50
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
+    freeze # code screenshots cli
     glib # gsettings
     gparted # disk partitioner
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast

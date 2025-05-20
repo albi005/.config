@@ -11,6 +11,7 @@
     ../../modules/base.nix
     ../../modules/desktop.nix
     ../../modules/dotnet.nix
+    ../../modules/dev.nix
   ];
 
   virtualisation.docker.enable = true;
@@ -21,10 +22,18 @@
 
   programs.adb.enable = true;
 
-  # needed by schpincer
   services.mysql = {
-    enable = false;
+    enable = true;
     package = pkgs.mariadb;
+    ensureDatabases = [ "albi" ];
+    ensureUsers = [
+      {
+        name = "albi";
+        ensurePermissions = {
+          "albi.*" = "ALL PRIVILEGES";
+        };
+      }
+    ];
   };
 
   services.postgresql = {

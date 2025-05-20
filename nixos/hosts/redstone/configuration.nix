@@ -47,7 +47,7 @@
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    ensureDatabases = ["albi"];
+    ensureDatabases = [ "albi" ];
     ensureUsers = [
       {
         name = "albi";
