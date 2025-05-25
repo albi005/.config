@@ -85,13 +85,6 @@
   home-manager.users.albi =
     { pkgs, config, ... }:
     {
-      imports = [ inputs.zen-nebula.homeModules.default ];
-
-      zen-nebula = {
-        enable = true;
-        profile = "stp853zv.default";
-      };
-
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.conf".text = lib.mkDefault "";
 
