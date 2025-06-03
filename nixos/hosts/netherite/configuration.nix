@@ -73,6 +73,7 @@
     #gaphor # https://github.com/NixOS/nixpkgs/pull/378026
     stable.gaphor
     uppaal
+    cachix
   ];
 
   users.users.albi.packages = with pkgs; [
