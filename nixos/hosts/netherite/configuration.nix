@@ -14,6 +14,10 @@
     ../../modules/dev.nix
   ];
 
+  services.moodle.enable = true;
+  services.moodle.virtualHost.hostName = "moodle.alb1.hu";
+  services.moodle.initialPassword = "2004";
+
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
