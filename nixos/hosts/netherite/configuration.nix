@@ -53,6 +53,7 @@
         ensureDBOwnership = true;
       }
     ];
+    package = pkgs.postgresql_17_jit;
   };
   users = {
     users.startsch = {

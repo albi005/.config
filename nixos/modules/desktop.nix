@@ -11,8 +11,7 @@
   # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
   programs.java.enable = true;
-  # programs.java.package = pkgs.jdk23;
-  programs.java.package = (pkgs.jdk21.override { enableJavaFX = true; });
+  programs.java.package = pkgs.jdk23;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
   programs.wireshark.enable = true; # network protocol analyzer
