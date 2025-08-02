@@ -80,6 +80,7 @@
   users.users.albi.packages = with pkgs; [
     gaphor
     jetbrains.clion
+    jetbrains.datagrip
     jetbrains.idea-ultimate
     # jetbrains.phpstorm
     jetbrains.rider

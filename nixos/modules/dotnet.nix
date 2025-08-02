@@ -14,6 +14,7 @@
           combinePackages [
             sdk_9_0
             sdk_8_0
+            sdk_6_0_1xx-bin
           ]
         ).overrideAttrs
           (
@@ -42,4 +43,8 @@
       };
       systemPackages = [ dotnet-combined ];
     };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "dotnet-sdk-6.0.136"
+  ];
 }
