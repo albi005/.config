@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 {
   imports = [
-    ../pkgs/qbittorrent.nix
+    # ../pkgs/qbittorrent.nix
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -47,7 +47,7 @@
 
     qbittorrent.enable = true;
     qbittorrent.group = "media";
-    qbittorrent.port = 9797;
+    qbittorrent.webuiPort = 9797;
 
     nginx = {
       enable = true;

@@ -4,13 +4,14 @@
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      BASHDB_PATH = "${pkgs.bashdb}";
+      # https://github.com/NixOS/nixpkgs/issues/428955
+      # BASHDB_PATH = "${pkgs.bashdb}";
       OMNISHARP_PATH = "${pkgs.omnisharp-roslyn}";
       RZLS_PATH = "${pkgs.rzls}";
       DOTNET_SDK_PATH = "${pkgs.dotnet-sdk_9}";
     };
     systemPackages = with pkgs; [
-      bashdb # bash debug adapter
+      # bashdb # bash debug adapter
       gopls
       lua-language-server
       neovim
