@@ -18,7 +18,35 @@
   services.statusApi.enable = true;
   services.statusApi.host = "100.69.0.2";
 
+  services.redlib = {
+    enable = true;
+    port = 5069;
+  };
+
   virtualisation.docker.enable = true;
+
+  # virtualisation.oci-containers = {
+  #   containers = {
+  #     dfv = {
+  #       image = "mcr.microsoft.com/mssql/server:2022-latest";
+  #       volumes = [
+  #         "/var/lib/dfvdb/data:/var/opt/mssql/data"
+  #         "/var/lib/dfvdb/log:/var/opt/mssql/log"
+  #         "/var/lib/dfvdb/secrets:/var/opt/mssql/secrets"
+  #       ];
+  #       user = "root";
+  #       environment = {
+  #         ACCEPT_EULA = "Y";
+  #         MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
+  #       };
+  #       ports = [ "1433:1433" ];
+  #     };
+  #   };
+  # };
+  # systemd.services.docker-dfv = {
+  #   wants = [ "tailscaled.service" ];
+  #   after = [ "tailscaled.service" ];
+  # };
 
   services.vaultwarden = {
     enable = false;
@@ -138,16 +166,16 @@
         environmentFiles = [ /home/albi/secrets/keletikuria.env ];
         ports = [ "10006:8080" ];
       };
-      # startsch = {
-      #   image = "startsch";
-      #   ports = [ "10007:8080" ];
-      #   environmentFiles = [ /home/albi/secrets/startsch.env ];
-      #   user = "2001:2001";
-      #   environment = {
-      #     ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
-      #   };
-      #   volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
-      # };
+      startsch = {
+        image = "startsch";
+        ports = [ "10007:8080" ];
+        environmentFiles = [ /home/albi/secrets/startsch.env ];
+        user = "2001:2001";
+        environment = {
+          ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
+        };
+        volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
+      };
     };
   };
 
@@ -170,6 +198,7 @@
           ensureDBOwnership = true;
         }
       ];
+      package = pkgs.postgresql_17_jit;
     };
     restic = {
       server = {
@@ -238,6 +267,11 @@
         {
           "waka.alb1.hu" = {
             locations."/".proxyPass = "http://localhost:10010";
+            locations."/".proxyWebsockets = true;
+            inherit listen;
+          };
+          "reddit.alb1.hu" = {
+            locations."/".proxyPass = "http://localhost:5069";
             locations."/".proxyWebsockets = true;
             inherit listen;
           };
