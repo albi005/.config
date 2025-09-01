@@ -65,7 +65,7 @@
     #kitty # terminal emulator
     krita # paint but actually
     libreoffice
-    libsForQt5.kruler # screen ruler
+    kdePackages.kruler # screen ruler
     loupe # image viewer
     nemo-with-extensions # file manager
     obsidian # notes

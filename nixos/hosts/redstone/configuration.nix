@@ -79,7 +79,6 @@
 
   users.users.albi.packages = with pkgs; [
     lens
-    gaphor
     jetbrains.clion
     jetbrains.datagrip
     jetbrains.idea-ultimate
