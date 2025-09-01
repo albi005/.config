@@ -77,6 +77,7 @@
       fd # find file by name
       file # file info
       gcc
+      gemini-cli # Google Gemini CLI
       gh
       glow # .md tui
       gnumake # make
@@ -87,6 +88,10 @@
       inetutils
       iperf # speed test between hosts
       jq # command-line JSON processor
+      k9s # Kubernetes TUI
+      kubecolor # kubectl but with colors
+      kubectl # Kubernetes CLI
+      kubelogin-oidc # for auth to KSZK Kubernetes cluster
       lsd # ls but in rust
       maven
       netscanner # nmap tui
@@ -205,6 +210,7 @@
         e = "python3 $HOME/.config/scripts/print-env.py";
         ed = "nvim";
         f = "fastfetch";
+	h = "curl -v -o /dev/null";
         l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
         nano = "nvim";
         ports = "sudo netstat -tulpn";

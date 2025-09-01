@@ -4,6 +4,9 @@ memoryDecay=0.64
 show_enabled_plugins_first=false
 telemetry=true
 
+[application]
+enabled=true
+
 [applications]
 enabled=true
 terminal=Alacritty
@@ -99,7 +102,7 @@ enabled=true
 enabled=false
 
 [python.unit_converter]
-enabled=true
+enabled=false
 
 [python.vpn]
 enabled=false

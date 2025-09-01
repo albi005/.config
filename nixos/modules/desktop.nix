@@ -72,7 +72,7 @@
     remmina # remote desktop client
     sioyek # fancy pdf reader
     sqlitebrowser
-    thunderbird # email client
+    stable.thunderbird # email client
     totem # videos
     vscode
     wezterm # terminal emulator

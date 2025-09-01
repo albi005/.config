@@ -16,7 +16,7 @@
 
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  #networking.firewall.allowedTCPPorts = [ 80 3210 ];
 
   services.actual.enable = true;
   services.actual.settings.port = 6001;
@@ -78,6 +78,7 @@
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
   users.users.albi.packages = with pkgs; [
+    lens
     gaphor
     jetbrains.clion
     jetbrains.datagrip
@@ -94,6 +95,8 @@
     staruml
     prismlauncher
     tokei
+    yamlfmt
+    telegram-desktop
   ];
 
   environment.systemPackages = [
