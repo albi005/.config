@@ -92,6 +92,7 @@
       kubecolor # kubectl but with colors
       kubectl # Kubernetes CLI
       kubelogin-oidc # for auth to KSZK Kubernetes cluster
+      kubernetes-helm # kubernetes package manager
       lsd # ls but in rust
       maven
       netscanner # nmap tui
