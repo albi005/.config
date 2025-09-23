@@ -1,5 +1,6 @@
 vim.g.mapleader = ' ' -- set what <Leader> means in keybinds
 vim.o.exrc = true -- source .nvim.lua files
+vim.opt.wrap = false
 
 require'init.colors' -- catppuccin
 require'init.lualine' -- bottom status bar

@@ -15,7 +15,7 @@ blur = true
 transparent_background_colors = false
 
 [scrolling]
-history = 50000
+history = 100000
 
 [general]
 # https://alacritty.org/config-alacritty.html

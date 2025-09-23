@@ -38,6 +38,7 @@
             nvim-nio # required by nvim-dap-ui
           ];
         plugins = with pkgs.vimPlugins; [
+	  vim-plugin-AnsiEsc
           catppuccin-nvim
           # comment-nvim
           # copilot-cmp
