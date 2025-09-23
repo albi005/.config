@@ -48,6 +48,7 @@
     qbittorrent.enable = true;
     qbittorrent.group = "media";
     qbittorrent.webuiPort = 9797;
+    qbittorrent.profileDir = "/media/services/qbittorrent";
 
     nginx = {
       enable = true;

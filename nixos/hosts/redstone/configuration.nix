@@ -79,9 +79,10 @@
 
   users.users.albi.packages = with pkgs; [
     lens
+    android-studio
     # jetbrains.clion
-    jetbrains.datagrip
-    # jetbrains.idea-ultimate
+    # jetbrains.datagrip
+    jetbrains.idea-ultimate
     # jetbrains.phpstorm
     jetbrains.rider
     # jetbrains.ruby-mine # pek-next
@@ -98,6 +99,7 @@
     minikube
     telegram-desktop
     fio
+    kubectl-cnpg
   ];
 
   environment.systemPackages = [
