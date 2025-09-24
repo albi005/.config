@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  stable,
   lib,
   ...
 }:
@@ -76,7 +77,7 @@
   # https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Standalone_Server
   services.samba = {
     enable = true;
-    shares = {
+    settings = {
       Megosztott = {
         path = "/shared/Megosztott";
         "writeable" = "yes";
