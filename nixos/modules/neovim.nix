@@ -20,7 +20,7 @@
       nodePackages.bash-language-server
       nodePackages.typescript-language-server
       pyright
-      roslyn-ls # https://github.com/seblyng/roslyn.nvim#-installation
+      #roslyn-ls # https://github.com/seblyng/roslyn.nvim#-installation
       rzls # razor
       typescript
       vscode-langservers-extracted # html

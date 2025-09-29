@@ -11,7 +11,7 @@
   # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
   programs.java.enable = true;
-  programs.java.package = pkgs.jdk23;
+  programs.java.package = pkgs.jdk24;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
   programs.wireshark.enable = true; # network protocol analyzer
@@ -43,7 +43,7 @@
     nwg-look # gtk theme config gui
     pavucontrol # pulseaudio volume control
     playerctl # media player controller
-    rofi-wayland # start menu
+    rofi # start menu
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];

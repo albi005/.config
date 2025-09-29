@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  stable,
   ...
 }: {
   imports = [
@@ -91,6 +92,7 @@
       k9s # Kubernetes TUI
       kubecolor # kubectl but with colors
       kubectl # Kubernetes CLI
+      kubectl-cnpg
       kubelogin-oidc # for auth to KSZK Kubernetes cluster
       kubernetes-helm # kubernetes package manager
       lsd # ls but in rust

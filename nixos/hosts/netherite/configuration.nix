@@ -4,7 +4,8 @@
   inputs,
   stable,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
@@ -19,12 +20,12 @@
   # virtualisation.virtualbox.host.enableKvm = true;
   # virtualisation.virtualbox.host.addNetworkInterface = false;
 
-  programs.adb.enable = true;
+  # programs.adb.enable = true;
 
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    ensureDatabases = ["albi"];
+    ensureDatabases = [ "albi" ];
     ensureUsers = [
       {
         name = "albi";
@@ -64,26 +65,25 @@
     groups.startsch.gid = 2001;
   };
 
-  services.teamviewer.enable = true;
+  # services.teamviewer.enable = true;
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
 
   networking.hostName = "netherite";
 
   environment.systemPackages = with pkgs; [
-    #gaphor # https://github.com/NixOS/nixpkgs/pull/378026
-    stable.gaphor
-    uppaal
     cachix
   ];
 
   users.users.albi.packages = with pkgs; [
+    lens # K8s "IDE"
     jetbrains.idea-ultimate
     jetbrains.rider
+    android-studio
     # jetbrains.webstorm
     # jetbrains.phpstorm
     # jetbrains.rust-rover
-    jetbrains.clion
+    # jetbrains.clion
     # prismlauncher # minecraft launcher
     # devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
@@ -92,8 +92,8 @@
 
   systemd.services.cloudflared = {
     description = "cloudflared";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       TimeoutStartSec = 0;
       Type = "notify";
@@ -109,7 +109,7 @@
     group = "cloudflared";
     isSystemUser = true;
   };
-  users.groups.cloudflared = {};
+  users.groups.cloudflared = { };
 
   services.tailscale.useRoutingFeatures = "both";
 
@@ -117,7 +117,7 @@
     server = {
       enable = true;
       appendOnly = true;
-      extraFlags = ["--no-auth"];
+      extraFlags = [ "--no-auth" ];
       listenAddress = "31415";
     };
     # backups = {
@@ -139,20 +139,22 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts = let
-      tailscaleToLocalhost = port: {
-        locations."/".proxyPass = "http://localhost:${builtins.toString port}";
-        locations."/".proxyWebsockets = true;
-        listen = [
-          {
-            addr = "100.69.0.1";
-            port = 80;
-            ssl = false;
-          }
-        ];
+    virtualHosts =
+      let
+        tailscaleToLocalhost = port: {
+          locations."/".proxyPass = "http://localhost:${builtins.toString port}";
+          locations."/".proxyWebsockets = true;
+          listen = [
+            {
+              addr = "100.69.0.1";
+              port = 80;
+              ssl = false;
+            }
+          ];
+        };
+      in
+      {
+        "netherite" = tailscaleToLocalhost 3006;
       };
-    in {
-      "netherite" = tailscaleToLocalhost 3006;
-    };
   };
 }
