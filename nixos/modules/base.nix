@@ -3,11 +3,13 @@
   pkgs,
   config,
   stable,
+  inputs,
   ...
-}: {
+}:
+{
   imports = [
-    ./neovim.nix
     ./status.nix
+    ./neovim.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -49,7 +51,7 @@
   };
 
   # https://nixos.wiki/wiki/NTFS
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # https://nixos.wiki/wiki/Nixos-generate-config
   fileSystems."/".options = [
@@ -65,6 +67,7 @@
     };
 
     systemPackages = with pkgs; [
+      bat # cat/less with highlighting
       bottom
       bun # js but based
       calc
@@ -123,7 +126,7 @@
       yazi # file explorer tui
       yt-dlp
       zip
-      zoxide # fancy cd
+      zoxide # cd but rust
     ];
   };
 
@@ -135,13 +138,13 @@
   programs.nix-ld.package = pkgs.nix-ld-rs;
   services.tailscale.enable = true; # p2p vpn
 
-  systemd.services.tailscaled.before = ["nginx.service"]; # make nginx wait for tailscale
+  systemd.services.tailscaled.before = [ "nginx.service" ]; # make nginx wait for tailscale
 
   networking = {
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      trustedInterfaces = ["tailscale0"];
+      trustedInterfaces = [ "tailscale0" ];
     };
 
     # Cloudflare DNS
@@ -185,99 +188,98 @@
       "vboxusers"
       "wireshark"
     ];
-    packages = [];
+    packages = [ ];
   };
 
-  home-manager.users.albi = {
-    config,
-    pkgs,
-    ...
-  }: {
-    home.sessionPath = ["${config.home.homeDirectory}/.dotnet/tools"];
+  home-manager.users.albi =
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    {
+      home.sessionPath = [ "${config.home.homeDirectory}/.dotnet/tools" ];
 
-    programs.bash = {
-      enable = true;
+      programs.bash = {
+        enable = true;
 
-      shellAliases = {
-        b = "headsetcontrol -b";
-        c = "clear";
-        c-bash = "nvim ~/.profile && source ~/.profile";
-        c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
-        c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
-        c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
-        c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
-        cfg = "cd ~/.config";
-        cl = "c && l";
-        colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
-	dw = "dotnet watch";
-        e = "python3 $HOME/.config/scripts/print-env.py";
-        ed = "nvim";
-        f = "fastfetch";
-	h = "curl -v -o /dev/null";
-        l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
-        nano = "nvim";
-        ports = "sudo netstat -tulpn";
-        rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
-        rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
-        rsync = "rsync --progress";
-        st = "systemctl-tui";
-        sus = "systemctl suspend";
-        td = "tree --depth";
-        tree = "l --tree --group-directories-first";
-        try = "nix-shell -p ";
-        update = "nix flake update --flake /home/albi/.config/nixos";
-        v = "nvim .";
-        vi = "nvim";
-        vim = "nvim";
+        shellAliases = {
+          b = "headsetcontrol -b";
+          c = "clear";
+          c-bash = "nvim ~/.profile && source ~/.profile";
+          c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
+          c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
+          c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
+          c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
+          cfg = "cd ~/.config";
+          cl = "c && l";
+          colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
+          dw = "dotnet watch";
+          e = "python3 $HOME/.config/scripts/print-env.py";
+          ed = "nvim";
+          f = "fastfetch";
+          h = "curl -v -o /dev/null";
+          l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
+          nano = "nvim";
+          ports = "sudo netstat -tulpn";
+          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
+          rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
+          rsync = "rsync --progress";
+          st = "systemctl-tui";
+          sus = "systemctl suspend";
+          td = "tree --depth";
+          tree = "l --tree --group-directories-first";
+          try = "nix-shell -p";
+          update = "nix flake update --flake /home/albi/.config/nixos";
+        };
+
+        bashrcExtra = ''
+          export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
+          export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
+          export NODE_PATH=~/.npm-packages/lib/node_modules;
+
+          # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
+          function y() {
+              local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+              yazi "$@" --cwd-file="$tmp"
+              if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+                  builtin cd -- "$cwd"
+              fi
+              rm -f -- "$tmp"
+          }
+
+          # https://github.com/ajeetdsouza/zoxide#installation
+          eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+        '';
       };
 
-      bashrcExtra = ''
-        export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
-        export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
-        export NODE_PATH=~/.npm-packages/lib/node_modules;
-
-        # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
-        function y() {
-            local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-            yazi "$@" --cwd-file="$tmp"
-            if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-                builtin cd -- "$cwd"
-            fi
-            rm -f -- "$tmp"
-        }
-
-        # https://github.com/ajeetdsouza/zoxide#installation
-        eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+      home.file.".npmrc".text = ''
+        prefix=~/.npm-packages
       '';
-    };
 
-    home.file.".npmrc".text = ''
-      prefix=~/.npm-packages
-    '';
+      # behind tailscale, don't care
+      home.file.".wakatime.cfg".text = ''
+        [settings]
+        api_url = http://waka.alb1.hu/api
+        api_key = b9753890-9f75-498f-9155-d19f2190de78
+      '';
 
-    # behind tailscale, don't care
-    home.file.".wakatime.cfg".text = ''
-      [settings]
-      api_url = http://waka.alb1.hu/api
-      api_key = b9753890-9f75-498f-9155-d19f2190de78
-    '';
+      programs.yazi = {
+        enable = true;
+        enableBashIntegration = true;
+        shellWrapperName = "y";
 
-    programs.yazi = {
-      enable = true;
-      enableBashIntegration = true;
-      shellWrapperName = "y";
-
-      settings = {
-        manager = {
-          show_hidden = true;
-          sort_dir_first = true;
+        settings = {
+          manager = {
+            show_hidden = true;
+            sort_dir_first = true;
+          };
         };
       };
-    };
 
-    # DONT'T TOUCH
-    home.stateVersion = "23.05";
-  };
+      # DONT'T TOUCH
+      home.stateVersion = "23.05";
+    };
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
@@ -336,7 +338,7 @@
   '';
 
   # blank tty after 60 seconds
-  boot.kernelParams = ["consoleblank=60"];
+  boot.kernelParams = [ "consoleblank=60" ];
 
   # DON'T TOUCH
   system.stateVersion = "23.05";

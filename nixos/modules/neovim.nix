@@ -1,78 +1,109 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   environment = {
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      # https://github.com/NixOS/nixpkgs/issues/428955
-      # BASHDB_PATH = "${pkgs.bashdb}";
-      OMNISHARP_PATH = "${pkgs.omnisharp-roslyn}";
-      RZLS_PATH = "${pkgs.rzls}";
-      DOTNET_SDK_PATH = "${pkgs.dotnet-sdk_9}";
     };
-    systemPackages = with pkgs; [
-      # bashdb # bash debug adapter
-      gopls
-      lua-language-server
-      neovim
-      nil
-      nixd
-      nodePackages.bash-language-server
-      nodePackages.typescript-language-server
-      pyright
-      #roslyn-ls # https://github.com/seblyng/roslyn.nvim#-installation
-      rzls # razor
-      typescript
-      vscode-langservers-extracted # html
-    ];
   };
 
-  home-manager.users.albi =
-    { config, pkgs, ... }:
-    {
-      programs.neovim = {
-        enable = true;
-        extraLuaPackages =
-          luaPkgs: with luaPkgs; [
-            luautf8
-            nvim-nio # required by nvim-dap-ui
-          ];
-        plugins = with pkgs.vimPlugins; [
-	  vim-plugin-AnsiEsc
-          catppuccin-nvim
-          # comment-nvim
-          # copilot-cmp
-          # copilot-lua
-          # friendly-snippets
-          harpoon2
-	  plenary-nvim # "lua functions you don't want to write", required by harpoon2
-          # indent-blankline-nvim
-          lualine-nvim
-          # neodev-nvim # nvim api types
-          # nvim-autopairs
-          # nvim-dap
-          # nvim-dap-ui
-          # nvim-dap-virtual-text
-          # nvim-treesitter.withAllGrammars
-          # nvim-web-devicons
-          roslyn-nvim
-          rzls-nvim
-          telescope-nvim
-          # undotree
-          # vim-illuminate # highlight symbol under the cursor
-          # vim-wakatime
-          which-key-nvim
-          #
-          # lsp-zero-nvim # deprecated
-          # # LSP
-          nvim-lspconfig
-          # # Autocomplete
-          nvim-cmp
-          cmp-nvim-lsp
-          # luasnip
-          #
-          # clangd_extensions-nvim
-        ];
+  programs = {
+    nvf = {
+      enable = true;
+      enableManpages = true;
+      settings = {
+        # example: https://github.com/NotAShelf/nvf/blob/main/configuration.nix
+        vim = {
+          viAlias = true;
+          vimAlias = true;
+
+          debugMode = {
+            enable = false;
+            level = 16;
+            logFile = "/tmp/nvim.log";
+          };
+
+          lsp = {
+            enable = true;
+            formatOnSave = true;
+            lightbulb.enable = true; # shows a lightbulb when there are code actions
+            trouble.enable = true; # diagnostics, references, telescope results, quickfix and location lists
+            otter-nvim.enable = true; # language injection
+            nvim-docs-view.enable = true; # :DocsViewToggle # display lsp hover documentation in a side panel
+          };
+
+          languages = {
+            enableFormat = true;
+            enableTreesitter = true;
+            enableExtraDiagnostics = true;
+
+            nix.enable = true;
+            elixir.enable = true;
+          };
+
+          visuals = {
+            nvim-scrollbar.enable = true;
+            nvim-web-devicons.enable = true; # Nerd Font icons for use by neovim plugins
+            fidget-nvim.enable = true; # notifications/status messages
+
+            indent-blankline.enable = true; # indentation lines
+
+            cellular-automaton.enable = true; # :CellularAutomaton make_it_rain
+          };
+
+          statusline = {
+            lualine = {
+              enable = true;
+              theme = "catppuccin";
+            };
+          };
+
+          theme = {
+            enable = true;
+            name = "catppuccin";
+            style = "mocha";
+            transparent = false;
+          };
+
+          autocomplete = {
+            blink-cmp.enable = true;
+          };
+
+          snippets.luasnip.enable = true;
+
+          filetree = {
+            neo-tree = {
+              enable = true;
+            };
+          };
+
+          treesitter.context.enable = true; # sticky context
+
+          binds = {
+            whichKey.enable = true;
+            cheatsheet.enable = true;
+          };
+
+          telescope.enable = true;
+
+          dashboard = {
+            alpha.enable = true;
+          };
+
+          utility = {
+            vim-wakatime.enable = true;
+            undotree.enable = true;
+          };
+
+          ui = {
+            borders.enable = true;
+            illuminate.enable = true;
+          };
+        };
       };
     };
+  };
 }
