@@ -53,7 +53,7 @@
     albert # app launcher, like spotlight on macos
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
-    dbeaver-bin # database client
+    #dbeaver-bin # database client
     desktop-file-utils # needed by something
     ffmpeg-full
     file-roller # archive manager
@@ -63,14 +63,14 @@
     headsetcontrol # arctis nova 7 battery check
     imhex # hex editor
     #kitty # terminal emulator
-    krita # paint but actually
+    #krita # paint but actually
     libreoffice
     kdePackages.kruler # screen ruler
     loupe # image viewer
     nemo-with-extensions # file manager
     obsidian # notes
     remmina # remote desktop client
-    sioyek # fancy pdf reader
+    #sioyek # fancy pdf reader
     sqlitebrowser
     stable.thunderbird # email client
     totem # videos

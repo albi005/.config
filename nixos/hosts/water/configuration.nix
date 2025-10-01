@@ -34,11 +34,8 @@
   boot.supportedFilesystems = ["apfs"];
 
   environment.systemPackages = with pkgs; [
-    impala # tui for iwd
-    uppaal
-    bun
-    jetbrains.idea-ultimate
-    jetbrains.rider
+    # jetbrains.idea-ultimate
+    # jetbrains.rider
     # jetbrains.webstorm
     # prisma
     # dotnet-sdk_8
