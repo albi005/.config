@@ -28,7 +28,6 @@
 
           lsp = {
             enable = true;
-            formatOnSave = true;
             lightbulb.enable = true; # shows a lightbulb when there are code actions
             trouble.enable = true; # diagnostics, references, telescope results, quickfix and location lists
             otter-nvim.enable = true; # language injection
@@ -58,6 +57,35 @@
             lualine = {
               enable = true;
               theme = "catppuccin";
+
+              # https://github.com/NotAShelf/nvf/blob/e48638ae/modules/plugins/statusline/lualine/lualine.nix#L187
+              activeSection.b = [
+                ''
+                  {
+                    "filetype",
+                    colored = true,
+                    icon_only = true,
+                    icon = { align = 'left' }
+                  }
+                ''
+                ''
+                  {
+                    "filename",
+                    symbols = {modified = ' ', readonly = ' '},
+                    separator = {right = ''},
+
+                    -- Show full path: https://github.com/nvim-lualine/lualine.nvim/issues/271
+                    path = 2 -- 0 = just filename, 1 = relative path, 2 = absolute path
+                  }
+                ''
+                ''
+                  {
+                    "",
+                    draw_empty = true,
+                    separator = { left = '', right = '' }
+                  }
+                ''
+              ];
             };
           };
 

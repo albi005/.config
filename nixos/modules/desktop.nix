@@ -4,8 +4,7 @@
   stable,
   inputs,
   ...
-}:
-{
+}: {
   hardware.bluetooth.enable = true; # use with bluetuith
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   # programs.firefox.enable = true;
@@ -25,12 +24,14 @@
     #ags # js based widgets # TODO: Migrate to ags2/astal
     (ags_1.overrideAttrs (old: {
       # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
-      buildInputs = old.buildInputs ++ [ libdbusmenu-gtk3 ];
+      buildInputs = old.buildInputs ++ [libdbusmenu-gtk3];
     }))
     brightnessctl # brightnessctl s 50
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     freeze # code screenshots cli
+    elixir
+    erlang
     glib # gsettings
     gparted # disk partitioner
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
@@ -81,63 +82,60 @@
     inputs.zen-browser.packages."${system}".default # arc but based on firefox
   ];
 
-  home-manager.users.albi =
-    { pkgs, config, ... }:
-    {
-      # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
-      home.file.".config/hypr/host.conf".text = lib.mkDefault "";
+  home-manager.users.albi = {
+    pkgs,
+    config,
+    ...
+  }: {
+    # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
+    home.file.".config/hypr/host.conf".text = lib.mkDefault "";
 
-      home.file.".config/hypr/hyprpaper.conf".text =
-        let
-          wallpaperPath = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
-            sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
-          };
-        in
-        ''
-          preload = ${wallpaperPath}
-          wallpaper = ,${wallpaperPath}
-          splash = false
-        '';
-
-      # https://github.com/catppuccin/nix/blob/main/modules/home-manager/gtk.nix
-      # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
-      # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation
-      # catppuccin/gtk joever: https://github.com/catppuccin/gtk/issues/262
-      gtk = {
-        enable = true;
-        theme = {
-          package = pkgs.catppuccin-gtk.override {
-            accents = [ "green" ];
-            size = "compact";
-            variant = "mocha";
-          };
-          name = "catppuccin-mocha-green-compact";
-        };
-        iconTheme = {
-          package = pkgs.adwaita-icon-theme;
-          name = "Adwaita";
-        };
+    home.file.".config/hypr/hyprpaper.conf".text = let
+      wallpaperPath = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
+        sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
       };
+    in ''
+      preload = ${wallpaperPath}
+      wallpaper = ,${wallpaperPath}
+      splash = false
+    '';
 
-      home.pointerCursor = {
-        gtk.enable = true;
-        x11.enable = true;
-        package = pkgs.catppuccin-cursors.mochaLight;
-        name = "catppuccin-mocha-light-cursors";
-        size = 24;
+    # https://github.com/catppuccin/nix/blob/main/modules/home-manager/gtk.nix
+    # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
+    # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation
+    # catppuccin/gtk joever: https://github.com/catppuccin/gtk/issues/262
+    gtk = {
+      enable = true;
+      theme = {
+        package = pkgs.catppuccin-gtk.override {
+          accents = ["green"];
+          size = "compact";
+          variant = "mocha";
+        };
+        name = "catppuccin-mocha-green-compact";
       };
-
-      # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
-      xdg.configFile = {
-        "gtk-4.0/assets".source =
-          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-        "gtk-4.0/gtk.css".source =
-          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-        "gtk-4.0/gtk-dark.css".source =
-          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+      iconTheme = {
+        package = pkgs.adwaita-icon-theme;
+        name = "Adwaita";
       };
     };
+
+    home.pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.catppuccin-cursors.mochaLight;
+      name = "catppuccin-mocha-light-cursors";
+      size = 24;
+    };
+
+    # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
+    xdg.configFile = {
+      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+    };
+  };
 
   qt.enable = true;
   qt.style = "adwaita-dark";
@@ -156,9 +154,9 @@
       vista-fonts # calibri
     ];
     fontconfig.defaultFonts = {
-      sansSerif = [ "Cantarell" ];
-      serif = [ "Roboto Slab" ];
-      monospace = [ "Cascadia Code" ];
+      sansSerif = ["Cantarell"];
+      serif = ["Roboto Slab"];
+      monospace = ["Cascadia Code"];
     };
   };
 
@@ -167,7 +165,7 @@
     enable = true;
     theme = {
       package = pkgs.catppuccin-gtk.override {
-        accents = [ "green" ];
+        accents = ["green"];
         size = "compact";
         variant = "mocha";
       };
@@ -205,5 +203,5 @@
   # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  services.udev.packages = [ pkgs.headsetcontrol ];
+  services.udev.packages = [pkgs.headsetcontrol];
 }
