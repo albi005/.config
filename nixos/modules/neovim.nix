@@ -15,16 +15,22 @@
       enable = true;
       enableManpages = true;
       settings = {
-        # example: https://github.com/NotAShelf/nvf/blob/main/configuration.nix
+        # Example: https://github.com/NotAShelf/nvf/blob/main/configuration.nix
+        # Options search: https://notashelf.github.io/nvf/options.html
+        # Loading lua configs from `~/.config/nvf/`: https://notashelf.github.io/nvf/index.xhtml#sec-impure-absolute-dir
         vim = {
           viAlias = true;
           vimAlias = true;
 
-          debugMode = {
-            enable = false;
-            level = 16;
-            logFile = "/tmp/nvim.log";
-          };
+          # :help key-notation
+          keymaps = [
+            {
+              key = "<leader>y";
+              mode = ["v"];
+              silent = true;
+              action = ''"+y'';
+            }
+          ];
 
           lsp = {
             enable = true;
@@ -32,6 +38,12 @@
             trouble.enable = true; # diagnostics, references, telescope results, quickfix and location lists
             otter-nvim.enable = true; # language injection
             nvim-docs-view.enable = true; # :DocsViewToggle # display lsp hover documentation in a side panel
+
+            mappings = {
+              codeAction = "<A-CR>";
+              format = "<F3>";
+              renameSymbol = "<F2>";
+            };
           };
 
           languages = {
@@ -95,6 +107,8 @@
             style = "mocha";
             transparent = false;
           };
+
+          autopairs.nvim-autopairs.enable = true;
 
           autocomplete = {
             blink-cmp.enable = true;
