@@ -144,6 +144,10 @@
             borders.enable = true;
             illuminate.enable = true;
           };
+
+          options = {
+            wrap = false;
+          };
         };
       };
     };
