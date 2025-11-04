@@ -138,7 +138,7 @@
   # programs.java.enable = true;
   # programs.java.package = pkgs.jdk21;
   programs.nix-ld.enable = true; # enables running unpatched dynamic binaries
-  programs.nix-ld.package = pkgs.nix-ld-rs;
+  programs.nix-ld.package = pkgs.nix-ld;
   services.tailscale.enable = true; # p2p vpn
 
   systemd.services.tailscaled.before = ["nginx.service"]; # make nginx wait for tailscale
