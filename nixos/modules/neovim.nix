@@ -53,6 +53,7 @@
 
             nix.enable = true;
             elixir.enable = true;
+            ts.enable = true;
           };
 
           visuals = {
