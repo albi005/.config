@@ -111,9 +111,11 @@
       ripgrep # rg, find text in files
       rustic # restic but in rust
       rustup
+      scryer-prolog # Prolog implementation in Rust
       sl # train
       smartmontools # ssd health
       sqlcmd # sql server
+      swi-prolog
       systemctl-tui
       tcpdump
       trippy # tracecroute tui
