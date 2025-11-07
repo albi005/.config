@@ -121,6 +121,7 @@
       trippy # tracecroute tui
       typescript
       unzip
+      inputs.wakatime-ls.packages."${system}".default # coding-time tracker language-server for helix
       wget
       xclip
       xz
