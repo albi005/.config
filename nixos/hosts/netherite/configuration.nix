@@ -14,6 +14,8 @@
     ../../modules/dev.nix
   ];
 
+  services.teamviewer.enable = true;
+
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
@@ -80,14 +82,16 @@
     jetbrains.idea-ultimate
     jetbrains.rider
     android-studio
-    # jetbrains.webstorm
-    # jetbrains.phpstorm
+    jetbrains.webstorm
+    jetbrains.phpstorm
     # jetbrains.rust-rover
     # jetbrains.clion
     # prismlauncher # minecraft launcher
     # devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
     # php # authsch
+    prisma
+    prisma-engines
   ];
 
   systemd.services.cloudflared = {
