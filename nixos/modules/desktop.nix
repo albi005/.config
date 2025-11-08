@@ -9,8 +9,8 @@
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
-  programs.java.enable = true;
-  programs.java.package = pkgs.jdk24;
+  programs.java.enable = false;
+  programs.java.package = pkgs.jdk25;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
   programs.wireshark.enable = true; # network protocol analyzer
