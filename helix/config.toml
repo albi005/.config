@@ -1,0 +1,24 @@
+theme = "catppuccin_mocha"
+
+[editor]
+end-of-line-diagnostics = "hint"
+line-number = "relative"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+
+[editor.lsp]
+display-progress-messages = true
+display-inlay-hints = true
+
+[editor.auto-save]
+focus-lost = true
+
+[editor.inline-diagnostics]
+cursor-line = "warning" # show warnings and errors on the cursorline inline
+
+
+
+
+

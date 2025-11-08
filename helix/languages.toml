@@ -1,0 +1,47 @@
+# https://github.com/mrnossiom/wakatime-ls#helix
+[language-server.wakatime]
+command = "wakatime-ls"
+
+# Add an entry for every used language to enable coding-time tracking
+# https://github.com/helix-editor/helix/blob/master/languages.toml#L293
+[[language]]
+name = "markdown"
+language-servers = [ "marksman", "wakatime" ]
+[[language]]
+name = "rust"
+language-servers = [ "rust-analyzer", "wakatime" ]
+[[language]]
+name = "nix"
+language-servers = [ "nil", "nixd", "wakatime" ]
+[[language]]
+name = "prolog"
+file-types = ["pl", "pro", "prolog"]
+language-servers = [ "swipl", "wakatime" ]
+[[language]]
+name = "elixir"
+language-servers = [ "elixir-ls", "expert", "wakatime" ]
+[[language]]
+name = "javascript"
+language-servers = [ "typescript-language-server", "wakatime" ]
+[[language]]
+name = "typescript"
+language-servers = [ "typescript-language-server", "wakatime" ]
+[[language]]
+name = "jsx"
+language-servers = [ "typescript-language-server", "wakatime" ]
+[[language]]
+name = "tsx"
+language-servers = [ "typescript-language-server", "wakatime" ]
+[[language]]
+name = "css"
+language-servers = [ "vscode-css-language-server", "wakatime" ]
+[[language]]
+name = "html"
+language-servers = [ "vscode-html-language-server", "superhtml", "wakatime" ]
+
+
+# Fix .pl being perl instead of prolog
+# https://github.com/jamesnvc/lsp_server#helix
+[[language]]
+name = "perl"
+file-types = ["perl"]
