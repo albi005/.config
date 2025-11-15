@@ -4,8 +4,7 @@
   inputs,
   stable,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
@@ -15,6 +14,11 @@
   ];
 
   services.teamviewer.enable = true;
+  services.mongodb.enable = true;
+
+  services.xserver.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
+  services.xserver.displayManager.startx.enable = true;
 
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
@@ -27,7 +31,7 @@
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    ensureDatabases = [ "albi" ];
+    ensureDatabases = ["albi"];
     ensureUsers = [
       {
         name = "albi";
@@ -96,8 +100,8 @@
 
   systemd.services.cloudflared = {
     description = "cloudflared";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       TimeoutStartSec = 0;
       Type = "notify";
@@ -113,7 +117,7 @@
     group = "cloudflared";
     isSystemUser = true;
   };
-  users.groups.cloudflared = { };
+  users.groups.cloudflared = {};
 
   services.tailscale.useRoutingFeatures = "both";
 
@@ -121,7 +125,7 @@
     server = {
       enable = true;
       appendOnly = true;
-      extraFlags = [ "--no-auth" ];
+      extraFlags = ["--no-auth"];
       listenAddress = "31415";
     };
     # backups = {
@@ -143,22 +147,20 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts =
-      let
-        tailscaleToLocalhost = port: {
-          locations."/".proxyPass = "http://localhost:${builtins.toString port}";
-          locations."/".proxyWebsockets = true;
-          listen = [
-            {
-              addr = "100.69.0.1";
-              port = 80;
-              ssl = false;
-            }
-          ];
-        };
-      in
-      {
-        "netherite" = tailscaleToLocalhost 3006;
+    virtualHosts = let
+      tailscaleToLocalhost = port: {
+        locations."/".proxyPass = "http://localhost:${builtins.toString port}";
+        locations."/".proxyWebsockets = true;
+        listen = [
+          {
+            addr = "100.69.0.1";
+            port = 80;
+            ssl = false;
+          }
+        ];
       };
+    in {
+      "netherite" = tailscaleToLocalhost 3006;
+    };
   };
 }

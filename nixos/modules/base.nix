@@ -115,7 +115,7 @@
       sl # train
       smartmontools # ssd health
       sqlcmd # sql server
-      swi-prolog
+      swi-prolog-gui
       systemctl-tui
       tcpdump
       trippy # tracecroute tui
