@@ -21,6 +21,16 @@
   services.redlib = {
     enable = true;
     port = 5069;
+    settings = {
+      REDLIB_ROBOTS_DISABLE_INDEXING = true;
+      REDLIB_DEFAULT_COMMENT_SORT = "top";
+      REDLIB_DEFAULT_DISABLE_VISIT_REDDIT_CONFIRMATION = true;
+      REDLIB_DEFAULT_FIXED_NAVBAR = false;
+      REDLIB_DEFAULT_FRONT_PAGE = "all";
+      REDLIB_DEFAULT_POST_SORT = "top";
+      REDLIB_DEFAULT_SHOW_NSFW = true;
+      REDLIB_DEFAULT_USE_HLS = true;
+    };
   };
 
   virtualisation.docker.enable = true;
