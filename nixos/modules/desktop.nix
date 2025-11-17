@@ -2,6 +2,7 @@
   lib,
   pkgs,
   stable,
+  nixos-25_05,
   inputs,
   ...
 }: {
@@ -22,7 +23,7 @@
 
   environment.systemPackages = with pkgs; [
     #ags # js based widgets # TODO: Migrate to ags2/astal
-    (ags_1.overrideAttrs (old: {
+    (nixos-25_05.ags_1.overrideAttrs (old: {
       # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
       buildInputs = old.buildInputs ++ [libdbusmenu-gtk3];
     }))
@@ -62,7 +63,7 @@
     gnome-disk-utility # disk manager
     google-chrome
     headsetcontrol # arctis nova 7 battery check
-    imhex # hex editor
+    #imhex # hex editor
     #kitty # terminal emulator
     #krita # paint but actually
     libreoffice
