@@ -310,7 +310,7 @@
   };
 
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     dates = "03:33";
     flake = "path:${config.users.users.albi.home}/.config/nixos#${config.networking.hostName}";
     flags = [
