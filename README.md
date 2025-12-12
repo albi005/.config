@@ -2,48 +2,55 @@
 
 ## Install
 1. [Install NixOS](https://nixos.org/download.html#download-nixos)
-   - Use albi as username
+   - Use `albi` as the username
    - Select *No desktop*
-2. Log in as albi and run `sh <(curl -L alb1.hu/init)`
+2. Log in as `albi` and run `sh <(curl -L alb1.hu/init)`
 
 ### Bootloader-specific settings
+
+Some of the below options might be useful if you have an older setup.
+
 - BIOS instead of UEFI: 
-```nix
-# Use grub instead of systemd-boot:
-# Disabling systemd-boot enables GRUB
-boot.loader.systemd-boot.enable = false;
-boot.loader.grub.useOSProber = true; # if dual booting
-boot.loader.grub.device = "/dev/sda"; # if needed
-```
+  ```nix
+  # Use grub instead of systemd-boot:
+  # Disabling systemd-boot enables GRUB
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.grub.useOSProber = true; # if dual booting
+  boot.loader.grub.device = "/dev/sda"; # if needed
+  ```
 
 - Garbage PC™ (Intel Atom Bay Trail Whatever): [Nix Wiki](https://nixos.wiki/wiki/Bootloader#Installing_x86_64_NixOS_on_IA-32_UEFI), [Arch Wiki](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface#UEFI_firmware_bitness)
-```nix
-boot.loader.efi.canTouchEfiVariables = false;
-```
+  ```nix
+  boot.loader.efi.canTouchEfiVariables = false;
+  ```
 
 ## Scripts
-Some scripts you might find useful while working with Linux.
-**If you have Nix** (`nix-shell`) installed,
-all of them are **runnable using the below commands**,
-[without having to install python](https://nix.dev/tutorials/first-steps/reproducible-scripts.html)
-or any python packages.
+Some [reproducible interpreted scripts](https://nix.dev/tutorials/first-steps/reproducible-scripts.html) you might find useful while working with Linux.
+**If you have Nix installed** (you can run `nix-shell`), **all of them are runnable using the below commands**,
+without having to explicitly install dependencies, like Python or Python packages.
 The individual scripts contain more information on the specifications used and how they are implemented.
 
-- **`./scripts/print-env.py`**
+- `./scripts/print-env.py`
   - **Pretty-prints the current environment variables.** Sorts, colors and splits array variables onto new lines.
-- **`./scripts/list-desktop-files.py`**
+- `./scripts/list-desktop-files.py`
   - **Lists `.desktop` files.** These are used to populate app launchers and when opening URLs.
-- **`./scripts/list-mimeapps-lists.py`**
+- `./scripts/list-mimeapps-lists.py`
   - **Lists `mimeapps.list` files.** These are used to set which `.desktop` file is used when opening a URL.
-- **`./scripts/list-minecraft-saves.py`**
+- `./scripts/list-minecraft-saves.py`
   - Lists Minecraft saves by searching for `level.dat` files. You will most likely have to update the code for your specific use case.
-- **`./scripts/list-non-empty-dirs-from-env-var.py XDG_DATA_DIRS`**
+- `./scripts/list-non-empty-dirs-from-env-var.py XDG_DATA_DIRS`
   - Given the name of an environment variable (`XDG_DATA_DIRS` in the example), lists all non-empty directories referenced by it.
-- **`./scripts/mkmedia.sh`**
+- `./scripts/mkmedia.sh`
   - Initializes a `/media` directory for *Linux ISOs*, using my preferred directory layout.
 
 
 ## Cheat sheets
+
+### systemd
+
+```sh
+sudo systemctl reboot --boot-loader-entry <Tab><Tab>
+```
 
 ### Alacritty
 
@@ -56,6 +63,9 @@ ctrl+shift+b       search backward
 ```
 
 ### nvim cheat sheet
+
+> [!NOTE]
+> Some of these might not work with the current config.
 
 ```
 d create dir
@@ -103,6 +113,7 @@ C-b d    deattach
 ```
 
 ## Notes
+
 - Before editing the `ags` config run `ags init` to set up JavaScript types
 
 ## Bookmarks

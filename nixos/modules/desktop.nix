@@ -75,7 +75,9 @@
     #sioyek # fancy pdf reader
     sqlitebrowser
     stable.thunderbird # email client
+    tinymist # typst language server
     totem # videos
+    typst # LaTeX but rust
     vscode
     wezterm # terminal emulator
     wireshark
