@@ -89,7 +89,7 @@
       go
       gopls
       gotools
-      helix # neovim but rust (based af)
+      helix # neovim but rust (actually goated)
       inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       iperf # speed test between hosts
       jq # command-line JSON processor
@@ -99,8 +99,8 @@
       kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`
       kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
       kubernetes-helm # kubernetes package manager
-      lsd # ls but in rust
-      maven # `mvn`
+      lsd # ls but rust
+      maven # java slop "build system", `mvn`
       netscanner # nmap tui
       nil # nix ls: refactorings
       nixd # nix ls: code completion and documentation for packages and options, even shows package versions in inlay hints
@@ -112,7 +112,7 @@
       python3 # even slower slop machine
       restic # backups
       ripgrep # rg, find text in files
-      rustic # restic but in rust
+      rustic # restic but rust
       rustup
       scryer-prolog # Prolog implementation in Rust
       sl # train
@@ -122,12 +122,12 @@
       systemctl-tui
       tcpdump
       trippy # tracecroute tui
-      typescript
+      typescript # duct tape for slopscript
       unzip
       wget
       xclip
       xz
-      yarn # yet another javascript package manager
+      yarn # yet another slopscript package manager
       yazi # file explorer tui
       yt-dlp
       zip # `zip zip.zip *.zip`
