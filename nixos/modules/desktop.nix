@@ -30,7 +30,8 @@
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     freeze # code screenshots cli
-    elixir
+    elixir # functional programming language
+    elixir-ls # used by helix
     erlang
     glib # gsettings
     gparted # disk partitioner

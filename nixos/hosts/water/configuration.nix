@@ -64,7 +64,6 @@
     # jetbrains.rider
     # jetbrains.webstorm
     # prisma
-    # dotnet-sdk_8
   ];
 
   # use function keys instead of media keys by default
