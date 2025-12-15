@@ -1,8 +1,7 @@
 {
   lib,
   pkgs,
-  stable,
-  nixos-25_05,
+  nixos-2505,
   inputs,
   ...
 }: {
@@ -23,7 +22,7 @@
 
   environment.systemPackages = with pkgs; [
     #ags # js based widgets # TODO: Migrate to ags2/astal
-    (nixos-25_05.ags_1.overrideAttrs (old: {
+    (nixos-2505.ags_1.overrideAttrs (old: {
       # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
       buildInputs = old.buildInputs ++ [libdbusmenu-gtk3];
     }))
@@ -74,13 +73,13 @@
     remmina # remote desktop client
     #sioyek # fancy pdf reader
     sqlitebrowser
-    stable.thunderbird # email client
+    thunderbird # email client
     tinymist # typst language server
     totem # videos
     typst # LaTeX but rust
-    vscode
-    wezterm # terminal emulator
-    wireshark
+    # vscode
+    # wezterm # terminal emulator
+    # wireshark
     wofi-emoji # emoji selector
     inputs.zen-browser.packages."${system}".default # arc but based on firefox
   ];

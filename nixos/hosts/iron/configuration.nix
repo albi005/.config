@@ -1,8 +1,5 @@
 {
   pkgs,
-  config,
-  inputs,
-  stable,
   ...
 }:
 {
@@ -70,7 +67,7 @@
   };
 
   services.couchdb = {
-    package = stable.couchdb3;
+    # package = stable.couchdb3;
     enable = true;
     port = 10004;
   };

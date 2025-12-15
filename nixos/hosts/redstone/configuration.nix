@@ -1,6 +1,5 @@
 {
   pkgs,
-  stable,
   ...
 }:
 {
@@ -103,7 +102,6 @@
   ];
 
   environment.systemPackages = [
-    # stable.bencodetools
   ];
 
   systemd.services.cloudflared = {

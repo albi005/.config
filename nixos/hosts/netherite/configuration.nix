@@ -1,8 +1,5 @@
 {
-  config,
   pkgs,
-  inputs,
-  stable,
   ...
 }: {
   imports = [
@@ -12,9 +9,6 @@
     ../../modules/dotnet.nix
     ../../modules/dev.nix
   ];
-
-  services.teamviewer.enable = true;
-  services.mongodb.enable = true;
 
   services.xserver.enable = true;
   services.xserver.desktopManager.xfce.enable = true;
@@ -71,31 +65,26 @@
     groups.startsch.gid = 2001;
   };
 
-  # services.teamviewer.enable = true;
   services.statusApi.enable = true;
   services.statusApi.host = "netherite";
 
   networking.hostName = "netherite";
 
-  environment.systemPackages = with pkgs; [
-    cachix
-  ];
-
   users.users.albi.packages = with pkgs; [
-    lens # K8s "IDE"
-    jetbrains.idea-ultimate
+    # lens # K8s "IDE"
+    # jetbrains.idea-ultimate
     jetbrains.rider
-    android-studio
-    jetbrains.webstorm
-    jetbrains.phpstorm
+    # android-studio
+    # jetbrains.webstorm
+    # jetbrains.phpstorm
     # jetbrains.rust-rover
     # jetbrains.clion
     # prismlauncher # minecraft launcher
     # devcontainer # docker based dev envs
     #cura # https://discourse.nixos.org/t/issue-building-nixos-due-to-sip-package/48702/2
     # php # authsch
-    prisma
-    prisma-engines
+    # prisma
+    # prisma-engines
   ];
 
   systemd.services.cloudflared = {

@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  stable,
   inputs,
   ...
 }: {
@@ -66,47 +65,51 @@
     };
 
     systemPackages = with pkgs; [
+      inputs.git-leave.packages."${system}".default # searches for uncommited/unpushed git changes
+      inputs.wakatime-ls.packages."${system}".default # coding-time tracker language-server for helix
       bat # cat/less with highlighting
-      bottom
-      bun # js but based
-      calc
+      bottom # task manager, `btm`
+      bun # js but based and fast af
+      calc # short for calculator
       cloc # Count Lines Of Code
       cmatrix # Matrix like effect in your terminal
       corepack # pnpm pnpx yarn yarnpkg
       cmctl # Kubernetes cert-manager manager
       dig # dns tools
-      dua # Disk Usage Analyzer tui
+      dua # 🐐 Disk Usage Analyzer tui, `dua i`
       exiftool # image metadata reader
-      fastfetch # neofetch
+      fastfetch # neoneofetch
       fd # find file by name
       file # file info
       gcc
-      gemini-cli # Google Gemini CLI
-      gh
-      glow # .md tui
-      gnumake # make
+      gemini-cli # google's vibe-slop cli
+      gh # github cli, `gh auth setup-git`
+      glow # .md reader tui
+      gnumake # `make`
       go
       gopls
       gotools
       helix # neovim but rust (based af)
-      inetutils
+      inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       iperf # speed test between hosts
       jq # command-line JSON processor
       k9s # Kubernetes TUI
       kubecolor # kubectl but with colors
       kubectl # Kubernetes CLI
-      kubectl-cnpg
-      kubelogin-oidc # for auth to KSZK Kubernetes cluster
+      kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`
+      kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
       kubernetes-helm # kubernetes package manager
       lsd # ls but in rust
-      maven
+      maven # `mvn`
       netscanner # nmap tui
-      nixfmt-rfc-style
-      nmap
-      nodejs
+      nil # nix ls: refactorings
+      nixd # nix ls: code completion and documentation for packages and options, even shows package versions in inlay hints
+      nixfmt # official nix formatter
+      nmap # hackerman, `sudo nmap 192.168.0.0/24`
+      nodejs # slop machine
       onefetch # neofetch for git
       pstree # processs tree
-      python3
+      python3 # even slower slop machine
       restic # backups
       ripgrep # rg, find text in files
       rustic # restic but in rust
@@ -121,14 +124,13 @@
       trippy # tracecroute tui
       typescript
       unzip
-      inputs.wakatime-ls.packages."${system}".default # coding-time tracker language-server for helix
       wget
       xclip
       xz
       yarn # yet another javascript package manager
       yazi # file explorer tui
       yt-dlp
-      zip
+      zip # `zip zip.zip *.zip`
       zoxide # cd but rust
     ];
   };
@@ -137,7 +139,7 @@
   programs.git.enable = true;
   # programs.java.enable = true;
   # programs.java.package = pkgs.jdk21;
-  programs.nix-ld.enable = true; # enables running unpatched dynamic binaries
+  programs.nix-ld.enable = true; # enables running dynamic binaries that haven't been patched for nixos
   programs.nix-ld.package = pkgs.nix-ld;
   services.tailscale.enable = true; # p2p vpn
 
