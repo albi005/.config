@@ -44,7 +44,7 @@
   };
 
   services.mysql = {
-    enable = true;
+    enable = false;
     package = pkgs.mariadb;
     ensureDatabases = [ "albi" ];
     ensureUsers = [
@@ -71,34 +71,34 @@
     package = pkgs.postgresql_17_jit;
   };
 
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableKvm = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
-  virtualisation.virtualbox.host.addNetworkInterface = false;
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableKvm = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.addNetworkInterface = false;
 
   users.users.albi.packages = with pkgs; [
-    lens
-    android-studio
+    # lens
+    # android-studio
     # jetbrains.clion
     # jetbrains.datagrip
-    jetbrains.idea-ultimate
+    # jetbrains.idea-ultimate
     # jetbrains.phpstorm
     jetbrains.rider
     # jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
-    jetbrains.webstorm
+    # jetbrains.webstorm
     # ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
-    vlc
+    # vlc
     # staruml
     # prismlauncher
-    tokei
-    yamlfmt
-    minikube
-    telegram-desktop
-    fio
-    kubectl-cnpg
+    # tokei
+    # yamlfmt
+    # minikube
+    # telegram-desktop
+    # fio
+    # kubectl-cnpg
   ];
 
   environment.systemPackages = [
