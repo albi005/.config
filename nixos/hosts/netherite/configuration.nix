@@ -71,7 +71,7 @@
   networking.hostName = "netherite";
 
   users.users.albi.packages = with pkgs; [
-    # lens # K8s "IDE"
+    lens # K8s "IDE"
     # jetbrains.idea-ultimate
     jetbrains.rider
     # android-studio
