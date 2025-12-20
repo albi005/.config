@@ -312,7 +312,7 @@
   };
 
   system.autoUpgrade = {
-    enable = false;
+    enable = true;
     dates = "03:33";
     flake = "path:${config.users.users.albi.home}/.config/nixos#${config.networking.hostName}";
     flags = [
@@ -320,7 +320,7 @@
       # "--no-write-lock-file"
       "--print-build-logs"
     ];
-    allowReboot = true;
+    allowReboot = false; # TODO: REENABLE AFTER STARTSCH HAS BEEN FIXED
     persistent = false; # don't run at startup
   };
 

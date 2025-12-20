@@ -12,48 +12,8 @@
 
   boot.loader.systemd-boot.enable = false;
 
-  services.statusApi.enable = true;
-  services.statusApi.host = "100.69.0.2";
-
-  services.redlib = {
-    enable = true;
-    port = 5069;
-    settings = {
-      REDLIB_ROBOTS_DISABLE_INDEXING = true;
-      REDLIB_DEFAULT_COMMENT_SORT = "top";
-      REDLIB_DEFAULT_DISABLE_VISIT_REDDIT_CONFIRMATION = true;
-      REDLIB_DEFAULT_FIXED_NAVBAR = false;
-      REDLIB_DEFAULT_FRONT_PAGE = "all";
-      REDLIB_DEFAULT_POST_SORT = "top";
-      REDLIB_DEFAULT_SHOW_NSFW = true;
-      REDLIB_DEFAULT_USE_HLS = true;
-    };
-  };
-
-  virtualisation.docker.enable = true;
-
-  # virtualisation.oci-containers = {
-  #   containers = {
-  #     dfv = {
-  #       image = "mcr.microsoft.com/mssql/server:2022-latest";
-  #       volumes = [
-  #         "/var/lib/dfvdb/data:/var/opt/mssql/data"
-  #         "/var/lib/dfvdb/log:/var/opt/mssql/log"
-  #         "/var/lib/dfvdb/secrets:/var/opt/mssql/secrets"
-  #       ];
-  #       user = "root";
-  #       environment = {
-  #         ACCEPT_EULA = "Y";
-  #         MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
-  #       };
-  #       ports = [ "1433:1433" ];
-  #     };
-  #   };
-  # };
-  # systemd.services.docker-dfv = {
-  #   wants = [ "tailscaled.service" ];
-  #   after = [ "tailscaled.service" ];
-  # };
+  # services.statusApi.enable = true;
+  # services.statusApi.host = "100.69.0.2";
 
   services.vaultwarden = {
     enable = false;
@@ -68,7 +28,7 @@
 
   services.couchdb = {
     # package = stable.couchdb3;
-    enable = true;
+    enable = false;
     port = 10004;
   };
 
@@ -129,6 +89,83 @@
   };
   users.groups.wakapi = { };
 
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune.enable = true;
+    };
+    oci-containers = {
+      backend = "docker";
+      containers = {
+        alb1 = {
+          image = "alb1";
+          ports = [ "127.0.0.1:10001:8080" ];
+        };
+        menza = {
+          image = "menza";
+          volumes = [ "/home/albi/www/Menza:/data" ];
+          environment = {
+            ConnectionStrings__Database = "Data Source=/data/menza.db";
+            Firebase__ServiceAccount = "/data/service-account.json";
+          };
+          environmentFiles = [ /home/albi/secrets/menza.env ];
+          ports = [ "127.0.0.1:10002:8080" ];
+        };
+        dishelps = {
+          image = "dishelps";
+          volumes = [ "/home/albi/www/DisHelps:/data" ];
+          environment = {
+            ConnectionStrings__Database = "Data Source=/data/dishelps.db";
+          };
+          ports = [ "127.0.0.1:10005:8080" ];
+        };
+        keletikuria = {
+          image = "keletikuria";
+          volumes = [ "/home/albi/www/KeletiKuria:/data" ];
+          environment = {
+            ConnectionStrings__Database = "Data Source=/data/keletikuria.db";
+          };
+          environmentFiles = [ /home/albi/secrets/keletikuria.env ];
+          ports = [ "127.0.0.1:10006:8080" ];
+        };
+        redlib = {
+          image = "quay.io/redlib/redlib:latest";
+          user = "65534:65534";
+          # recommended by gemini
+          extraOptions = [
+            "--read-only"
+            "--tmpfs=/tmp" 
+            "--cap-drop=ALL"
+            "--security-opt=no-new-privileges"
+            "--memory=512m"
+            "--pull=always"
+          ];
+          environment = {
+            REDLIB_ROBOTS_DISABLE_INDEXING = "on";
+            REDLIB_DEFAULT_COMMENT_SORT = "top";
+            REDLIB_DEFAULT_DISABLE_VISIT_REDDIT_CONFIRMATION = "on";
+            REDLIB_DEFAULT_FIXED_NAVBAR = "off";
+            REDLIB_DEFAULT_FRONT_PAGE = "all";
+            REDLIB_DEFAULT_POST_SORT = "top";
+            REDLIB_DEFAULT_SHOW_NSFW = "on";
+            REDLIB_DEFAULT_USE_HLS = "on";
+          };
+          ports = [ "127.0.0.1:5069:8080" ];
+        };
+        startsch = {
+          image = "startsch";
+          ports = [ "127.0.0.1:10007:8080" ];
+          environmentFiles = [ /home/albi/secrets/startsch.env ];
+          user = "2001:2001";
+          environment = {
+            ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
+          };
+          volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
+        };
+      };
+    };
+  };
+
   # https://github.com/vogler/free-games-claimer
   # sudo docker run --rm -it -p 6080:6080 -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games
   # noVNC at http://iron:6080
@@ -138,53 +175,6 @@
   #         "0 3 * * * docker run --rm -it -p 6080:6080 -v fgc:/fgc/data --pull=always ghcr.io/vogler/free-games-claimer node epic-games"
   #     ];
   # };
-
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers = {
-      alb1 = {
-        image = "alb1";
-        ports = [ "10001:8080" ];
-      };
-      menza = {
-        image = "menza";
-        volumes = [ "/home/albi/www/Menza:/data" ];
-        environment = {
-          ConnectionStrings__Database = "Data Source=/data/menza.db";
-          Firebase__ServiceAccount = "/data/service-account.json";
-        };
-        environmentFiles = [ /home/albi/secrets/menza.env ];
-        ports = [ "10002:8080" ];
-      };
-      dishelps = {
-        image = "dishelps";
-        volumes = [ "/home/albi/www/DisHelps:/data" ];
-        environment = {
-          ConnectionStrings__Database = "Data Source=/data/dishelps.db";
-        };
-        ports = [ "10005:8080" ];
-      };
-      keletikuria = {
-        image = "keletikuria";
-        volumes = [ "/home/albi/www/KeletiKuria:/data" ];
-        environment = {
-          ConnectionStrings__Database = "Data Source=/data/keletikuria.db";
-        };
-        environmentFiles = [ /home/albi/secrets/keletikuria.env ];
-        ports = [ "10006:8080" ];
-      };
-      startsch = {
-        image = "startsch";
-        ports = [ "10007:8080" ];
-        environmentFiles = [ /home/albi/secrets/startsch.env ];
-        user = "2001:2001";
-        environment = {
-          ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
-        };
-        volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
-      };
-    };
-  };
 
   users.users.startsch = {
     group = "startsch";
