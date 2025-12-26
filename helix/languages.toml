@@ -12,7 +12,7 @@ name = "rust"
 language-servers = [ "rust-analyzer", "wakatime" ]
 [[language]]
 name = "nix"
-language-servers = [ "nil", "nixd", "wakatime" ]
+language-servers = [ "nixd", "nil", "wakatime" ]
 [[language]]
 name = "prolog"
 file-types = ["pl", "pro", "prolog"]

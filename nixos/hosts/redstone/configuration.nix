@@ -81,7 +81,7 @@
     # android-studio
     # jetbrains.clion
     # jetbrains.datagrip
-    # jetbrains.idea-ultimate
+    jetbrains.idea
     # jetbrains.phpstorm
     jetbrains.rider
     # jetbrains.ruby-mine # pek-next

@@ -82,7 +82,8 @@
     # wezterm # terminal emulator
     # wireshark
     wofi-emoji # emoji selector
-    inputs.zen-browser.packages."${system}".default # arc but based on firefox
+    inputs.nur.legacyPackages."${stdenv.hostPlatform.system}".repos.Ev357.helium # chromium fork
+    inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
   ];
 
   home-manager.users.albi = {
