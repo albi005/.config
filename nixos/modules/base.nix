@@ -3,6 +3,7 @@
   pkgs,
   config,
   inputs,
+  nixos-unstable,
   ...
 }: {
   imports = [
@@ -82,7 +83,7 @@
       fd # find file by name
       file # file info
       gcc
-      gemini-cli # google's vibe-slop cli
+      nixos-unstable.gemini-cli # google's vibe-slop cli
       gh # github cli, `gh auth setup-git`
       glow # .md reader tui
       gnumake # `make`
@@ -93,6 +94,7 @@
       inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       iperf # speed test between hosts
       jq # command-line JSON processor
+      k3d # instant Kubernetes clusters `k3d cluster create mycluster --image rancher/k3s:v1.29.6-k3s1`
       k9s # Kubernetes TUI
       kubecolor # kubectl but with colors
       kubectl # Kubernetes CLI

@@ -13,6 +13,9 @@
     ../../modules/dev.nix
   ];
 
+  services.k3s.enable = true;
+  services.k3s.role = "server";
+
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
   #networking.firewall.allowedTCPPorts = [ 80 3210 ];
@@ -77,7 +80,8 @@
   # virtualisation.virtualbox.host.addNetworkInterface = false;
 
   users.users.albi.packages = with pkgs; [
-    # lens
+    lens
+    argocd
     # android-studio
     # jetbrains.clion
     # jetbrains.datagrip
