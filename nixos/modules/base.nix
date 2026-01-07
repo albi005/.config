@@ -129,6 +129,7 @@
       wget
       xclip
       xz
+      yaml-language-server # for helix
       yarn # yet another slopscript package manager
       yazi # file explorer tui
       yt-dlp

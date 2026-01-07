@@ -14,8 +14,8 @@
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.startx.enable = true;
 
-  # virtualisation.docker.enable = true;
-  virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
+  virtualisation.docker.enable = true;
+  # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
   # virtualisation.virtualbox.host.enableKvm = true;
   # virtualisation.virtualbox.host.addNetworkInterface = false;
