@@ -127,6 +127,7 @@
       typescript # duct tape for slopscript
       unzip
       nixos-unstable.vcluster # cli for kubernetes in kubernetes
+      vscode-json-languageserver # json ls for helix
       wget
       xclip
       xz
