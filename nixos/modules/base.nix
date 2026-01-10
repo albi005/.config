@@ -94,10 +94,10 @@
       inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       iperf # speed test between hosts
       jq # command-line JSON processor
-      k3d # instant Kubernetes clusters `k3d cluster create mycluster --image rancher/k3s:v1.29.6-k3s1`
-      k9s # Kubernetes TUI
-      kubecolor # kubectl but with colors
-      kubectl # Kubernetes CLI
+      k3d # instant Kubernetes clusters `k3d cluster create mycluster --image rancher/k3s:v1.34.3-k3s1`
+      nixos-unstable.k9s # Kubernetes TUI
+      nixos-unstable.kubecolor # kubectl but with colors
+      nixos-unstable.kubectl # Kubernetes CLI
       kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`
       kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
       kubernetes-helm # kubernetes package manager
@@ -126,6 +126,7 @@
       trippy # tracecroute tui
       typescript # duct tape for slopscript
       unzip
+      nixos-unstable.vcluster # cli for kubernetes in kubernetes
       wget
       xclip
       xz
