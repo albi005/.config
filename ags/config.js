@@ -149,7 +149,7 @@ const hostname = Utils.exec("hostname")
  */
 function getWindows(hostname) {
     switch (hostname) {
-        case 'redstoneasd':
+        case 'redstone':
             return [
                 Bar(0, Widget.CenterBox({
                     startWidget: Widget.Box({ children: [MediaControls(), /* Notification() */] }),

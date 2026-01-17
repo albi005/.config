@@ -5,7 +5,8 @@
   inputs,
   nixos-unstable,
   ...
-}: {
+}:
+{
   imports = [
     ./status.nix
     ./neovim.nix
@@ -50,7 +51,7 @@
   };
 
   # https://nixos.wiki/wiki/NTFS
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # https://nixos.wiki/wiki/Nixos-generate-config
   fileSystems."/".options = [
@@ -65,78 +66,78 @@
       NIXPKGS_ALLOW_UNFREE = "1";
     };
 
-    systemPackages = with pkgs; [
-      inputs.git-leave.packages."${system}".default # searches for uncommited/unpushed git changes
-      inputs.wakatime-ls.packages."${system}".default # coding-time tracker language-server for helix
-      bat # cat/less with highlighting
-      bottom # task manager, `btm`
-      bun # js but based and fast af
-      calc # short for calculator
-      cloc # Count Lines Of Code
-      cmatrix # Matrix like effect in your terminal
-      corepack # pnpm pnpx yarn yarnpkg
-      cmctl # Kubernetes cert-manager manager
-      dig # dns tools
-      dua # 🐐 Disk Usage Analyzer tui, `dua i`
-      exiftool # image metadata reader
-      fastfetch # neoneofetch
-      fd # find file by name
-      file # file info
-      gcc
+    systemPackages = [
+      inputs.git-leave.packages."${pkgs.stdenv.hostPlatform.system}".default # searches for uncommited/unpushed git changes
+      inputs.wakatime-ls.packages."${pkgs.stdenv.hostPlatform.system}".default # coding-time tracker language-server for helix
+      pkgs.bat # cat/less with highlighting
+      pkgs.bottom # task manager, `btm`
+      pkgs.bun # js but based and fast af
+      pkgs.calc # short for calculator
+      pkgs.cloc # Count Lines Of Code
+      pkgs.cmatrix # Matrix like effect in your terminal
+      pkgs.corepack # pnpm pnpx yarn yarnpkg
+      pkgs.cmctl # Kubernetes cert-manager manager
+      pkgs.dig # dns tools
+      pkgs.dua # 🐐 Disk Usage Analyzer tui, `dua i`
+      pkgs.exiftool # image metadata reader
+      pkgs.fastfetch # neoneofetch
+      pkgs.fd # find file by name
+      pkgs.file # file info
+      pkgs.gcc
       nixos-unstable.gemini-cli # google's vibe-slop cli
-      gh # github cli, `gh auth setup-git`
-      glow # .md reader tui
-      gnumake # `make`
-      go
-      gopls
-      gotools
-      helix # neovim but rust (actually goated)
-      inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
-      iperf # speed test between hosts
-      jq # command-line JSON processor
-      k3d # instant Kubernetes clusters `k3d cluster create mycluster --image rancher/k3s:v1.34.3-k3s1`
+      pkgs.gh # github cli, `gh auth setup-git`
+      pkgs.glow # .md reader tui
+      pkgs.gnumake # `make`
+      pkgs.go
+      pkgs.gopls
+      pkgs.gotools
+      pkgs.helix # neovim but rust (actually goated)
+      pkgs.inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
+      pkgs.iperf # speed test between hosts
+      pkgs.jq # command-line JSON processor
+      pkgs.k3d # instant Kubernetes clusters `k3d cluster create mycluster --image rancher/k3s:v1.34.3-k3s1`
       nixos-unstable.k9s # Kubernetes TUI
       nixos-unstable.kubecolor # kubectl but with colors
       nixos-unstable.kubectl # Kubernetes CLI
-      kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`
-      kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
-      kubernetes-helm # kubernetes package manager
-      lsd # ls but rust
-      maven # java slop "build system", `mvn`
-      netscanner # nmap tui
-      nil # nix ls: refactorings
-      nixd # nix ls: code completion and documentation for packages and options, even shows package versions in inlay hints
-      nixfmt # official nix formatter
-      nmap # hackerman, `sudo nmap 192.168.0.0/24`
-      nodejs # slop machine
-      onefetch # neofetch for git
-      pstree # processs tree
-      python3 # even slower slop machine
-      restic # backups
-      ripgrep # rg, find text in files
-      rustic # restic but rust
-      rustup
-      scryer-prolog # Prolog implementation in Rust
-      sl # train
-      smartmontools # ssd health
-      sqlcmd # sql server
-      swi-prolog-gui
-      systemctl-tui
-      tcpdump
-      trippy # tracecroute tui
-      typescript # duct tape for slopscript
-      unzip
+      nixos-unstable.kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`
+      nixos-unstable.kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
+      nixos-unstable.kubernetes-helm # kubernetes package manager
+      pkgs.lsd # ls but rust
+      pkgs.maven # java slop "build system", `mvn`
+      pkgs.netscanner # nmap tui
+      nixos-unstable.nil # nix ls: refactorings
+      nixos-unstable.nixd # nix ls: code completion and documentation for packages and options, even shows package versions in inlay hints
+      pkgs.nixfmt # official nix formatter
+      pkgs.nmap # hackerman, `sudo nmap 192.168.0.0/24`
+      pkgs.nodejs # slop machine
+      pkgs.onefetch # neofetch for git
+      pkgs.pstree # processs tree
+      pkgs.python3 # even slower slop machine
+      pkgs.restic # backups
+      pkgs.ripgrep # rg, find text in files
+      pkgs.rustic # restic but rust
+      pkgs.rustup
+      pkgs.scryer-prolog # Prolog implementation in Rust
+      pkgs.sl # train
+      pkgs.smartmontools # ssd health
+      pkgs.sqlcmd # sql server
+      pkgs.swi-prolog-gui
+      pkgs.systemctl-tui
+      pkgs.tcpdump
+      pkgs.trippy # tracecroute tui
+      pkgs.typescript # duct tape for slopscript
+      pkgs.unzip
       nixos-unstable.vcluster # cli for kubernetes in kubernetes
-      vscode-json-languageserver # json ls for helix
-      wget
-      xclip
-      xz
-      yaml-language-server # for helix
-      yarn # yet another slopscript package manager
-      yazi # file explorer tui
-      yt-dlp
-      zip # `zip zip.zip *.zip`
-      zoxide # cd but rust
+      pkgs.vscode-json-languageserver # json ls for helix
+      pkgs.wget
+      pkgs.xclip
+      pkgs.xz
+      pkgs.yaml-language-server # for helix
+      pkgs.yarn # yet another slopscript package manager
+      pkgs.yazi # file explorer tui
+      pkgs.yt-dlp
+      pkgs.zip # `zip zip.zip *.zip`
+      pkgs.zoxide # cd but rust
     ];
   };
 
@@ -148,13 +149,13 @@
   programs.nix-ld.package = pkgs.nix-ld;
   services.tailscale.enable = true; # p2p vpn
 
-  systemd.services.tailscaled.before = ["nginx.service"]; # make nginx wait for tailscale
+  systemd.services.tailscaled.before = [ "nginx.service" ]; # make nginx wait for tailscale
 
   networking = {
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      trustedInterfaces = ["tailscale0"];
+      trustedInterfaces = [ "tailscale0" ];
     };
 
     # Cloudflare DNS
@@ -173,9 +174,9 @@
   programs.tmux = {
     enable = true;
     keyMode = "vi";
-    plugins = with pkgs.tmuxPlugins; [
-      sensible
-      catppuccin
+    plugins = [
+      pkgs.tmuxPlugins.sensible
+      pkgs.tmuxPlugins.catppuccin
     ];
     extraConfig = ''
       set-option -ga terminal-overrides ',alacritty:Tc'
@@ -198,97 +199,99 @@
       "vboxusers"
       "wireshark"
     ];
-    packages = [];
+    packages = [ ];
   };
 
-  home-manager.users.albi = {
-    config,
-    pkgs,
-    ...
-  }: {
-    home.sessionPath = ["${config.home.homeDirectory}/.dotnet/tools"];
+  home-manager.users.albi =
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    {
+      home.sessionPath = [ "${config.home.homeDirectory}/.dotnet/tools" ];
 
-    programs.bash = {
-      enable = true;
+      programs.bash = {
+        enable = true;
 
-      shellAliases = {
-        b = "headsetcontrol -b";
-        c = "clear";
-        c-bash = "nvim ~/.profile && source ~/.profile";
-        c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
-        c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
-        c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
-        c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
-        cfg = "cd ~/.config";
-        cl = "c && l";
-        colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
-        dw = "dotnet watch";
-        e = "python3 $HOME/.config/scripts/print-env.py";
-        ed = "nvim";
-        f = "fastfetch";
-        h = "curl -v -o /dev/null";
-        l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
-        nano = "nvim";
-        ports = "sudo netstat -tulpn";
-        rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
-        rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
-        rsync = "rsync --progress";
-        st = "systemctl-tui";
-        sus = "systemctl suspend";
-        td = "tree --depth";
-        tree = "l --tree --group-directories-first";
-        try = "nix-shell -p";
-        update = "nix flake update --flake /home/albi/.config/nixos";
-        v = "nvim .";
+        shellAliases = {
+          b = "headsetcontrol -b";
+          c = "clear";
+          c-bash = "nvim ~/.profile && source ~/.profile";
+          c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
+          c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
+          c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
+          c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
+          cfg = "cd ~/.config";
+          cl = "c && l";
+          colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
+          dw = "dotnet watch";
+          e = "python3 $HOME/.config/scripts/print-env.py";
+          ed = "nvim";
+          f = "fastfetch";
+          h = "curl -v -o /dev/null";
+          l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
+          nano = "nvim";
+          ports = "sudo netstat -tulpn";
+          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
+          rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
+          rsync = "rsync --progress";
+          st = "systemctl-tui";
+          sus = "systemctl suspend";
+          td = "tree --depth";
+          tree = "l --tree --group-directories-first";
+          try = "nix-shell -p";
+          update = "nix flake update --flake /home/albi/.config/nixos";
+          v = "nvim .";
+        };
+
+        bashrcExtra = ''
+          export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
+          export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
+          export NODE_PATH=~/.npm-packages/lib/node_modules;
+
+          # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
+          function y() {
+              local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+              yazi "$@" --cwd-file="$tmp"
+              if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+                  builtin cd -- "$cwd"
+              fi
+              rm -f -- "$tmp"
+          }
+
+          # https://github.com/ajeetdsouza/zoxide#installation
+          eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+        '';
       };
 
-      bashrcExtra = ''
-        export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
-        export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
-        export NODE_PATH=~/.npm-packages/lib/node_modules;
-
-        # https://yazi-rs.github.io/docs/quick-start#shell-wrapper
-        function y() {
-            local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-            yazi "$@" --cwd-file="$tmp"
-            if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-                builtin cd -- "$cwd"
-            fi
-            rm -f -- "$tmp"
-        }
-
-        # https://github.com/ajeetdsouza/zoxide#installation
-        eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+      home.file.".npmrc".text = ''
+        prefix=~/.npm-packages
       '';
-    };
 
-    home.file.".npmrc".text = ''
-      prefix=~/.npm-packages
-    '';
+      # behind tailscale, don't care
+      home.file.".wakatime.cfg".text = ''
+        [settings]
+        api_url = http://waka.alb1.hu/api
+        api_key = b9753890-9f75-498f-9155-d19f2190de78
+      '';
 
-    # behind tailscale, don't care
-    home.file.".wakatime.cfg".text = ''
-      [settings]
-      api_url = http://waka.alb1.hu/api
-      api_key = b9753890-9f75-498f-9155-d19f2190de78
-    '';
+      programs.yazi = {
+        enable = true;
+        enableBashIntegration = true;
+        shellWrapperName = "y";
 
-    programs.yazi = {
-      enable = true;
-      enableBashIntegration = true;
-      shellWrapperName = "y";
-
-      settings = {
-        manager = {
-          show_hidden = true;
-          sort_dir_first = true;
+        settings = {
+          manager = {
+            show_hidden = true;
+            sort_dir_first = true;
+          };
         };
       };
-    };
 
-    # DONT'T TOUCH
-    home.stateVersion = "23.05";
-  };
+      # DONT'T TOUCH
+      home.stateVersion = "23.05";
+    };
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
@@ -347,7 +350,7 @@
   '';
 
   # blank tty after 60 seconds
-  boot.kernelParams = ["consoleblank=60"];
+  boot.kernelParams = [ "consoleblank=60" ];
 
   # DON'T TOUCH
   system.stateVersion = "23.05";

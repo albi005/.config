@@ -13,8 +13,8 @@
     ../../modules/dev.nix
   ];
 
-  services.k3s.enable = true;
-  services.k3s.role = "server";
+  # services.k3s.enable = true;
+  # services.k3s.role = "server";
 
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs

@@ -5,9 +5,8 @@
 let
   dotnet-combined =
     (
-      with pkgs.dotnetCorePackages;
-      combinePackages [
-        sdk_10_0
+      pkgs.dotnetCorePackages.combinePackages [
+        pkgs.dotnetCorePackages.sdk_10_0
       ]
     ).overrideAttrs
       (
