@@ -1,5 +1,6 @@
 {
   pkgs,
+  nixos-unstable,
   ...
 }:
 {
@@ -82,16 +83,20 @@
   users.users.albi.packages = with pkgs; [
     lens
     argocd
+    nixos-unstable.renovate
+    nixos-unstable.updatecli
     # android-studio
     # jetbrains.clion
     # jetbrains.datagrip
     jetbrains.idea
     # jetbrains.phpstorm
-    jetbrains.rider
-    # jetbrains.ruby-mine # pek-next
+    nixos-unstable.jetbrains.rider
+    nixos-unstable.jetbrains.goland
+    krita
+    jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
     # jetbrains.webstorm
-    # ruby
+    ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
     # vlc

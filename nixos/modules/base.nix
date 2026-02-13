@@ -67,6 +67,9 @@
     };
 
     systemPackages = [
+      pkgs.delve
+      pkgs.gdlv
+
       inputs.git-leave.packages."${pkgs.stdenv.hostPlatform.system}".default # searches for uncommited/unpushed git changes
       inputs.wakatime-ls.packages."${pkgs.stdenv.hostPlatform.system}".default # coding-time tracker language-server for helix
       pkgs.bat # cat/less with highlighting
@@ -92,6 +95,7 @@
       pkgs.gopls
       pkgs.gotools
       pkgs.helix # neovim but rust (actually goated)
+      nixos-unstable.helm-ls # for helix
       pkgs.inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       pkgs.iperf # speed test between hosts
       pkgs.jq # command-line JSON processor
@@ -100,6 +104,7 @@
       nixos-unstable.kubecolor # kubectl but with colors
       nixos-unstable.kubectl # Kubernetes CLI
       nixos-unstable.kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`
+      nixos-unstable.kubectl-view-allocations # `kubectl view allocations`
       nixos-unstable.kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
       nixos-unstable.kubernetes-helm # kubernetes package manager
       pkgs.lsd # ls but rust
@@ -111,6 +116,7 @@
       pkgs.nmap # hackerman, `sudo nmap 192.168.0.0/24`
       pkgs.nodejs # slop machine
       pkgs.onefetch # neofetch for git
+      nixos-unstable.opencode # open source vibe coding cli
       pkgs.pstree # processs tree
       pkgs.python3 # even slower slop machine
       pkgs.restic # backups
@@ -127,7 +133,24 @@
       pkgs.trippy # tracecroute tui
       pkgs.typescript # duct tape for slopscript
       pkgs.unzip
-      nixos-unstable.vcluster # cli for kubernetes in kubernetes
+      (pkgs.vcluster.overrideAttrs (oldAttrs: rec {
+        version = "0.32.0-next.0";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "loft-sh";
+          repo = "vcluster";
+          tag = "v${version}";
+          hash = "sha256-91LqWODqMg4Ky+r0nHUOwwOGIoYel+HeyFwXr18yu7Y=";
+        };
+
+        # You MUST add this block because it doesn't auto-update
+        ldflags = [
+          "-s"
+          "-w"
+          "-X main.version=${version}"
+          "-X main.goVersion=${pkgs.lib.getVersion pkgs.go}"
+        ];
+      }))
       pkgs.vscode-json-languageserver # json ls for helix
       pkgs.wget
       pkgs.xclip
@@ -214,36 +237,42 @@
       programs.bash = {
         enable = true;
 
-        shellAliases = {
-          b = "headsetcontrol -b";
-          c = "clear";
-          c-bash = "nvim ~/.profile && source ~/.profile";
-          c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
-          c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
-          c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
-          c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
-          cfg = "cd ~/.config";
-          cl = "c && l";
-          colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
-          dw = "dotnet watch";
-          e = "python3 $HOME/.config/scripts/print-env.py";
-          ed = "nvim";
-          f = "fastfetch";
-          h = "curl -v -o /dev/null";
-          l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
-          nano = "nvim";
-          ports = "sudo netstat -tulpn";
-          rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
-          rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
-          rsync = "rsync --progress";
-          st = "systemctl-tui";
-          sus = "systemctl suspend";
-          td = "tree --depth";
-          tree = "l --tree --group-directories-first";
-          try = "nix-shell -p";
-          update = "nix flake update --flake /home/albi/.config/nixos";
-          v = "nvim .";
-        };
+        shellAliases =
+          let
+            sounds = pkgs.callPackage ../pkgs/sounds.nix { };
+          in
+          {
+            b = "headsetcontrol -b";
+            bell = "(printf '\\a' && sleep .15 && printf '\\a' && sleep .4 && printf '\\a' && sleep .15 && printf '\\a')";
+            c = "clear";
+            c-bash = "nvim ~/.profile && source ~/.profile";
+            c-hyprland = "PREV_PWD=$PWD; cd ~/.config/hypr; nvim hyprland.conf; cd $PREV_PWD";
+            c-nix = "PREV_PWD=$PWD; cd ~/.config/nixos; v; cd $PREV_PWD";
+            c-scripts = "PREV_PWD=$PWD; cd ~/.config/scripts; v; cd $PREV_PWD";
+            c-vim = "PREV_PWD=$PWD; cd ~/.config/nvim; v; cd $PREV_PWD";
+            cfg = "cd ~/.config";
+            cl = "c && l";
+            colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
+            dw = "dotnet watch";
+            e = "python3 $HOME/.config/scripts/print-env.py";
+            ed = "nvim";
+            f = "fastfetch";
+            h = "curl -v -o /dev/null";
+            l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
+            nano = "nvim";
+            p = "${pkgs.mpv}/bin/mpv ${sounds.pipe} --no-terminal >/dev/null 2>&1 & disown";
+            ports = "sudo netstat -tulpn";
+            rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
+            rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
+            rsync = "rsync --progress";
+            st = "systemctl-tui";
+            sus = "systemctl suspend";
+            td = "tree --depth";
+            tree = "l --tree --group-directories-first";
+            try = "nix-shell -p";
+            update = "nix flake update --flake /home/albi/.config/nixos";
+            v = "nvim .";
+          };
 
         bashrcExtra = ''
           export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";

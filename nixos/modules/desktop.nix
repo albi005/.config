@@ -27,6 +27,7 @@
       buildInputs = old.buildInputs ++ [libdbusmenu-gtk3];
     }))
     brightnessctl # brightnessctl s 50
+    libcanberra-gtk3 # used by alacritty to play bell sound
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     freeze # code screenshots cli
@@ -36,6 +37,7 @@
     glib # gsettings
     gparted # disk partitioner
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
+    hyprls
     hyprpaper # wallpaper daemon
     hyprpicker # color picker
     imagemagick # 'convert' command for images
@@ -43,7 +45,7 @@
     libnotify # used by some apps to send notifications
     lxqt.lxqt-policykit # polkit frontend https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent https://reddit.com/r/NixOS/comments/171mexa/comment/k3rpftn
     nwg-look # gtk theme config gui
-    pavucontrol # pulseaudio volume control
+    pavucontrol # pulseaudio volume control, audio settings, headset/output configuration
     playerctl # media player controller
     rofi # start menu
     waybar # top bar
