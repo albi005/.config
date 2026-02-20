@@ -1,7 +1,8 @@
 {
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
@@ -14,6 +15,29 @@
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.startx.enable = true;
 
+  # --- Matter / Thread / Home Assistant ---
+  # ZBT-2 is managed directly by Home Assistant via the homeassistant_hardware integration.
+  # HA installs and runs its own OpenThread Border Router internally — no separate OTBR container needed.
+
+  services.matter-server = {
+    enable = true;
+    port = 5580;
+  };
+
+  services.home-assistant = {
+    enable = true;
+    openFirewall = true;
+    extraComponents = [
+      "matter"
+      "thread"
+      "otbr"
+      "homeassistant_hardware"
+    ];
+    config = {
+      default_config = { };
+    };
+  };
+
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
@@ -25,7 +49,7 @@
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
-    ensureDatabases = ["albi"];
+    ensureDatabases = [ "albi" ];
     ensureUsers = [
       {
         name = "albi";
@@ -37,7 +61,7 @@
   };
 
   services.postgresql = {
-    authentication = '''';
+    authentication = "";
     enable = true;
     enableTCPIP = true;
     ensureDatabases = [
@@ -72,7 +96,7 @@
 
   users.users.albi.packages = with pkgs; [
     lens # K8s "IDE"
-    # jetbrains.idea-ultimate
+    jetbrains.idea-ultimate
     jetbrains.rider
     # android-studio
     # jetbrains.webstorm
@@ -89,8 +113,8 @@
 
   systemd.services.cloudflared = {
     description = "cloudflared";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       TimeoutStartSec = 0;
       Type = "notify";
@@ -106,7 +130,7 @@
     group = "cloudflared";
     isSystemUser = true;
   };
-  users.groups.cloudflared = {};
+  users.groups.cloudflared = { };
 
   services.tailscale.useRoutingFeatures = "both";
 
@@ -114,7 +138,7 @@
     server = {
       enable = true;
       appendOnly = true;
-      extraFlags = ["--no-auth"];
+      extraFlags = [ "--no-auth" ];
       listenAddress = "31415";
     };
     # backups = {
@@ -136,20 +160,22 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts = let
-      tailscaleToLocalhost = port: {
-        locations."/".proxyPass = "http://localhost:${builtins.toString port}";
-        locations."/".proxyWebsockets = true;
-        listen = [
-          {
-            addr = "100.69.0.1";
-            port = 80;
-            ssl = false;
-          }
-        ];
+    virtualHosts =
+      let
+        tailscaleToLocalhost = port: {
+          locations."/".proxyPass = "http://localhost:${builtins.toString port}";
+          locations."/".proxyWebsockets = true;
+          listen = [
+            {
+              addr = "100.69.0.1";
+              port = 80;
+              ssl = false;
+            }
+          ];
+        };
+      in
+      {
+        "netherite" = tailscaleToLocalhost 3006;
       };
-    in {
-      "netherite" = tailscaleToLocalhost 3006;
-    };
   };
 }
