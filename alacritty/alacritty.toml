@@ -21,3 +21,6 @@ history = 100000
 # https://alacritty.org/config-alacritty.html
 
 import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
+
+[bell]
+command = { program = "canberra-gtk-play", args = ["-i", "bell"] }

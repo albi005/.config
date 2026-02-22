@@ -2,11 +2,20 @@
 [language-server.wakatime]
 command = "wakatime-ls"
 
+[language-server.helm-ls]
+command = "helm_ls"
+
+[language-server.yaml-language-server.config.yaml]
+schemas = { "https://json.schemastore.org/kustomization" = "kustomization.yaml" }
+
 # Add an entry for every used language to enable coding-time tracking
 # https://github.com/helix-editor/helix/blob/master/languages.toml#L293
 [[language]]
 name = "markdown"
 language-servers = [ "marksman", "wakatime" ]
+[[language]]
+name = "yaml"
+language-servers = [ "yaml-language-server", "helm-ls", "wakatime" ]
 [[language]]
 name = "rust"
 language-servers = [ "rust-analyzer", "wakatime" ]
