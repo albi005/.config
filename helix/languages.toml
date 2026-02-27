@@ -45,6 +45,9 @@ language-servers = [ "typescript-language-server", "wakatime" ]
 name = "css"
 language-servers = [ "vscode-css-language-server", "wakatime" ]
 [[language]]
+name = "python"
+language-servers = [ "ty", "ruff", "jedi", "pylsp", "wakatime" ]
+[[language]]
 name = "html"
 language-servers = [ "vscode-html-language-server", "superhtml", "wakatime" ]
 

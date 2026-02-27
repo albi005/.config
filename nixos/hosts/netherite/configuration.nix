@@ -38,11 +38,11 @@
     };
   };
 
-  virtualisation.docker.enable = true;
-  # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
+  # virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
-  # virtualisation.virtualbox.host.enableKvm = true;
-  # virtualisation.virtualbox.host.addNetworkInterface = false;
+  virtualisation.virtualbox.host.enableKvm = true;
+  virtualisation.virtualbox.host.addNetworkInterface = false;
 
   # programs.adb.enable = true;
 

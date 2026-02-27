@@ -121,6 +121,7 @@
       pkgs.python3 # even slower slop machine
       pkgs.restic # backups
       pkgs.ripgrep # rg, find text in files
+      nixos-unstable.ruff # python formatter/linter for helix
       pkgs.rustic # restic but rust
       pkgs.rustup
       pkgs.scryer-prolog # Prolog implementation in Rust
@@ -131,8 +132,10 @@
       pkgs.systemctl-tui
       pkgs.tcpdump
       pkgs.trippy # tracecroute tui
+      nixos-unstable.ty # python ls for helix
       pkgs.typescript # duct tape for slopscript
       pkgs.unzip
+      nixos-unstable.uv # faster python package manager
       (pkgs.vcluster.overrideAttrs (oldAttrs: rec {
         version = "0.32.0-next.0";
 
