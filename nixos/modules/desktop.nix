@@ -4,7 +4,8 @@
   nixos-2505,
   inputs,
   ...
-}: {
+}:
+{
   hardware.bluetooth.enable = true; # use with bluetuith
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   # programs.firefox.enable = true;
@@ -18,14 +19,14 @@
   services.gnome.gnome-keyring.enable = true; # security credential store
   services.gvfs.enable = true; # GNOME Virtual file system
   services.printing.enable = true;
-  services.upower.enable = true; # required by ags battery widget
+  services.upower.enable = true; # required by quickshell battery widget
 
   environment.systemPackages = with pkgs; [
-    #ags # js based widgets # TODO: Migrate to ags2/astal
-    (nixos-2505.ags_1.overrideAttrs (old: {
-      # https://github.com/NixOS/nixpkgs/issues/306446#issuecomment-2081540768
-      buildInputs = old.buildInputs ++ [libdbusmenu-gtk3];
-    }))
+    quickshell # qt-based widget system for wayland/x11
+    qt6.qtdeclarative # qmlls language server for quickshell
+    qt6.qtimageformats # webp and additional image format support for quickshell
+    qt6.qt5compat # visual effects like blur for quickshell
+    qt6.qtpositioning # location services for quickshell weather widget
     brightnessctl # brightnessctl s 50
     libcanberra-gtk3 # used by alacritty to play bell sound
     cliphist # wayland clipboard manager with support for multimedia
@@ -41,14 +42,12 @@
     hyprpaper # wallpaper daemon
     hyprpicker # color picker
     imagemagick # 'convert' command for images
-    libdbusmenu-gtk3 # needed by ags
     libnotify # used by some apps to send notifications
     lxqt.lxqt-policykit # polkit frontend https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent https://reddit.com/r/NixOS/comments/171mexa/comment/k3rpftn
     nwg-look # gtk theme config gui
     pavucontrol # pulseaudio volume control, audio settings, headset/output configuration
     playerctl # media player controller
     rofi # start menu
-    waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
 
@@ -88,60 +87,67 @@
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
   ];
 
-  home-manager.users.albi = {
-    pkgs,
-    config,
-    ...
-  }: {
-    # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
-    home.file.".config/hypr/host.conf".text = lib.mkDefault "";
+  home-manager.users.albi =
+    {
+      pkgs,
+      config,
+      ...
+    }:
+    {
+      # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
+      home.file.".config/hypr/host.conf".text = lib.mkDefault "";
 
-    home.file.".config/hypr/hyprpaper.conf".text = let
-      wallpaperPath = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
-        sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
-      };
-    in ''
-      preload = ${wallpaperPath}
-      wallpaper = ,${wallpaperPath}
-      splash = false
-    '';
+      home.file.".config/hypr/hyprpaper.conf".text =
+        let
+          wallpaperPath = pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
+            sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
+          };
+        in
+        ''
+          preload = ${wallpaperPath}
+          wallpaper = ,${wallpaperPath}
+          splash = false
+        '';
 
-    # https://github.com/catppuccin/nix/blob/main/modules/home-manager/gtk.nix
-    # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
-    # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation
-    # catppuccin/gtk joever: https://github.com/catppuccin/gtk/issues/262
-    gtk = {
-      enable = true;
-      theme = {
-        package = pkgs.catppuccin-gtk.override {
-          accents = ["green"];
-          size = "compact";
-          variant = "mocha";
+      # https://github.com/catppuccin/nix/blob/main/modules/home-manager/gtk.nix
+      # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
+      # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation
+      # catppuccin/gtk joever: https://github.com/catppuccin/gtk/issues/262
+      gtk = {
+        enable = true;
+        theme = {
+          package = pkgs.catppuccin-gtk.override {
+            accents = [ "green" ];
+            size = "compact";
+            variant = "mocha";
+          };
+          name = "catppuccin-mocha-green-compact";
         };
-        name = "catppuccin-mocha-green-compact";
+        iconTheme = {
+          package = pkgs.adwaita-icon-theme;
+          name = "Adwaita";
+        };
       };
-      iconTheme = {
-        package = pkgs.adwaita-icon-theme;
-        name = "Adwaita";
+
+      home.pointerCursor = {
+        gtk.enable = true;
+        x11.enable = true;
+        package = pkgs.catppuccin-cursors.mochaLight;
+        name = "catppuccin-mocha-light-cursors";
+        size = 24;
+      };
+
+      # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
+      xdg.configFile = {
+        "gtk-4.0/assets".source =
+          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source =
+          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+        "gtk-4.0/gtk-dark.css".source =
+          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
       };
     };
-
-    home.pointerCursor = {
-      gtk.enable = true;
-      x11.enable = true;
-      package = pkgs.catppuccin-cursors.mochaLight;
-      name = "catppuccin-mocha-light-cursors";
-      size = 24;
-    };
-
-    # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
-    xdg.configFile = {
-      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-    };
-  };
 
   qt.enable = true;
   qt.style = "adwaita-dark";
@@ -160,9 +166,9 @@
       vista-fonts # calibri
     ];
     fontconfig.defaultFonts = {
-      sansSerif = ["Cantarell"];
-      serif = ["Roboto Slab"];
-      monospace = ["Cascadia Code"];
+      sansSerif = [ "Cantarell" ];
+      serif = [ "Roboto Slab" ];
+      monospace = [ "Cascadia Code" ];
     };
   };
 
@@ -171,7 +177,7 @@
     enable = true;
     theme = {
       package = pkgs.catppuccin-gtk.override {
-        accents = ["green"];
+        accents = [ "green" ];
         size = "compact";
         variant = "mocha";
       };
@@ -209,5 +215,5 @@
   # https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  services.udev.packages = [pkgs.headsetcontrol];
+  services.udev.packages = [ pkgs.headsetcontrol ];
 }
