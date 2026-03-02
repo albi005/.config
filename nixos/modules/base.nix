@@ -10,6 +10,7 @@
   imports = [
     ./status.nix
     ./neovim.nix
+    ./helix.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -71,7 +72,6 @@
       pkgs.gdlv
 
       inputs.git-leave.packages."${pkgs.stdenv.hostPlatform.system}".default # searches for uncommited/unpushed git changes
-      inputs.wakatime-ls.packages."${pkgs.stdenv.hostPlatform.system}".default # coding-time tracker language-server for helix
       pkgs.bat # cat/less with highlighting
       pkgs.bottom # task manager, `btm`
       pkgs.bun # js but based and fast af
@@ -94,8 +94,6 @@
       pkgs.go
       pkgs.gopls
       pkgs.gotools
-      pkgs.helix # neovim but rust (actually goated)
-      nixos-unstable.helm-ls # for helix
       pkgs.inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       pkgs.iperf # speed test between hosts
       pkgs.jq # command-line JSON processor
@@ -154,11 +152,11 @@
           "-X main.goVersion=${pkgs.lib.getVersion pkgs.go}"
         ];
       }))
-      pkgs.vscode-json-languageserver # json ls for helix
+      pkgs.vscode-json-languageserver
       pkgs.wget
       pkgs.xclip
       pkgs.xz
-      pkgs.yaml-language-server # for helix
+      pkgs.yaml-language-server
       pkgs.yarn # yet another slopscript package manager
       pkgs.yazi # file explorer tui
       pkgs.yt-dlp
@@ -314,7 +312,7 @@
         shellWrapperName = "y";
 
         settings = {
-          manager = {
+          mgr = {
             show_hidden = true;
             sort_dir_first = true;
           };

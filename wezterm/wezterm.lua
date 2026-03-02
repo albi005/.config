@@ -7,7 +7,7 @@ return {
     color_scheme = 'Catppuccin Mocha',
 
     font = wezterm.font 'Cascadia Code',
-    font_size = 11,
+    font_size = 10,
 
     hide_tab_bar_if_only_one_tab = true,
     scrollback_lines = 10000,
