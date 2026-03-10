@@ -135,13 +135,13 @@
       pkgs.unzip
       nixos-unstable.uv # faster python package manager
       (pkgs.vcluster.overrideAttrs (oldAttrs: rec {
-        version = "0.32.0-next.0";
+        version = "0.32.0";
 
         src = pkgs.fetchFromGitHub {
           owner = "loft-sh";
           repo = "vcluster";
           tag = "v${version}";
-          hash = "sha256-91LqWODqMg4Ky+r0nHUOwwOGIoYel+HeyFwXr18yu7Y=";
+          hash = "sha256-fXEVKt7EU5+FfaTO6YdcUBDKb7b/3CHoLxyUlmwARfA=";
         };
 
         # You MUST add this block because it doesn't auto-update
