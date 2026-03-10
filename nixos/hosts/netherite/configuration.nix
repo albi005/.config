@@ -95,6 +95,7 @@
   networking.hostName = "netherite";
 
   users.users.albi.packages = with pkgs; [
+    (callPackage ../../pkgs/modelsim { }) # HDL simulator
     lens # K8s "IDE"
     jetbrains.idea-ultimate
     jetbrains.rider

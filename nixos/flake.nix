@@ -62,7 +62,16 @@
           ];
         };
     in
+    let
+      system = "x86_64-linux";
+      pkgs = import inputs.nixos-2511 {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
     {
+      packages.${system}.modelsim = pkgs.callPackage ./pkgs/modelsim { };
+
       nixosConfigurations = {
         iron = mkHost "iron";
         netherite = mkHost "netherite";
