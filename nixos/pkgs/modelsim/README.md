@@ -1,40 +1,40 @@
 # ModelSim - Intel FPGA Starter Edition (20.1.1.720)
 
-Nix package for ModelSim ASE (Altera Starter Edition), an HDL simulator for Verilog and VHDL.
+HDL simulator for Verilog and VHDL, packaged with Nix.
 
-All ModelSim binaries are 32-bit (i386). The package uses `buildFHSEnv` with `multiArch` to provide a compatible runtime environment.
+## Running
 
-The installer is fetched directly from Intel's CDN — no manual download needed.
+1. [Install Nix](https://nixos.org/download/)
+2. Run:
+   ```sh
+   nix run "github:albi005/.config?dir=nixos#modelsim"
+   ```
 
-## Usage
+This opens the `vsim` GUI. The installer (~1.4 GB) is downloaded automatically from Intel's CDN on first run.
 
-### Run directly from GitHub
-
-```sh
-nix run github:albi005/.config#modelsim
-```
-
-This launches `vsim` (the GUI). To run a specific tool:
+To run a specific tool instead:
 
 ```sh
-nix run github:albi005/.config#modelsim -- vcom -version
-nix run github:albi005/.config#modelsim -- vlog -version
+nix run "github:albi005/.config?dir=nixos#modelsim" -- vcom -version   # VHDL compiler
+nix run "github:albi005/.config?dir=nixos#modelsim" -- vlog -version   # Verilog compiler
+nix run "github:albi005/.config?dir=nixos#modelsim" -- vlib --help     # library manager
 ```
 
-### Build locally
+## Adding to a NixOS flake
 
-```sh
-nix build github:albi005/.config#modelsim
-./result/bin/vsim      # GUI
-./result/bin/vcom      # VHDL compiler
-./result/bin/vlog      # Verilog compiler
-./result/bin/vlib      # library manager
+In `flake.nix`, add the input:
+
+```nix
+inputs.modelsim.url = "github:albi005/.config?dir=nixos";
 ```
 
-### NixOS configuration
+Then in your NixOS module, add the package to your user or system packages:
 
-The package is included in the `netherite` host configuration. After `nixos-rebuild switch`, all ModelSim tools are available on `$PATH`.
-
-## Included tools
-
-The package exposes individual wrappers for all 45 ModelSim tools (`vsim`, `vcom`, `vlog`, `vlib`, `vsim`, `sccom`, etc.) in `$out/bin/`.
+```nix
+{ inputs, pkgs, ... }:
+{
+  users.users.yourname.packages = [
+    inputs.modelsim.packages.${pkgs.stdenv.hostPlatform.system}.modelsim
+  ];
+}
+```
