@@ -50,6 +50,9 @@ language-servers = [ "ty", "ruff", "jedi", "pylsp", "wakatime" ]
 [[language]]
 name = "html"
 language-servers = [ "vscode-html-language-server", "superhtml", "wakatime" ]
+[[language]]
+name = "vhdl"
+language-servers = [ "vhdl_ls", "wakatime" ]
 
 
 # Fix .pl being perl instead of prolog
