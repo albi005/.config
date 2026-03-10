@@ -5,8 +5,8 @@
 }: {
   environment = {
     variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      # EDITOR = "nvim";
+      # VISUAL = "nvim";
     };
   };
 

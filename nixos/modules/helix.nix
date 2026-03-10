@@ -5,6 +5,13 @@
   ...
 }:
 {
+  environment = {
+    variables = {
+      EDITOR = "hx";
+      VISUAL = "hx";
+    };
+  };
+
   environment.systemPackages = [
     pkgs.helix # neovim but rust (actually goated)
     pkgs.vscode-json-languageserver
