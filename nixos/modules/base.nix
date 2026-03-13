@@ -258,6 +258,8 @@
             e = "python3 $HOME/.config/scripts/print-env.py";
             ed = "nvim";
             f = "fastfetch";
+            fn = "fortnite";
+            fortnite = "systemctl reboot --boot-loader-entry auto-windows";
             h = "curl -v -o /dev/null";
             l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
             nano = "nvim";
