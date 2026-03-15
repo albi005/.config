@@ -262,8 +262,9 @@
             fortnite = "systemctl reboot --boot-loader-entry auto-windows";
             h = "curl -v -o /dev/null";
             l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
+            n = "${pkgs.mpv}/bin/mpv ${sounds.vine} --no-terminal >/dev/null 2>&1 & disown";
             nano = "nvim";
-            p = "${pkgs.mpv}/bin/mpv ${sounds.pipe} --no-terminal >/dev/null 2>&1 & disown";
+            p = "${pkgs.mpv}/bin/mpv ${sounds.pipe} --volume=40 --no-terminal >/dev/null 2>&1 & disown";
             ports = "sudo netstat -tulpn";
             rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
             rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file

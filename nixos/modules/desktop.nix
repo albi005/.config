@@ -4,6 +4,7 @@
   nixos-2505,
   inputs,
   nixos-unstable,
+  config,
   ...
 }:
 {
@@ -75,23 +76,28 @@
     nemo-with-extensions # file manager
     obsidian # notes
     remmina # remote desktop client
-    # sioyek # fancy pdf reader
-    # HACK: fix Qt OpenGL context creation on Wayland
-    (pkgs.symlinkJoin {
-      name = "sioyek-wrapped";
-      paths = [ nixos-unstable.sioyek ];
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/sioyek \
-          --set QT_QPA_PLATFORM xcb \
-          --prefix LD_LIBRARY_PATH : ${
-            lib.makeLibraryPath [
-              pkgs.libGL
-              pkgs.libglvnd
-            ]
-          }
-      '';
-    })
+    (
+      if config.networking.hostname != "redstone" then
+        sioyek # fancy pdf reader
+      else
+        # HACK: fix Qt OpenGL context creation on Wayland
+        # idk why it's only brokie on redstone
+        (pkgs.symlinkJoin {
+          name = "sioyek-wrapped";
+          paths = [ nixos-unstable.sioyek ];
+          buildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/sioyek \
+              --set QT_QPA_PLATFORM xcb \
+              --prefix LD_LIBRARY_PATH : ${
+                lib.makeLibraryPath [
+                  pkgs.libGL
+                  pkgs.libglvnd
+                ]
+              }
+          '';
+        })
+    )
     sqlitebrowser
     thunderbird # email client
     tinymist # typst language server
