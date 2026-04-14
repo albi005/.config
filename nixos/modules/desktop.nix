@@ -99,7 +99,7 @@
         })
     )
     sqlitebrowser
-    thunderbird # email client
+    nixos-2505.thunderbird # email client
     tinymist # typst language server
     totem # videos
     typst # LaTeX but rust
