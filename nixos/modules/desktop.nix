@@ -77,7 +77,7 @@
     obsidian # notes
     remmina # remote desktop client
     (
-      if config.networking.hostname != "redstone" then
+      if config.networking.hostName != "redstone" then
         sioyek # fancy pdf reader
       else
         # HACK: fix Qt OpenGL context creation on Wayland

@@ -75,6 +75,26 @@
     package = pkgs.postgresql_17_jit;
   };
 
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers = {
+      mssql = {
+        image = "mcr.microsoft.com/mssql/server:2022-latest";
+        volumes = [
+          "/var/lib/dfvdb/data:/var/opt/mssql/data"
+          "/var/lib/dfvdb/log:/var/opt/mssql/log"
+          "/var/lib/dfvdb/secrets:/var/opt/mssql/secrets"
+        ];
+        user = "root";
+        environment = {
+          ACCEPT_EULA = "Y";
+          MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
+        };
+        ports = [ "1433:1433" ];
+      };
+    };
+  };
+
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableKvm = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
@@ -95,7 +115,7 @@
     krita
     jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
-    # jetbrains.webstorm
+    jetbrains.webstorm
     ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
@@ -108,6 +128,7 @@
     # telegram-desktop
     # fio
     # kubectl-cnpg
+    vscode
   ];
 
   environment.systemPackages = [
