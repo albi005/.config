@@ -22,6 +22,10 @@
     nvf.url = "github:NotAShelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixos-unstable";
 
+    # https://github.com/NixOS/nixpkgs/pull/332296
+    # https://github.com/sweenu/nixfiles/blob/eff799274616b1c9679cf6cb73f4640617b5a0b3/flake.nix#L82
+    otbr.url = "github:NixOS/nixpkgs/pull/332296/head";
+
     # helix-editor language-server that sends wakatime (coding time tracker) heartbeats
     wakatime-ls.url = "github:mrnossiom/wakatime-ls";
     wakatime-ls.inputs.nixpkgs.follows = "nixos-unstable";
@@ -57,6 +61,8 @@
             # load module defitions
             inputs.home-manager.nixosModules.home-manager
             inputs.nvf.nixosModules.default
+            # https://github.com/sweenu/nixfiles/blob/eff799274616b1c9679cf6cb73f4640617b5a0b3/flake.nix#L236
+            "${inputs.otbr}/nixos/modules/services/home-automation/openthread-border-router.nix"
 
             ./hosts/${hostname}/configuration.nix
           ];
