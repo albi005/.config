@@ -241,4 +241,6 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   services.udev.packages = [ pkgs.headsetcontrol ];
+
+  hardware.i2c.enable = true;
 }

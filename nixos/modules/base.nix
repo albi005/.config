@@ -78,6 +78,7 @@
       pkgs.calc # short for calculator
       pkgs.cloc # Count Lines Of Code
       pkgs.cmatrix # Matrix like effect in your terminal
+      nixos-unstable.codex # OpenAI slop CLI
       pkgs.corepack # pnpm pnpx yarn yarnpkg
       pkgs.cmctl # Kubernetes cert-manager manager
       pkgs.dig # dns tools
@@ -254,7 +255,7 @@
             cfg = "cd ~/.config";
             cl = "c && l";
             colors = "curl -s https://gist.githubusercontent.com/grhbit/db6c5654fa976be33808b8b33a6eb861/raw/1875ff9b84a014214d0ce9d922654bb34001198e/24-bit-color.sh | bash";
-            dw = "dotnet watch";
+            dw = "dotnet watch --non-interactive";
             e = "python3 $HOME/.config/scripts/print-env.py";
             ed = "nvim";
             f = "fastfetch";

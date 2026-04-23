@@ -100,7 +100,7 @@
     jetbrains.idea-ultimate
     jetbrains.rider
     # android-studio
-    # jetbrains.webstorm
+    jetbrains.webstorm
     # jetbrains.phpstorm
     # jetbrains.rust-rover
     # jetbrains.clion
