@@ -42,3 +42,5 @@ sethandler <C-V> a:ide
 
 " use ctrl a as an ide shortcut in visual mode
 sethandler <C-A> v:ide
+
+sethandler <S-Tab> a:ide

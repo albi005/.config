@@ -46,10 +46,15 @@ The individual scripts contain more information on the specifications used and h
 
 ## Cheat sheets
 
-### systemd
-
 ```sh
+# reboot into windows or another boot entry
 sudo systemctl reboot --boot-loader-entry <Tab><Tab>
+
+# remove previous NixOS generations and remove unused Nix derivations
+sudo nix-collect-garbage -d
+
+# remove unused Docker containers, networks, images, build cache
+docker system prune -a
 ```
 
 ### Alacritty
@@ -62,10 +67,20 @@ ctrl+shift+f       search forward
 ctrl+shift+b       search backward
 ```
 
+### tmux cheat sheet
+
+```
+C-b ?    help
+C-b c    create window
+C-b 1    select window 1
+C-b w    window tree
+C-b d    deattach
+```
+
 ### nvim cheat sheet
 
 > [!NOTE]
-> Some of these might not work with the current config.
+> Some of these might not work with the current config. Use Helix (`hx`) instead, as it has better keybinds.
 
 ```
 d create dir
@@ -101,16 +116,6 @@ gv select last selection
 - `gl`: Show diagnostics
 - `[d`: previous diagnostic
 - `]d`: next diagnostic
-
-### tmux cheat sheet
-
-```
-C-b ?    help
-C-b c    create window
-C-b 1    select window 1
-C-b w    window tree
-C-b d    deattach
-```
 
 ## Notes
 

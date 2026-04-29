@@ -110,6 +110,7 @@
     # jetbrains.datagrip
     jetbrains.idea
     # jetbrains.phpstorm
+    (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
     nixos-unstable.jetbrains.rider
     nixos-unstable.jetbrains.goland
     krita
