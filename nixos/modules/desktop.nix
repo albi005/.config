@@ -54,63 +54,66 @@
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
 
-  users.users.albi.packages = with pkgs; [
-    alacritty # terminal emulator
-    albert # app launcher, like spotlight on macos
-    beeper # all your chats in one app
-    bluetuith # bluetooth manager tui
-    #dbeaver-bin # database client
-    desktop-file-utils # needed by something
-    ffmpeg-full
-    file-roller # archive manager
-    #gimp # paint
-    gnome-disk-utility # disk manager
-    google-chrome
-    headsetcontrol # arctis nova 7 battery check
-    #imhex # hex editor
-    #kitty # terminal emulator
-    #krita # paint but actually
-    libreoffice
-    kdePackages.kruler # screen ruler
-    loupe # image viewer
-    nemo-with-extensions # file manager
-    obsidian # notes
-    remmina # remote desktop client
-    (
-      if config.networking.hostName != "redstone" then
-        sioyek # fancy pdf reader
-      else
-        # HACK: fix Qt OpenGL context creation on Wayland
-        # idk why it's only brokie on redstone
-        (pkgs.symlinkJoin {
-          name = "sioyek-wrapped";
-          paths = [ nixos-unstable.sioyek ];
-          buildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/sioyek \
-              --set QT_QPA_PLATFORM xcb \
-              --prefix LD_LIBRARY_PATH : ${
-                lib.makeLibraryPath [
-                  pkgs.libGL
-                  pkgs.libglvnd
-                ]
-              }
-          '';
-        })
-    )
-    sqlitebrowser
-    nixos-2505.thunderbird # email client
-    tinymist # typst language server
-    totem # videos
-    typst # LaTeX but rust
-    # vscode
-    wezterm # terminal emulator
-    # wireshark
-    wofi-emoji # emoji selector
-    inputs.nur.legacyPackages."${stdenv.hostPlatform.system}".repos.Ev357.helium # chromium fork
-    zed-editor
-    inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
-  ];
+  users.users.albi.packages =
+    with pkgs;
+    [
+      alacritty # terminal emulator
+      albert # app launcher, like spotlight on macos
+      beeper # all your chats in one app
+      bluetuith # bluetooth manager tui
+      #dbeaver-bin # database client
+      desktop-file-utils # needed by something
+      ffmpeg-full
+      file-roller # archive manager
+      #gimp # paint
+      gnome-disk-utility # disk manager
+      google-chrome
+      headsetcontrol # arctis nova 7 battery check
+      #imhex # hex editor
+      #kitty # terminal emulator
+      #krita # paint but actually
+      libreoffice
+      kdePackages.kruler # screen ruler
+      loupe # image viewer
+      nemo-with-extensions # file manager
+      obsidian # notes
+      remmina # remote desktop client
+      (
+        if config.networking.hostName != "redstone" then
+          sioyek # fancy pdf reader
+        else
+          # HACK: fix Qt OpenGL context creation on Wayland
+          # idk why it's only brokie on redstone
+          (pkgs.symlinkJoin {
+            name = "sioyek-wrapped";
+            paths = [ nixos-unstable.sioyek ];
+            buildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/sioyek \
+                --set QT_QPA_PLATFORM xcb \
+                --prefix LD_LIBRARY_PATH : ${
+                  lib.makeLibraryPath [
+                    pkgs.libGL
+                    pkgs.libglvnd
+                  ]
+                }
+            '';
+          })
+      )
+      sqlitebrowser
+      nixos-2505.thunderbird # email client
+      tinymist # typst language server
+      totem # videos
+      typst # LaTeX but rust
+      # vscode
+      wezterm # terminal emulator
+      # wireshark
+      wofi-emoji # emoji selector
+      inputs.nur.legacyPackages."${stdenv.hostPlatform.system}".repos.Ev357.helium # chromium fork
+      zed-editor
+      inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
+    ]
+    ++ lib.optionals config.hardware.i2c.enable [ pkgs.ddcutil ];
 
   home-manager.users.albi =
     {
@@ -243,4 +246,5 @@
   services.udev.packages = [ pkgs.headsetcontrol ];
 
   hardware.i2c.enable = true;
+  users.users.albi.extraGroups = [ "i2c" ];
 }

@@ -21,6 +21,7 @@
 !/waybar/**
 !/wezterm/**
 
+!/AGENTS.md
 !/.gitignore
 !/README.md
 !/init.sh

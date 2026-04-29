@@ -296,6 +296,8 @@
 
           # https://github.com/ajeetdsouza/zoxide#installation
           eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+
+          . ~/.config/scripts/ddc.sh
         '';
       };
 

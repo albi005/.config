@@ -5,6 +5,7 @@
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-2505.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixos-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-t3code.url = "github:NixOS/nixpkgs?ref=pull/510466/merge";
 
     # checks for unsaved or uncommitted changes
     git-leave.url = "github:mrnossiom/git-leave";
