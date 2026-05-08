@@ -1,5 +1,6 @@
 {
   pkgs,
+  nixos-unstable,
   ...
 }:
 {
@@ -98,7 +99,7 @@
     (callPackage ../../pkgs/modelsim { }) # HDL simulator
     lens # K8s "IDE"
     jetbrains.idea-ultimate
-    jetbrains.rider
+    nixos-unstable.jetbrains.rider
     # android-studio
     jetbrains.webstorm
     # jetbrains.phpstorm
