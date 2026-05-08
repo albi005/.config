@@ -76,7 +76,10 @@
       };
     in
     {
-      packages.${system}.modelsim = pkgs.callPackage ./pkgs/modelsim { };
+      packages.${system} = {
+        modelsim = pkgs.callPackage ./pkgs/modelsim { };
+        quartus-ii-13_1 = pkgs.callPackage ./pkgs/quartus-ii-13_1 { };
+      };
 
       nixosConfigurations = {
         iron = mkHost "iron";

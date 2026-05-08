@@ -154,6 +154,7 @@
         ];
       }))
       pkgs.vscode-json-languageserver
+      pkgs.wakatime-cli # coding time tracker, might be needed when offline
       pkgs.wget
       pkgs.xclip
       pkgs.xz
