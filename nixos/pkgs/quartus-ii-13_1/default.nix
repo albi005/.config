@@ -45,6 +45,8 @@ let
     pkgs.freetype
     pkgs.glibc
     pkgs.gtk2
+    pkgs.libpng
+    pkgs.libpng12
     pkgs.libxcrypt-legacy
     pkgs.libxml2
     pkgs.ncurses5
