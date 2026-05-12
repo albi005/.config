@@ -9,7 +9,7 @@
 {
   imports = [
     ./status.nix
-    ./neovim.nix
+    # ./neovim.nix
     ./helix.nix
   ];
 
@@ -88,13 +88,13 @@
       pkgs.fd # find file by name
       pkgs.file # file info
       pkgs.gcc
-      nixos-unstable.gemini-cli # google's vibe-slop cli
+      # nixos-unstable.gemini-cli # google's vibe-slop cli
       pkgs.gh # github cli, `gh auth setup-git`
       pkgs.glow # .md reader tui
       pkgs.gnumake # `make`
-      pkgs.go
-      pkgs.gopls
-      pkgs.gotools
+      # pkgs.go
+      # pkgs.gopls
+      # pkgs.gotools
       pkgs.inetutils # dnsdomainname ftp hostname ifconfig logger ping ping6 rcp rexec rlogin rsh talk telnet tftp traceroute whois
       pkgs.iperf # speed test between hosts
       pkgs.jq # command-line JSON processor
@@ -107,8 +107,8 @@
       nixos-unstable.kubelogin-oidc # for auth to KSZK Kubernetes cluster, `kubectl oidc-login`
       nixos-unstable.kubernetes-helm # kubernetes package manager
       pkgs.lsd # ls but rust
-      pkgs.maven # java slop "build system", `mvn`
-      pkgs.netscanner # nmap tui
+      # pkgs.maven # java slop "build system", `mvn`
+      # pkgs.netscanner # nmap tui
       nixos-unstable.nil # nix ls: refactorings
       nixos-unstable.nixd # nix ls: code completion and documentation for packages and options, even shows package versions in inlay hints
       pkgs.nixfmt # official nix formatter
@@ -120,17 +120,17 @@
       pkgs.python3 # even slower slop machine
       pkgs.restic # backups
       pkgs.ripgrep # rg, find text in files
-      nixos-unstable.ruff # python formatter/linter for helix
+      nixos-unstable.ruff # minister of the Prime Minister's Office, python formatter/linter for helix
       pkgs.rustic # restic but rust
       pkgs.rustup
-      pkgs.scryer-prolog # Prolog implementation in Rust
+      # pkgs.scryer-prolog # Prolog implementation in Rust
       pkgs.sl # train
       pkgs.smartmontools # ssd health
       pkgs.sqlcmd # sql server
-      pkgs.swi-prolog-gui
+      # pkgs.swi-prolog-gui
       pkgs.systemctl-tui
       pkgs.tcpdump
-      pkgs.trippy # tracecroute tui
+      # pkgs.trippy # tracecroute tui
       nixos-unstable.ty # python ls for helix
       pkgs.typescript # duct tape for slopscript
       pkgs.unzip
@@ -267,7 +267,7 @@
             n = "${pkgs.mpv}/bin/mpv ${sounds.vine} --no-terminal >/dev/null 2>&1 & disown";
             nano = "nvim";
             p = "${pkgs.mpv}/bin/mpv ${sounds.pipe} --volume=40 --no-terminal >/dev/null 2>&1 & disown";
-            ports = "sudo netstat -tulpn";
+            ports = "sudo ${pkgs.unixtools.netstat}/bin/netstat -tulpn";
             rb = "sudo nixos-rebuild switch --flake /home/albi/.config/nixos"; # rebuild desktop; use versions from lock file
             rbs = "rb --recreate-lock-file --no-write-lock-file"; # rebuild server; use latest version of everything without updating the lock file
             rsync = "rsync --progress";

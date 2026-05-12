@@ -108,17 +108,17 @@
     # android-studio
     # jetbrains.clion
     # jetbrains.datagrip
-    jetbrains.idea
+    # jetbrains.idea
     # jetbrains.phpstorm
     (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
     (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
     nixos-unstable.jetbrains.rider
-    nixos-unstable.jetbrains.goland
+    # nixos-unstable.jetbrains.goland
     krita
-    jetbrains.ruby-mine # pek-next
+    # jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
-    jetbrains.webstorm
-    ruby
+    # jetbrains.webstorm
+    # ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171
     # vlc

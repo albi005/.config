@@ -12,7 +12,7 @@
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
-  programs.java.enable = true;
+  # programs.java.enable = true;
   programs.java.package = pkgs.jdk25;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
@@ -34,8 +34,8 @@
     cliphist # wayland clipboard manager with support for multimedia
     dunst # notification daemon https://wiki.hyprland.org/Useful-Utilities/Must-have/#a-notification-daemon
     freeze # code screenshots cli
-    elixir # functional programming language
-    erlang
+    # elixir # functional programming language
+    # erlang
     glib # gsettings
     gparted # disk partitioner
     grimblast # hyprland screenshot program https://github.com/hyprwm/contrib/blob/main/grimblast/grimblast
@@ -49,7 +49,7 @@
     nwg-look # gtk theme config gui
     pavucontrol # pulseaudio volume control, audio settings, headset/output configuration
     playerctl # media player controller
-    rofi # start menu
+    # rofi # start menu
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
@@ -65,7 +65,7 @@
     file-roller # archive manager
     #gimp # paint
     gnome-disk-utility # disk manager
-    google-chrome
+    # google-chrome
     headsetcontrol # arctis nova 7 battery check
     #imhex # hex editor
     #kitty # terminal emulator
@@ -98,17 +98,17 @@
           '';
         })
     )
-    sqlitebrowser
+    # sqlitebrowser
     nixos-2505.thunderbird # email client
-    tinymist # typst language server
+    # tinymist # typst language server
     totem # videos
-    typst # LaTeX but rust
+    # typst # LaTeX but rust
     # vscode
     wezterm # terminal emulator
     # wireshark
     wofi-emoji # emoji selector
     inputs.nur.legacyPackages."${stdenv.hostPlatform.system}".repos.Ev357.helium # chromium fork
-    zed-editor
+    # zed-editor
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
   ];
 
