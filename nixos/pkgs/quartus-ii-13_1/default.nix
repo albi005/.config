@@ -50,6 +50,8 @@ let
     pkgs.libxcrypt-legacy
     pkgs.libxml2
     pkgs.ncurses5
+    pkgs.xorg.libXtst
+    pkgs.libGL
     pkgs.zlib
   ];
 
@@ -142,7 +144,6 @@ buildFHSEnv rec {
       '')
       pkgs.dejavu_fonts
       pkgs.gnumake
-      pkgs.xorg.libXtst
     ];
 
   multiArch = true;
@@ -158,6 +159,9 @@ buildFHSEnv rec {
     progs_to_wrap=(
       "${quartus-unwrapped}"/quartus/bin/*
       "${quartus-unwrapped}"/nios2eds/bin/*
+      "${quartus-unwrapped}"/quartus/sopc_builder/bin/qsys-edit
+      "${quartus-unwrapped}"/quartus/sopc_builder/bin/qsys-generate
+      "${quartus-unwrapped}"/quartus/sopc_builder/bin/qsys-script
     )
 
     wrapper=$out/bin/${pname}
@@ -170,6 +174,9 @@ buildFHSEnv rec {
       progs_wrapped+=("$wrapped")
       {
         echo "#!${runtimeShell}"
+        echo "export _JAVA_OPTIONS=\"-Dsun.java2d.opengl=false -Dsun.java2d.xrender=false -Dswing.volatileImageBufferEnabled=false -Dawt.toolkit=sun.awt.motif.MToolkit\""
+        echo "export AWT_TOOLKIT=MToolkit"
+        echo "export XLIB_SKIP_ARGB_VISUALS=1"
         echo "exec $wrapper $prog \"\$@\""
       } > "$wrapped"
     done
