@@ -281,7 +281,7 @@
           };
 
         bashrcExtra = ''
-          export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.npm-packages/bin";
+          export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.bun/bin:/home/albi/.npm-packages/bin";
           export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
           export NODE_PATH=~/.npm-packages/lib/node_modules;
 

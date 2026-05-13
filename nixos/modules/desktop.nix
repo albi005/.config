@@ -49,7 +49,7 @@
     nwg-look # gtk theme config gui
     pavucontrol # pulseaudio volume control, audio settings, headset/output configuration
     playerctl # media player controller
-    # rofi # start menu
+    rofi # clipboard
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
   ];
