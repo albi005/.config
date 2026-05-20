@@ -103,9 +103,23 @@ let
 
       rm -rf "$out/uninstall" "$out/logs"
 
+      # Quartus' qenv.sh probes /proc/cpuinfo for SSE support but the
+      # check fails inside the FHS environment. Stub it out.
       if [ -f "$out/quartus/adm/qenv.sh" ]; then
         substituteInPlace "$out/quartus/adm/qenv.sh" \
           --replace-fail 'grep sse /proc/cpuinfo > /dev/null 2>&1' ':'
+      fi
+
+      # Nios II Eclipse ships with tiny JVM heap limits (40m/384m) that
+      # cause "Java heap space" crashes the moment any real workspace is
+      # loaded. Bump them to usable values and also increase MaxPermSize.
+      # NOTE: the bundled JRE is 32-bit, so -Xmx is capped at ~1536m;
+      # anything higher causes "Could not reserve enough space" on start.
+      if [ -f "$out/nios2eds/bin/eclipse_nios2/eclipse.ini" ]; then
+        substituteInPlace "$out/nios2eds/bin/eclipse_nios2/eclipse.ini" \
+          --replace-fail '-Xms40m' '-Xms256m' \
+          --replace-fail '-Xmx384m' '-Xmx1536m' \
+          --replace-fail '-XX:MaxPermSize=256m' '-XX:MaxPermSize=384m'
       fi
 
       runHook postInstall
@@ -174,6 +188,9 @@ buildFHSEnv rec {
       progs_wrapped+=("$wrapped")
       {
         echo "#!${runtimeShell}"
+        # Force the JVM to use the Motif AWT toolkit and disable
+        # XRender-based Java2D rendering. Without these the Qsys
+        # window is broken inside the FHS environment.
         echo "export _JAVA_OPTIONS=\"-Dsun.java2d.opengl=false -Dsun.java2d.xrender=false -Dswing.volatileImageBufferEnabled=false -Dawt.toolkit=sun.awt.motif.MToolkit\""
         echo "export AWT_TOOLKIT=MToolkit"
         echo "export XLIB_SKIP_ARGB_VISUALS=1"
