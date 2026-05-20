@@ -25,20 +25,6 @@
     port = 5580;
   };
 
-  services.home-assistant = {
-    enable = true;
-    openFirewall = true;
-    extraComponents = [
-      "matter"
-      "thread"
-      "otbr"
-      "homeassistant_hardware"
-    ];
-    config = {
-      default_config = { };
-    };
-  };
-
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
@@ -99,10 +85,10 @@
     (callPackage ../../pkgs/modelsim { }) # HDL simulator
     (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
     lens # K8s "IDE"
-    jetbrains.idea-ultimate
+    # jetbrains.idea-ultimate
     nixos-unstable.jetbrains.rider
     # android-studio
-    jetbrains.webstorm
+    # jetbrains.webstorm
     # jetbrains.phpstorm
     # jetbrains.rust-rover
     # jetbrains.clion
