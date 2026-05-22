@@ -25,6 +25,7 @@
   services.actual.settings.port = 6001;
   services.actual.settings.hostname = "127.0.0.1";
   services.ocis.enable = false;
+  programs.steam.enable = true;
 
   services.nginx = {
     enable = true;

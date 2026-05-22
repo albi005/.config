@@ -76,6 +76,7 @@
       pkgs.bottom # task manager, `btm`
       pkgs.bun # js but based and fast af
       pkgs.calc # short for calculator
+      pkgs.cargo # rust package manager/build system
       pkgs.cloc # Count Lines Of Code
       pkgs.cmatrix # Matrix like effect in your terminal
       nixos-unstable.codex # OpenAI slop CLI
@@ -122,7 +123,8 @@
       pkgs.ripgrep # rg, find text in files
       nixos-unstable.ruff # minister of the Prime Minister's Office, python formatter/linter for helix
       pkgs.rustic # restic but rust
-      pkgs.rustup
+      pkgs.rustc # rust compiler
+      # pkgs.rustup
       # pkgs.scryer-prolog # Prolog implementation in Rust
       pkgs.sl # train
       pkgs.smartmontools # ssd health
@@ -281,7 +283,7 @@
           };
 
         bashrcExtra = ''
-          export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.bun/bin:/home/albi/.npm-packages/bin";
+          export PATH="$PATH:/home/albi/.dotnet/tools:/home/albi/.cargo/bin:/home/albi/.bun/bin:/home/albi/.npm-packages/bin";
           export PS1="\\[\\033[01;1m\\]\\u@\\h \\[\\033[01;33m\\]\\w \\[\\033[01;35m\\]\$ \\[\\033[00m\\]";
           export NODE_PATH=~/.npm-packages/lib/node_modules;
 
