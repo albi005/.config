@@ -12,7 +12,7 @@
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
-  # programs.java.enable = true;
+  programs.java.enable = true;
   programs.java.package = pkgs.jdk25;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
@@ -46,7 +46,7 @@
     libdbusmenu-gtk3 # needed by ags
     libnotify # used by some apps to send notifications
     lxqt.lxqt-policykit # polkit frontend https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent https://reddit.com/r/NixOS/comments/171mexa/comment/k3rpftn
-    nwg-look # gtk theme config gui
+    # nwg-look # gtk theme config gui
     pavucontrol # pulseaudio volume control, audio settings, headset/output configuration
     playerctl # media player controller
     rofi # clipboard
@@ -61,7 +61,7 @@
     bluetuith # bluetooth manager tui
     #dbeaver-bin # database client
     desktop-file-utils # needed by something
-    ffmpeg-full
+    # ffmpeg-full
     file-roller # archive manager
     #gimp # paint
     gnome-disk-utility # disk manager
@@ -70,7 +70,7 @@
     #imhex # hex editor
     #kitty # terminal emulator
     #krita # paint but actually
-    libreoffice
+    # libreoffice
     kdePackages.kruler # screen ruler
     loupe # image viewer
     nemo-with-extensions # file manager

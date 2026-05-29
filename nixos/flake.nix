@@ -49,11 +49,17 @@
                 inputs = inputs;
                 nixos-unstable = import inputs.nixos-unstable {
                   system = system;
-                  config.allowUnfree = true;
+                  config = {
+                    allowUnfree = true;
+                    android_sdk.accept_license = true;
+                  };
                 };
                 nixos-2505 = import inputs.nixos-2505 {
                   system = system;
-                  config.allowUnfree = true;
+                  config = {
+                    allowUnfree = true;
+                    android_sdk.accept_license = true;
+                  };
                 };
               };
             }

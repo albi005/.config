@@ -10,8 +10,9 @@
     ../../modules/desktop.nix
     ../../modules/dotnet.nix
     ../../modules/media.nix
-    ../../modules/scanning.nix
+    # ../../modules/scanning.nix
     ../../modules/dev.nix
+    ../../modules/flutter-dev.nix
   ];
 
   # services.k3s.enable = true;
@@ -21,11 +22,14 @@
   networking.hostId = "d7e8126d"; # needed by zfs
   #networking.firewall.allowedTCPPorts = [ 80 3210 ];
 
-  services.actual.enable = true;
+  # services.actual.enable = true;
   services.actual.settings.port = 6001;
   services.actual.settings.hostname = "127.0.0.1";
-  services.ocis.enable = false;
-  programs.steam.enable = true;
+  # services.ocis.enable = false;
+  # programs.steam.enable = true;
+  programs.adb.enable = true;
+
+  nixpkgs.config.android_sdk.accept_license = true;
 
   services.nginx = {
     enable = true;
@@ -64,7 +68,7 @@
   };
 
   services.postgresql = {
-    enable = true;
+    # enable = true;
     enableTCPIP = true;
     ensureDatabases = [ "albi" ];
     ensureUsers = [
@@ -79,20 +83,20 @@
   virtualisation.oci-containers = {
     backend = "docker";
     containers = {
-      mssql = {
-        image = "mcr.microsoft.com/mssql/server:2022-latest";
-        volumes = [
-          "/var/lib/dfvdb/data:/var/opt/mssql/data"
-          "/var/lib/dfvdb/log:/var/opt/mssql/log"
-          "/var/lib/dfvdb/secrets:/var/opt/mssql/secrets"
-        ];
-        user = "root";
-        environment = {
-          ACCEPT_EULA = "Y";
-          MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
-        };
-        ports = [ "1433:1433" ];
-      };
+      # mssql = {
+      #   image = "mcr.microsoft.com/mssql/server:2022-latest";
+      #   volumes = [
+      #     "/var/lib/dfvdb/data:/var/opt/mssql/data"
+      #     "/var/lib/dfvdb/log:/var/opt/mssql/log"
+      #     "/var/lib/dfvdb/secrets:/var/opt/mssql/secrets"
+      #   ];
+      #   user = "root";
+      #   environment = {
+      #     ACCEPT_EULA = "Y";
+      #     MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
+      #   };
+      #   ports = [ "1433:1433" ];
+      # };
     };
   };
 
@@ -103,19 +107,20 @@
 
   users.users.albi.packages = with pkgs; [
     lens
+    libreoffice-qt-fresh
     argocd
-    nixos-unstable.renovate
-    nixos-unstable.updatecli
-    # android-studio
+    # nixos-unstable.renovate
+    # nixos-unstable.updatecli
+    nixos-unstable.android-studio
     # jetbrains.clion
     # jetbrains.datagrip
     # jetbrains.idea
     # jetbrains.phpstorm
-    (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
-    (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
+    # (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
+    # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
     nixos-unstable.jetbrains.rider
     # nixos-unstable.jetbrains.goland
-    krita
+    # krita
     # jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
     # jetbrains.webstorm
@@ -132,6 +137,7 @@
     # fio
     # kubectl-cnpg
     vscode
+    nixos-unstable.google-chrome
   ];
 
   environment.systemPackages = [

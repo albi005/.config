@@ -6,6 +6,7 @@
   nixos-unstable,
   ...
 }:
+
 {
   imports = [
     ./status.nix
@@ -65,6 +66,7 @@
     # /etc/profile sources /nix/store/*-set-environment
     variables = {
       NIXPKGS_ALLOW_UNFREE = "1";
+      JAVA_HOME = "${pkgs.jdk17}";
     };
 
     systemPackages = [
@@ -171,8 +173,6 @@
 
   programs.direnv.enable = true;
   programs.git.enable = true;
-  # programs.java.enable = true;
-  # programs.java.package = pkgs.jdk21;
   programs.nix-ld.enable = true; # enables running dynamic binaries that haven't been patched for nixos
   programs.nix-ld.package = pkgs.nix-ld;
   services.tailscale.enable = true; # p2p vpn
@@ -226,6 +226,7 @@
       "docker"
       "vboxusers"
       "wireshark"
+      "adbusers"
     ];
     packages = [ ];
   };
