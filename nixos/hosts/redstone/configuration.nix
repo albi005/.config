@@ -8,7 +8,7 @@
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/desktop.nix
-    ../../modules/dotnet.nix
+    # ../../modules/dotnet.nix
     ../../modules/media.nix
     # ../../modules/scanning.nix
     ../../modules/dev.nix
@@ -107,18 +107,18 @@
 
   users.users.albi.packages = with pkgs; [
     lens
-    libreoffice-qt-fresh
-    argocd
+    # libreoffice-qt-fresh
+    # argocd
     # nixos-unstable.renovate
     # nixos-unstable.updatecli
-    nixos-unstable.android-studio
+    # nixos-unstable.android-studio
     # jetbrains.clion
     # jetbrains.datagrip
     # jetbrains.idea
     # jetbrains.phpstorm
     # (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
     # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
-    nixos-unstable.jetbrains.rider
+    # nixos-unstable.jetbrains.rider
     # nixos-unstable.jetbrains.goland
     # krita
     # jetbrains.ruby-mine # pek-next
@@ -136,8 +136,8 @@
     # telegram-desktop
     # fio
     # kubectl-cnpg
-    vscode
-    nixos-unstable.google-chrome
+    # vscode
+    # nixos-unstable.google-chrome
   ];
 
   environment.systemPackages = [

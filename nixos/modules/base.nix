@@ -84,6 +84,7 @@
       nixos-unstable.codex # OpenAI slop CLI
       pkgs.corepack # pnpm pnpx yarn yarnpkg
       pkgs.cmctl # Kubernetes cert-manager manager
+      pkgs.difftastic # structural diffs
       pkgs.dig # dns tools
       pkgs.dua # 🐐 Disk Usage Analyzer tui, `dua i`
       pkgs.exiftool # image metadata reader
@@ -326,6 +327,9 @@
           };
         };
       };
+
+      # programs.difftastic.enable = true;
+      # programs.difftastic.git.enable = true;
 
       # DONT'T TOUCH
       home.stateVersion = "23.05";
