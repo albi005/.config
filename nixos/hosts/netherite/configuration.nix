@@ -31,7 +31,7 @@
   # virtualisation.virtualbox.host.enableKvm = true;
   # virtualisation.virtualbox.host.addNetworkInterface = false;
 
-  # programs.adb.enable = true;
+  programs.adb.enable = true;
 
   services.mysql = {
     enable = true;
@@ -82,12 +82,12 @@
   networking.hostName = "netherite";
 
   users.users.albi.packages = with pkgs; [
-    (callPackage ../../pkgs/modelsim { }) # HDL simulator
-    (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
+    # (callPackage ../../pkgs/modelsim { }) # HDL simulator
+    # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
     lens # K8s "IDE"
     # jetbrains.idea-ultimate
     nixos-unstable.jetbrains.rider
-    # android-studio
+    nixos-unstable.android-studio
     # jetbrains.webstorm
     # jetbrains.phpstorm
     # jetbrains.rust-rover
