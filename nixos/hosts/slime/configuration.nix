@@ -30,7 +30,7 @@
         user = "root";
         environment = {
           ACCEPT_EULA = "Y";
-          MSSQL_SA_PASSWORD = "<YourStrong!Passw0rd>";
+          # MSSQL_SA_PASSWORD = "";
         };
         ports = [ "1433:1433" ];
       };
