@@ -14,6 +14,11 @@
     ./helix.nix
   ];
 
+  programs.nh = {
+    enable = true;
+    flake = "/home/albi/.config/nixos";
+  };
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
