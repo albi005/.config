@@ -35,7 +35,7 @@
     jellyfin.enable = true;
     jellyfin.group = "media";
 
-    jellyseerr.enable = true;
+    seerr.enable = true;
 
     sonarr.enable = true;
     sonarr.group = "media";

@@ -2,9 +2,8 @@
 {
   environment.systemPackages = [
     nixos-unstable.android-studio
+    nixos-unstable.android-tools
     pkgs.scrcpy
     nixos-unstable.jadx
   ];
-
-  programs.adb.enable = true;
 }
