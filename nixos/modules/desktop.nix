@@ -46,7 +46,7 @@
     libdbusmenu-gtk3 # needed by ags
     libnotify # used by some apps to send notifications
     lxqt.lxqt-policykit # polkit frontend https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent https://reddit.com/r/NixOS/comments/171mexa/comment/k3rpftn
-    # nwg-look # gtk theme config gui
+    nwg-look # gtk theme config gui
     pavucontrol # pulseaudio volume control, audio settings, headset/output configuration
     playerctl # media player controller
     rofi # clipboard
@@ -140,7 +140,9 @@
       # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation
       # catppuccin/gtk joever: https://github.com/catppuccin/gtk/issues/262
       gtk = {
-        enable = true;
+        enable = false;
+
+        # https://nixos.org/manual/nixos/stable/#sec-gnome-icons-and-gtk-themes
         theme = {
           package = pkgs.catppuccin-gtk.override {
             accents = [ "green" ];
@@ -153,6 +155,7 @@
           package = pkgs.adwaita-icon-theme;
           name = "Adwaita";
         };
+        gtk4.theme = null;
       };
 
       home.pointerCursor = {
@@ -164,19 +167,19 @@
       };
 
       # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
-      xdg.configFile = {
-        "gtk-4.0/assets".source =
-          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-        "gtk-4.0/gtk.css".source =
-          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-        "gtk-4.0/gtk-dark.css".source =
-          "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-      };
+      # xdg.configFile = {
+      #   "gtk-4.0/assets".source =
+      #     "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+      #   "gtk-4.0/gtk.css".source =
+      #     "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+      #   "gtk-4.0/gtk-dark.css".source =
+      #     "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+      # };
     };
 
   qt.enable = true;
-  qt.style = "adwaita-dark";
-  qt.platformTheme = "gnome";
+  # qt.style = "adwaita-dark";
+  # qt.platformTheme = "gnome";
 
   fonts = {
     enableDefaultPackages = true;
