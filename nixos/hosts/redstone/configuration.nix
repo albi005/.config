@@ -8,11 +8,12 @@
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/desktop.nix
-    # ../../modules/dotnet.nix
+    ../../modules/dotnet.nix
     ../../modules/media.nix
-    # ../../modules/scanning.nix
+    ../../modules/scanning.nix
     ../../modules/dev.nix
-    ../../modules/flutter-dev.nix
+    # ../../modules/flutter-dev.nix
+    ../../modules/android-dev.nix
   ];
 
   # services.k3s.enable = true;
@@ -27,9 +28,6 @@
   services.actual.settings.hostname = "127.0.0.1";
   # services.ocis.enable = false;
   # programs.steam.enable = true;
-  programs.adb.enable = true;
-
-  nixpkgs.config.android_sdk.accept_license = true;
 
   services.nginx = {
     enable = true;
@@ -111,14 +109,13 @@
     # argocd
     # nixos-unstable.renovate
     # nixos-unstable.updatecli
-    # nixos-unstable.android-studio
     # jetbrains.clion
     # jetbrains.datagrip
     # jetbrains.idea
     # jetbrains.phpstorm
     # (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
     # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
-    # nixos-unstable.jetbrains.rider
+    nixos-unstable.jetbrains.rider
     # nixos-unstable.jetbrains.goland
     # krita
     # jetbrains.ruby-mine # pek-next
