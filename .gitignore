@@ -27,14 +27,14 @@
 !/initinit.sh
 !/mimeapps.list
 
-# ignore
+# exclude
 .direnv
 JetBrains
 __pycache__
 ags/README.md
 ags/types
 albert/config.lock
-hypr/host.conf
+hypr/host.lua
 hypr/hyprpaper.conf
 result
 recyclarr

@@ -16,6 +16,7 @@
     pkgs.elixir-ls
     pkgs.helix # neovim but rust (actually goated)
     nixos-unstable.helm-ls
+    pkgs.lua-language-server # hyprland config
     pkgs.protols # Protocol Buffers Language Server (.proto files)
     pkgs.typescript-language-server
     pkgs.vhdl-ls # Very High Speed Integrated Circuit Hardware Description Language

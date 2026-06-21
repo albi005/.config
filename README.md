@@ -120,8 +120,12 @@ gv select last selection
 ## Notes
 
 - Before editing the `ags` config run `ags init` to set up JavaScript types
-- linux > systemd > display manager (ly) > desktop manager (uwsm) > window manager (Hyprland)
-- display manager == login manager
+- Desktop layers:
+  1. Linux (Kernel)
+  2. systemd (Init System)
+  3. Ly (Display Manager == Login Manger)
+  4. uwsm (Session Manager)
+  5. Hyprland (Wayland Compositor)
 
 ## Bookmarks
 

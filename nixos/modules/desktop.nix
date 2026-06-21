@@ -7,13 +7,18 @@
   config,
   ...
 }:
+let
+  nixos-config = config;
+in
 {
   hardware.bluetooth.enable = true; # use with bluetuith
   programs.dconf.enable = true; # gnome settings backend https://nixos.wiki/wiki/Home_Manager#I_cannot_set_GNOME_or_Gtk_themes_via_home-manager
   # programs.firefox.enable = true;
   programs.hyprland.enable = true; # Tiling compositor with the looks
   programs.hyprland.withUWSM = true; # UWSM is the thing that provides the .desktop that is started by a display manager. UWSM handles session stuff https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
-  services.displayManager.ly.enable = true;  programs.java.enable = true;
+  services.displayManager.ly.enable = true;
+  # services.desktopManager.plasma6.enable = true; # enable if you need x11. switch using login manager after exiting hyprland
+  programs.java.enable = true;
   programs.java.package = pkgs.jdk25;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
@@ -56,6 +61,8 @@
 
     gnome-tweaks
     dconf-editor
+    quickshell
+    kdePackages.qtdeclarative # qmlls
   ];
 
   users.users.albi.packages = with pkgs; [
@@ -127,7 +134,7 @@
     }:
     {
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
-      home.file.".config/hypr/host.conf".text = lib.mkDefault "";
+      home.file.".config/hypr/host.lua".text = lib.mkDefault "";
 
       home.file.".config/hypr/hyprpaper.conf".text =
         let
@@ -137,10 +144,23 @@
           };
         in
         ''
-          preload = ${wallpaperPath}
-          wallpaper = ,${wallpaperPath}
+          wallpaper {
+            monitor =
+            path = ${wallpaperPath}
+          }
           splash = false
         '';
+
+      # https://wiki.hypr.land/Configuring/Start/#autocompletions
+      home.file.".config/.luarc.json".text = ''
+        {
+          "workspace": {
+            "library": [
+              "${nixos-config.programs.hyprland.package}/share/hypr/stubs"
+            ]
+          }
+        }
+      '';
 
       # https://github.com/catppuccin/nix/blob/main/modules/home-manager/gtk.nix
       # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
@@ -184,7 +204,7 @@
       # };
     };
 
-  qt.enable = false;
+  # qt.enable = false;
   # qt.style = "adwaita-dark";
   # qt.platformTheme = "gnome";
 
@@ -207,11 +227,9 @@
     };
   };
 
-  # TODO: fix exit dispatcher!
-
-  services.greetd.enable = false;
+  # services.greetd.enable = false;
   programs.regreet = {
-    enable = false;
+    # enable = false;
     theme = {
       package = pkgs.catppuccin-gtk.override {
         accents = [ "green" ];

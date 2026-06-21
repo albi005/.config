@@ -53,7 +53,9 @@ language-servers = [ "vscode-html-language-server", "superhtml", "wakatime" ]
 [[language]]
 name = "vhdl"
 language-servers = [ "vhdl_ls", "wakatime" ]
-
+[[language]]
+name = "lua"
+language-servers = [ "lua-language-server", "wakatime" ]
 
 # Fix .pl being perl instead of prolog
 # https://github.com/jamesnvc/lsp_server#helix

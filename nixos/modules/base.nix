@@ -18,6 +18,7 @@
     enable = true;
     flake = "/home/albi/.config/nixos";
   };
+  nix.package = pkgs.lixPackageSets.stable.lix;
 
   nixpkgs.config.allowUnfree = true;
   nix = {
