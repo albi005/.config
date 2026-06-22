@@ -136,20 +136,20 @@ in
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.lua".text = lib.mkDefault "";
 
-      home.file.".config/hypr/hyprpaper.conf".text =
-        let
-          wallpaperPath = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
-            sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
-          };
-        in
-        ''
-          wallpaper {
-            monitor =
-            path = ${wallpaperPath}
-          }
-          splash = false
-        '';
+      # home.file.".config/hypr/hyprpaper.conf".text =
+      #   let
+      #     wallpaperPath = pkgs.fetchurl {
+      #       url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nix-wallpaper-dracula.png";
+      #       sha256 = "sha256-SykeFJXCzkeaxw06np0QkJCK28e0k30PdY8ZDVcQnh4=";
+      #     };
+      #   in
+      #   ''
+      #     wallpaper {
+      #       monitor =
+      #       path = ${wallpaperPath}
+      #     }
+      #     splash = false
+      #   '';
 
       # https://wiki.hypr.land/Configuring/Start/#autocompletions
       home.file.".config/.luarc.json".text = ''
@@ -166,44 +166,59 @@ in
       # names changed to lowercase: https://github.com/catppuccin/nix/pull/239
       # https://github.com/catppuccin/gtk/blob/23b52b5/docs/USAGE.md#manual-installation
       # catppuccin/gtk joever: https://github.com/catppuccin/gtk/issues/262
-      gtk = {
-        enable = false;
+      # gtk = {
+      #   enable = false;
 
-        # https://nixos.org/manual/nixos/stable/#sec-gnome-icons-and-gtk-themes
-        theme = {
-          package = pkgs.catppuccin-gtk.override {
-            accents = [ "green" ];
-            size = "compact";
-            variant = "mocha";
-          };
-          name = "catppuccin-mocha-green-compact";
-        };
-        iconTheme = {
-          package = pkgs.adwaita-icon-theme;
-          name = "Adwaita";
-        };
-        gtk4.theme = null;
-      };
+      #   # https://nixos.org/manual/nixos/stable/#sec-gnome-icons-and-gtk-themes
+      #   theme = {
+      #     package = pkgs.catppuccin-gtk.override {
+      #       accents = [ "green" ];
+      #       size = "compact";
+      #       variant = "mocha";
+      #     };
+      #     name = "catppuccin-mocha-green-compact";
+      #   };
+      #   iconTheme = {
+      #     package = pkgs.adwaita-icon-theme;
+      #     name = "Adwaita";
+      #   };
+      #   gtk4.theme = null;
+      # };
 
-      home.pointerCursor = {
-        gtk.enable = true;
-        x11.enable = true;
-        package = pkgs.catppuccin-cursors.mochaLight;
-        name = "catppuccin-mocha-light-cursors";
-        size = 24;
-      };
-
-      # symlink the `~/.config/gtk-4.0/` folder - https://github.com/catppuccin/gtk#for-nix-users
-      # xdg.configFile = {
-      #   "gtk-4.0/assets".source =
-      #     "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      #   "gtk-4.0/gtk.css".source =
-      #     "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      #   "gtk-4.0/gtk-dark.css".source =
-      #     "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+      # home.pointerCursor = {
+      #   # gtk.enable = true;
+      #   # x11.enable = true;
+      #   package = pkgs.catppuccin-cursors.mochaLight;
+      #   name = "catppuccin-mocha-light-cursors";
+      #   size = 24;
       # };
     };
 
+  # https://nix-community.github.io/stylix/configuration.html
+  stylix.enable = true;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  stylix.polarity = "dark";
+  stylix.fonts = {
+    serif = {
+      package = pkgs.roboto-serif;
+      name = "Roboto Serif";
+    };
+    sansSerif = {
+      package = pkgs.cantarell-fonts;
+      name = "Cantarell";
+    };
+    monospace = {
+      package = pkgs.cascadia-code;
+      name = "Cascadia Code";
+    };
+  };
+  stylix.image = config.lib.stylix.pixel "base00";
+  home-manager.sharedModules = [
+    {
+       stylix.targets.hyprpaper.enable = true;
+       services.hyprpaper.enable = true;
+    }
+  ];
   # qt.enable = false;
   # qt.style = "adwaita-dark";
   # qt.platformTheme = "gnome";
@@ -220,11 +235,11 @@ in
       roboto-slab
       vista-fonts # calibri
     ];
-    fontconfig.defaultFonts = {
-      sansSerif = [ "Cantarell" ];
-      serif = [ "Roboto Slab" ];
-      monospace = [ "Cascadia Code" ];
-    };
+    # fontconfig.defaultFonts = {
+    #   sansSerif = [ "Cantarell" ];
+    #   serif = [ "Roboto Slab" ];
+    #   monospace = [ "Cascadia Code" ];
+    # };
   };
 
   # services.greetd.enable = false;

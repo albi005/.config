@@ -3,8 +3,8 @@ local terminal = 'alacritty'
 local browser = 'zen-beta'
 -- local browser = "helium"
 
-hl.env('TERMINAL', '$terminal')
-hl.env('BROWSER', '$browser')
+hl.env('TERMINAL', terminal)
+hl.env('BROWSER', browser)
 
 --make obsidian use wayland
 -- https://www.electronjs.org/docs/latest/api/environment-variables#electron_ozone_platform_hint-linux
@@ -292,7 +292,7 @@ hl.bind('SUPER + K', hl.dsp.focus{ direction = 'up' })
 hl.bind('SUPER + J', hl.dsp.focus{ direction = 'down' })
 
 -- switch between vertical/horizontal split for windows
-hl.bind('SUPER + U', hl.dsp.layout('togglesplit'))
+hl.bind('SUPER + U', hl.dsp.layout'togglesplit')
 
 -- Switch workspaces with mainMod + [0-9]
 hl.bind('SUPER + 1', hl.dsp.focus{ workspace = 1 })
@@ -328,10 +328,10 @@ hl.bind('SUPER + mouse_up', hl.dsp.focus{ workspace = 'e-1' })
 hl.bind('SUPER + mouse:272', hl.dsp.window.drag())
 hl.bind('SUPER + mouse:273', hl.dsp.window.resize())
 
-    -- Set up media keys
-    -- https://www.reddit.com/r/hyprland/comments/1707yb8/comment/k3j8jgn
-    -- l -> do stuff even when locked
-    -- e -> repeats when key is held
+-- Set up media keys
+-- https://www.reddit.com/r/hyprland/comments/1707yb8/comment/k3j8jgn
+-- l -> do stuff even when locked
+-- e -> repeats when key is held
 hl.bind('XF86AudioMute', hl.dsp.exec_cmd'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle', { locked = true })
 hl.bind('XF86AudioPlay', hl.dsp.exec_cmd'playerctl play-pause', { locked = true })
 hl.bind('XF86AudioNext', hl.dsp.exec_cmd'playerctl next', { locked = true })
@@ -343,7 +343,7 @@ hl.bind('SUPER+CTRL+ALT+SHIFT + L', hl.dsp.exec_cmd'xdg-open https://linkedin.co
 -- Screenshots
 -- PrtScn: everything
 -- Shift + PrtScn: select area or window
-hl.env('XDG_SCREENSHOTS_DIR', '$HOME/Pictures/Screenshots')
+hl.env('XDG_SCREENSHOTS_DIR', os.getenv'HOME' .. '/Pictures/Screenshots')
 hl.bind('Print', hl.dsp.exec_cmd'mkdir -p $XDG_SCREENSHOTS_DIR && grimblast copysave')
 hl.bind('SHIFT + Print', hl.dsp.exec_cmd'mkdir -p $XDG_SCREENSHOTS_DIR && grimblast copysave area')
 hl.bind('SUPER + SHIFT + S', hl.dsp.exec_cmd'mkdir -p $XDG_SCREENSHOTS_DIR && grimblast copysave area')

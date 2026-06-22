@@ -1,5 +1,5 @@
 {
-  description = "albi's nix config";
+  description = "Albi's nix config";
 
   inputs = {
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -15,6 +15,10 @@
     # Option search: https://home-manager-options.extranix.com/
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixos-2605";
+
+    # nix-based theming https://nix-community.github.io/stylix/installation.html#nixos
+    stylix.url = "github:nix-community/stylix/release-26.05";
+    stylix.inputs.nixpkgs.follows = "nixos-2605";
 
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixos-unstable";
@@ -71,6 +75,7 @@
 
             # load module defitions
             inputs.home-manager.nixosModules.home-manager
+            inputs.stylix.nixosModules.stylix
             inputs.nvf.nixosModules.default
 
             # apply host-specific entry-point module
