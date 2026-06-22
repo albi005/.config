@@ -133,6 +133,8 @@ in
       ...
     }:
     {
+      programs.fuzzel.enable = true;
+
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.lua".text = lib.mkDefault "";
 
