@@ -13,7 +13,7 @@
   };
 
   environment.systemPackages = [
-    pkgs.bash-bash-language-server
+    pkgs.bash-language-server
     pkgs.elixir-ls
     pkgs.helix # neovim but rust (actually goated)
     nixos-unstable.helm-ls
@@ -22,6 +22,7 @@
     pkgs.typescript-language-server
     pkgs.vhdl-ls # Very High Speed Integrated Circuit Hardware Description Language
     pkgs.vscode-json-languageserver
+    inputs.self.packages."${pkgs.stdenv.hostPlatform.system}".kcl-language-server
     inputs.wakatime-ls.packages."${pkgs.stdenv.hostPlatform.system}".default # coding-time tracker language-server for helix
     pkgs.yaml-language-server
   ];

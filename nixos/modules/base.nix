@@ -110,6 +110,7 @@
       pkgs.jq # command-line JSON processor
       pkgs.k3d # instant Kubernetes clusters `k3d cluster create mycluster --image rancher/k3s:v1.34.3-k3s1`
       nixos-unstable.k9s # Kubernetes TUI
+      nixos-unstable.kcl # fancy language for kubernetes configuration
       nixos-unstable.kubecolor # kubectl but with colors
       nixos-unstable.kubectl # Kubernetes CLI
       nixos-unstable.kubectl-cnpg # cloud native postgres manager cli, `kubectl cnpg`

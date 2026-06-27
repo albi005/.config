@@ -63,6 +63,7 @@ in
     dconf-editor
     quickshell
     kdePackages.qtdeclarative # qmlls
+    vscode
   ];
 
   users.users.albi.packages = with pkgs; [
