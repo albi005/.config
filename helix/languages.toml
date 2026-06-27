@@ -62,3 +62,14 @@ language-servers = [ "lua-language-server", "wakatime" ]
 [[language]]
 name = "perl"
 file-types = ["perl"]
+
+# https://www.kcl-lang.io/docs/next/tools/Ide/helix
+[[language]]
+name = "kcl"
+scope = "source.k"
+file-types = ["kcl", { glob = "*.k" } ]
+roots = ["kcl.mod", "kcl.yaml"]
+language-servers = ["kcl-lsp"]
+
+[language-server.kcl-lsp]
+command = "kcl-language-server"

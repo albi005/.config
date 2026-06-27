@@ -13,6 +13,7 @@
   };
 
   environment.systemPackages = [
+    pkgs.bash-bash-language-server
     pkgs.elixir-ls
     pkgs.helix # neovim but rust (actually goated)
     nixos-unstable.helm-ls

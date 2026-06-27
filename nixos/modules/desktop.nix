@@ -214,11 +214,16 @@ in
       name = "Cascadia Code";
     };
   };
+  stylix.cursor = {
+    package = pkgs.catppuccin-cursors.mochaLight;
+    name = "catppuccin-mocha-light-cursors";
+    size = 24;
+  };
   stylix.image = config.lib.stylix.pixel "base00";
   home-manager.sharedModules = [
     {
-       stylix.targets.hyprpaper.enable = true;
-       services.hyprpaper.enable = true;
+      stylix.targets.hyprpaper.enable = true;
+      services.hyprpaper.enable = true;
     }
   ];
   # qt.enable = false;
