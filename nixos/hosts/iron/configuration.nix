@@ -12,6 +12,10 @@
 
   networking.hostName = "iron";
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "docker-28.5.2"
+  ];
+
   boot.loader.systemd-boot.enable = false;
 
   # services.statusApi.enable = true;
@@ -311,11 +315,9 @@
     matter-server = {
       enable = true;
     };
-    # defined in module imported from a nixpkgs PR
     openthread-border-router = {
       enable = true;
-      package = inputs.otbr.legacyPackages.${pkgs.stdenv.hostPlatform.system}.openthread-border-router;
-      backboneInterface = "enp3s0";
+      backboneInterfaces = [ "enp3s0" ];
       logLevel = "notice";
       rest.listenAddress = "::";
       web = {
@@ -368,6 +370,7 @@
         # "open_router"
         "otbr"
         # "overkiz" # needed for somfy
+        "reolink"
         "shelly"
         # "somfy"
         # "spotify"
