@@ -347,6 +347,8 @@
       ${openTCPPortForLAN 1883}
     '';
 
+  # https://wiki.nixos.org/wiki/Home_Assistant
+  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
   services = {
     home-assistant = {
       enable = true;
@@ -392,8 +394,6 @@
         (callPackage ../../pkgs/aquarea.nix { })
       ];
       config = {
-        # automation = "!include automations.yaml";
-        # script = "!include scripts.yaml";
         homeassistant = {
           name = "Home";
           # latitude = "!secret latitude";
@@ -435,8 +435,22 @@
         usb = { };
         webhook = { };
         zeroconf = { };
+
+        # https://wiki.nixos.org/wiki/Home_Assistant#Automations,_Scenes,_and_Scripts_from_the_UI
+        # Wire up config created using HA UI:
+        "automation ui" = "!include automations.yaml";
+        "scene ui" = "!include scenes.yaml";
+        "script ui" = "!include scripts.yaml";
+        # Declarative config if needed:
+        "automation nixos" = [
+          # YAML automations go here
+        ];
       };
       configWritable = true;
+      extraPackages =
+        python3Packages: with python3Packages; [
+          paho-mqtt # install python package, needed by MQTT
+        ];
       # openFirewall = true;
     };
   };
