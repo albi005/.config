@@ -25,5 +25,7 @@
     inputs.self.packages."${pkgs.stdenv.hostPlatform.system}".kcl-language-server
     inputs.wakatime-ls.packages."${pkgs.stdenv.hostPlatform.system}".default # coding-time tracker language-server for helix
     pkgs.yaml-language-server
+
+    nixos-unstable.cue
   ];
 }

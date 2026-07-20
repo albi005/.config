@@ -12,6 +12,7 @@ normal = "block"
 [editor.lsp]
 display-progress-messages = true
 display-inlay-hints = true
+# auto-document-highlight = true # next release
 
 [editor.auto-save]
 focus-lost = true

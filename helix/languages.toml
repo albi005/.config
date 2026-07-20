@@ -70,6 +70,17 @@ scope = "source.k"
 file-types = ["kcl", { glob = "*.k" } ]
 roots = ["kcl.mod", "kcl.yaml"]
 language-servers = ["kcl-lsp"]
-
 [language-server.kcl-lsp]
 command = "kcl-language-server"
+
+# https://github.com/cue-lang/cue/wiki/LSP:-Getting-started#helix
+[language-server.cuelsp]
+command = "cue"
+args = ["lsp", "serve"]
+[[language]]
+name = "cue"
+language-servers = [ "cuelsp" ]
+file-types = ["cue"]
+auto-format = true
+comment-token = "//"
+indent = { tab-width = 3, unit = "\t" }

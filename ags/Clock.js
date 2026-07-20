@@ -1,16 +1,16 @@
 const date = Variable("")
 
-// no time to waste
 function runEveryMinute(callback) {
     callback();
-
     const now = new Date();
-    const delay = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+    console.log(now);
 
-    setTimeout(() => {
-        callback();
-        setInterval(callback, 60000);
-    }, delay);
+    let delay = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+
+    setTimeout(
+        () => { runEveryMinute(callback); },
+         delay
+    );
 }
 
 runEveryMinute(async () => {
