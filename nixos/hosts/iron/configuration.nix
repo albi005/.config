@@ -343,6 +343,8 @@
       # Thread
       ${openTCPPortForLAN 8081}
       ${openTCPPortForLAN 8082}
+      # MQTT
+      ${openTCPPortForLAN 1883}
     '';
 
   services = {
@@ -366,6 +368,7 @@
         "met"
         # "meteo_france"
         "mobile_app"
+        "mqtt"
         # "music_assistant"
         # "open_router"
         "otbr"
@@ -386,6 +389,7 @@
         home-assistant-custom-components.xiaomi_miot
         # extended_openai_conversation
         # openai-whisper-cloud
+        (callPackage ../../pkgs/aquarea.nix { })
       ];
       config = {
         # automation = "!include automations.yaml";
@@ -435,6 +439,26 @@
       configWritable = true;
       # openFirewall = true;
     };
+  };
+
+  services.mosquitto = {
+    enable = true;
+    listeners = [
+      {
+        port = 1883;
+        settings.allow_anonymous = false;
+        users = {
+          homeassistant = {
+            password = "homeassistant-password";
+            acl = [ "readwrite #" ];
+          };
+          heishamon = {
+            password = "heishamon-password";
+            acl = [ "readwrite #" ];
+          };
+        };
+      }
+    ];
   };
 
   # services.avahi = {
