@@ -392,6 +392,9 @@
         # extended_openai_conversation
         # openai-whisper-cloud
         (callPackage ../../pkgs/aquarea.nix { })
+        (callPackage ../../pkgs/idokep.nix {
+          inherit (home-assistant.python3Packages) aiohttp beautifulsoup4 requests;
+        })
       ];
       config = {
         homeassistant = {
