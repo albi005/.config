@@ -87,6 +87,7 @@ in
     loupe # image viewer
     nemo-with-extensions # file manager
     obsidian # notes
+    qalculate-qt # 50years/1000000 to minute
     remmina # remote desktop client
     (
       if config.networking.hostName != "redstone" then
