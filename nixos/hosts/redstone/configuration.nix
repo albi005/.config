@@ -134,7 +134,7 @@
     # fio
     # kubectl-cnpg
     # vscode
-    # nixos-unstable.google-chrome
+    nixos-unstable.google-chrome
   ];
 
   environment.systemPackages = [

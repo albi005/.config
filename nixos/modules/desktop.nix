@@ -59,7 +59,7 @@ in
     waybar # top bar
     wl-clipboard # command-line copy/paste utilities for wayland
 
-    gnome-tweaks
+    # gnome-tweaks
     dconf-editor
     quickshell
     kdePackages.qtdeclarative # qmlls

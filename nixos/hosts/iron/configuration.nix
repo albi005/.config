@@ -21,6 +21,8 @@
   # services.statusApi.enable = true;
   # services.statusApi.host = "100.69.0.2";
 
+  services.alloy.enable = true;
+
   services.vaultwarden = {
     enable = false;
     backupDir = "/var/backup/vaultwarden";

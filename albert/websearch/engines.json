@@ -8,7 +8,7 @@
         "url": "http://www.amazon.com/s/?field-keywords=%s"
     },
     {
-        "fallback": true,
+        "fallback": false,
         "iconPath": ":gpt",
         "id": "ad4fb52c",
         "name": "Chat GPT",
@@ -56,7 +56,7 @@
         "url": "https://www.google.com/maps/search/%s/"
     },
     {
-        "fallback": false,
+        "fallback": true,
         "iconPath": ":scholar",
         "id": "1a01c006",
         "name": "Google Scholar",
@@ -80,7 +80,7 @@
         "url": "https://www.wolframalpha.com/input/?i=%s"
     },
     {
-        "fallback": true,
+        "fallback": false,
         "iconPath": ":youtube",
         "id": "e7f84422",
         "name": "YouTube",
