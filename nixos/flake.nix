@@ -33,6 +33,10 @@
 
     # firefox fork
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+    # jetbrains.*: Make libraries for jcef plugin available
+    # https://github.com/NixOS/nixpkgs/pull/546636
+    nixpkgs-rider.url = "github:NixOS/nixpkgs?ref=pull/546636/merge";
   };
 
   outputs =
@@ -64,6 +68,13 @@
                   };
                 };
                 nixos-2511 = import inputs.nixos-2511 {
+                  system = system;
+                  config = {
+                    allowUnfree = true;
+                    android_sdk.accept_license = true;
+                  };
+                };
+                nixpkgs-rider = import inputs.nixpkgs-rider {
                   system = system;
                   config = {
                     allowUnfree = true;
