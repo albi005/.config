@@ -13,7 +13,7 @@
     ../../modules/scanning.nix
     ../../modules/dev.nix
     # ../../modules/flutter-dev.nix
-    ../../modules/android-dev.nix
+    # ../../modules/android-dev.nix
   ];
 
   # services.k3s.enable = true;
@@ -115,7 +115,8 @@
     # jetbrains.phpstorm
     # (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
     # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
-    nixos-unstable.jetbrains.rider
+    # nixos-unstable.jetbrains.rider
+    pkgs.jetbrains.rider
     # nixos-unstable.jetbrains.goland
     # krita
     # jetbrains.ruby-mine # pek-next
