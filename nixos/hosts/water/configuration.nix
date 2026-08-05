@@ -1,5 +1,6 @@
 {
   pkgs,
+  nixos-unstable,
   ...
 }: {
   imports = [
@@ -17,7 +18,19 @@
   };
 
   # virtualisation.docker.enable = true;
-  # services.postgresql.enable = true;
+
+  services.postgresql = {
+    # enable = true;
+    enableTCPIP = true;
+    ensureDatabases = [ "albi" ];
+    ensureUsers = [
+      {
+        name = "albi";
+        ensureDBOwnership = true;
+      }
+    ];
+    package = pkgs.postgresql_18_jit;
+  };
 
   # virtualisation.oci-containers = {
   #   backend = "docker";
@@ -61,7 +74,7 @@
 
   environment.systemPackages = with pkgs; [
     # jetbrains.idea-ultimate
-    # jetbrains.rider
+    nixos-unstable.jetbrains.rider
     # jetbrains.webstorm
     # prisma
   ];
