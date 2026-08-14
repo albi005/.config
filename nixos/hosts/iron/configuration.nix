@@ -109,6 +109,13 @@
           image = "alb1";
           volumes = [ "/home/albi/alb1.hu_files:/alb1.hu_files:ro" ];
           ports = [ "127.0.0.1:10001:8080" ];
+          environment = {
+            OTEL_EXPORTER_OTLP_ENDPOINT = "http://host.docker.internal:4317";
+            # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
+          };
+          extraOptions = [
+            "--add-host=host.docker.internal:host-gateway" # enable accessing the host
+          ];
         };
         menza = {
           image = "menza";
@@ -172,6 +179,7 @@
           user = "2001:2001";
           environment = {
             ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
+            ASPNETCORE_ENVIRONMENT = "Development";
           };
           volumes = [ "/run/postgresql/.s.PGSQL.5432:/run/postgresql/.s.PGSQL.5432" ];
         };
@@ -335,6 +343,13 @@
     };
   };
 
+  networking.firewall.interfaces."docker0" = {
+    allowedTCPPorts = [
+      4317
+      4318
+    ];
+  };
+
   # https://github.com/sweenu/nixfiles/blob/eff799274616b1c9679cf6cb73f4640617b5a0b3/hosts/najdorf/hass.nix#L18-L21
   networking.firewall.extraCommands =
     let
@@ -359,6 +374,7 @@
         # "apple_tv" # looks for it for some reason
         "androidtv_remote"
         "cast"
+        "co2signal"
         "default_config"
         "epic_games_store" # idk
         "esphome"
@@ -386,11 +402,13 @@
         "thread"
         "upnp"
         # "wyoming"
+        "xiaomi_ble"
         "xiaomi_miio"
       ];
       customComponents = with pkgs; [
         # bbox
         # dawarich-ha
+        home-assistant-custom-components.adaptive_lighting
         home-assistant-custom-components.xiaomi_miot
         # extended_openai_conversation
         # openai-whisper-cloud
