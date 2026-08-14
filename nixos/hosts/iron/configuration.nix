@@ -107,6 +107,7 @@
       containers = {
         alb1 = {
           image = "alb1";
+          volumes = [ "/home/albi/alb1.hu_files:/alb1.hu_files:ro" ];
           ports = [ "127.0.0.1:10001:8080" ];
         };
         menza = {
