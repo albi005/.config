@@ -376,22 +376,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-rider": {
-      "locked": {
-        "lastModified": 1785926314,
-        "narHash": "sha256-4y3KWrY/iaGCqwiGmhyKXo/N03CKJnhwIqOF+LFLPr0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "391e4dde3fc15de11357e11b29a9367ebe778ced",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "pull/546636/merge",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -468,7 +452,6 @@
         "nixos-2511": "nixos-2511",
         "nixos-2605": "nixos-2605",
         "nixos-unstable": "nixos-unstable",
-        "nixpkgs-rider": "nixpkgs-rider",
         "nur": "nur",
         "nvf": "nvf",
         "stylix": "stylix",
