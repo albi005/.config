@@ -410,6 +410,7 @@
         # dawarich-ha
         home-assistant-custom-components.adaptive_lighting
         home-assistant-custom-components.xiaomi_miot
+        home-assistant-custom-components.home_connect_alt
         # extended_openai_conversation
         # openai-whisper-cloud
         (callPackage ../../pkgs/aquarea.nix { })
