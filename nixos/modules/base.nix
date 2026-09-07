@@ -139,6 +139,7 @@
       pkgs.sl # train
       pkgs.smartmontools # ssd health
       pkgs.sqlcmd # sql server
+      pkgs.sqlite # CLI for database in a single file, most used software in the world
       # pkgs.swi-prolog-gui
       pkgs.systemctl-tui
       pkgs.tcpdump
