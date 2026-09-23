@@ -16,22 +16,11 @@
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.startx.enable = true;
 
-  # --- Matter / Thread / Home Assistant ---
-  # ZBT-2 is managed directly by Home Assistant via the homeassistant_hardware integration.
-  # HA installs and runs its own OpenThread Border Router internally — no separate OTBR container needed.
-
-  services.matter-server = {
-    enable = true;
-    port = 5580;
-  };
-
   virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enable = true; # disable docker before enabling this
   # virtualisation.vmware.host.enable = true;
   # virtualisation.virtualbox.host.enableKvm = true;
   # virtualisation.virtualbox.host.addNetworkInterface = false;
-
-  programs.adb.enable = true;
 
   services.mysql = {
     enable = true;
@@ -88,8 +77,7 @@
     # jetbrains.idea-ultimate
     nixos-unstable.jetbrains.rider
     nixos-unstable.android-studio
-    # jetbrains.webstorm
-    # jetbrains.phpstorm
+    nixos-unstable.jetbrains.webstorm
     # jetbrains.rust-rover
     # jetbrains.clion
     # prismlauncher # minecraft launcher

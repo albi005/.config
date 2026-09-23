@@ -120,7 +120,6 @@ in
     wezterm # terminal emulator
     # wireshark
     wofi-emoji # emoji selector
-    inputs.nur.legacyPackages."${stdenv.hostPlatform.system}".repos.Ev357.helium # chromium fork
     # zed-editor
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
   ];
