@@ -268,6 +268,7 @@ hl.bind('SUPER + PERIOD', hl.dsp.exec_cmd'wofi-emoji')
 hl.bind('SUPER + A', hl.dsp.exec_cmd'pkill ags; ags')
 hl.bind('SUPER + S', hl.dsp.exec_cmd'jetbrains-toolbox')
 hl.bind('SUPER + SHIFT + C', hl.dsp.exec_cmd'hyprpicker -a')
+hl.bind('SUPER + Z', hl.dsp.exec_cmd'qalculate-qt')
 
 hl.bind('SUPER + T', hl.dsp.focus{ workspace = 'name:T' })
 hl.workspace_rule{

@@ -84,6 +84,7 @@ in
     #krita # paint but actually
     # libreoffice
     kdePackages.kruler # screen ruler
+    kdePackages.kolourpaint # ms paint but linux
     loupe # image viewer
     nemo-with-extensions # file manager
     obsidian # notes

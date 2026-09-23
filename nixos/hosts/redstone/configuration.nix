@@ -66,7 +66,7 @@
   };
 
   services.postgresql = {
-    # enable = true;
+    enable = true;
     enableTCPIP = true;
     ensureDatabases = [ "albi" ];
     ensureUsers = [
@@ -121,7 +121,7 @@
     # krita
     # jetbrains.ruby-mine # pek-next
     # jetbrains.rust-rover
-    # jetbrains.webstorm
+    jetbrains.webstorm
     # ruby
     # php
     # https://github.com/NixOS/nixpkgs/issues/358171

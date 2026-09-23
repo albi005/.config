@@ -143,8 +143,10 @@
       # pkgs.swi-prolog-gui
       pkgs.systemctl-tui
       pkgs.tcpdump
+      nixos-unstable.tinymist # language server for typst
       # pkgs.trippy # tracecroute tui
       nixos-unstable.ty # python ls for helix
+      nixos-unstable.typst # LaTeX but like markdown and rust btw
       pkgs.typescript # duct tape for slopscript
       pkgs.unzip
       nixos-unstable.uv # faster python package manager
