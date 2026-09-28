@@ -29,6 +29,12 @@ in
   services.printing.enable = true;
   services.upower.enable = true; # required by ags battery widget
 
+  # fix `nixos-rebuild switch` restarting the desktop session
+  systemd.user.services."wayland-session-bindpid@" = {
+    overrideStrategy = "asDropin";
+    restartIfChanged = false;
+  };
+
   environment.systemPackages = with pkgs; [
     #ags # js based widgets # TODO: Migrate to ags2/astal
     (nixos-2505.ags_1.overrideAttrs (old: {
