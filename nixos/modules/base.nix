@@ -150,24 +150,25 @@
       pkgs.typescript # duct tape for slopscript
       pkgs.unzip
       nixos-unstable.uv # faster python package manager
-      (pkgs.vcluster.overrideAttrs (oldAttrs: rec {
-        version = "0.32.0";
+      nixos-unstable.vcluster
+      # (pkgs.vcluster.overrideAttrs (oldAttrs: rec {
+      #   version = "0.32.0";
 
-        src = pkgs.fetchFromGitHub {
-          owner = "loft-sh";
-          repo = "vcluster";
-          tag = "v${version}";
-          hash = "sha256-fXEVKt7EU5+FfaTO6YdcUBDKb7b/3CHoLxyUlmwARfA=";
-        };
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "loft-sh";
+      #     repo = "vcluster";
+      #     tag = "v${version}";
+      #     hash = "sha256-fXEVKt7EU5+FfaTO6YdcUBDKb7b/3CHoLxyUlmwARfA=";
+      #   };
 
-        # You MUST add this block because it doesn't auto-update
-        ldflags = [
-          "-s"
-          "-w"
-          "-X main.version=${version}"
-          "-X main.goVersion=${pkgs.lib.getVersion pkgs.go}"
-        ];
-      }))
+      #   # You MUST add this block because it doesn't auto-update
+      #   ldflags = [
+      #     "-s"
+      #     "-w"
+      #     "-X main.version=${version}"
+      #     "-X main.goVersion=${pkgs.lib.getVersion pkgs.go}"
+      #   ];
+      # }))
       pkgs.vscode-json-languageserver
       pkgs.wakatime-cli # coding time tracker, might be needed when offline
       pkgs.wget
