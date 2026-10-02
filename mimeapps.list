@@ -36,6 +36,7 @@ x-scheme-handler/webcal=thunderbird.desktop
 x-scheme-handler/webcals=thunderbird.desktop
 x-scheme-handler/beeper=beepertexts.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
+x-scheme-handler/t3code=com.t3tools.T3Code.desktop
 
 [Added Associations]
 application/rss+xml=thunderbird.desktop;
