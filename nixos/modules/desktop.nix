@@ -209,6 +209,9 @@ in
   stylix.enable = true;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
   stylix.polarity = "dark";
+  # avoid the stylix gtksourceview overlay, which changes gtksourceview4's
+  # output hash and cascades into cache misses (inkscape, catppuccin-cursors)
+  stylix.targets.gtksourceview.enable = false;
   stylix.fonts = {
     serif = {
       package = pkgs.roboto-serif;
