@@ -21,6 +21,12 @@
 
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
+
+  # redstone shares its home NAT with iron; both defaulted to
+  # Tailscale UDP port 41641, colliding on the external mapping and forcing
+  # netherite<->redstone onto DERP. Use a unique port.
+  services.tailscale.port = 41642;
+
   #networking.firewall.allowedTCPPorts = [ 80 3210 ];
 
   # services.actual.enable = true;

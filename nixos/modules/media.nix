@@ -55,7 +55,7 @@
       virtualHosts =
         let
           tailscaleToLocalhost = port: {
-            locations."/".proxyPass = "http://localhost:${builtins.toString port}";
+            locations."/".proxyPass = "http://127.0.0.1:${builtins.toString port}";
             locations."/".proxyWebsockets = true;
             listen = [
               {

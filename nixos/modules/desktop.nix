@@ -129,6 +129,7 @@ in
     wofi-emoji # emoji selector
     # zed-editor
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
+    inputs.helium-browser.packages."${stdenv.hostPlatform.system}".default # chromium fork
   ];
 
   # services.desktopManager.gnome.enable = true;

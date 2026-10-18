@@ -33,6 +33,10 @@
 
     # firefox fork
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+    # chromium fork
+    helium-browser.url = "github:schembriaiden/helium-browser-nix-flake";
+    helium-browser.inputs.nixpkgs.follows = "nixos-unstable";
   };
 
   outputs =
