@@ -154,10 +154,16 @@
         };
         startsch = {
           image = "startsch";
+          extraOptions = [
+            "--memory=1g"
+            "--memory-swap=1g"
+            "--log-driver=journald"
+          ];
           ports = [ "127.0.0.1:10007:8080" ];
           environmentFiles = [ /home/albi/secrets/startsch.env ];
           user = "2001:2001";
           environment = {
+            DOTNET_gcServer = "0"; # use RAM optimized Desktop GC
             ConnectionStrings__Postgres = "Host=/run/postgresql; Username=startsch; Database=startsch";
             ASPNETCORE_ENVIRONMENT = "Development";
           };
@@ -366,6 +372,7 @@
         "ipp"
         "isal" # fast compression
         "matter"
+        "mcp_server" # so that LLMs can mess around with HA
         "met"
         # "meteo_france"
         "mobile_app"
