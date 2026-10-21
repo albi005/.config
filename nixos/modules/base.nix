@@ -140,6 +140,7 @@
       pkgs.smartmontools # ssd health
       pkgs.sqlcmd # sql server
       pkgs.sqlite # CLI for database in a single file, most used software in the world
+      pkgs.sshfs # mount ssh
       # pkgs.swi-prolog-gui
       pkgs.systemctl-tui
       pkgs.tcpdump
@@ -178,7 +179,7 @@
       pkgs.yarn # yet another slopscript package manager
       pkgs.yazi # file explorer tui
       pkgs.yt-dlp
-      pkgs.zip # `zip zip.zip *.zip`
+      pkgs.zip # `zip -r zip.zip *.zip`
       pkgs.zoxide # cd but rust
     ];
   };

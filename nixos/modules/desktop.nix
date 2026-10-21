@@ -75,6 +75,7 @@ in
   users.users.albi.packages = with pkgs; [
     alacritty # terminal emulator
     albert # app launcher, like spotlight on macos
+    appimage-run # `appimage-run Fortnite.AppImage`
     beeper # all your chats in one app
     bluetuith # bluetooth manager tui
     #dbeaver-bin # database client

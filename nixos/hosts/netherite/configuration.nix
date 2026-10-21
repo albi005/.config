@@ -86,6 +86,7 @@
     # php # authsch
     # prisma
     # prisma-engines
+    libreoffice
   ];
 
   systemd.services.cloudflared = {
