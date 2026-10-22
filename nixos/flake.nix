@@ -37,6 +37,12 @@
     # chromium fork
     helium-browser.url = "github:schembriaiden/helium-browser-nix-flake";
     helium-browser.inputs.nixpkgs.follows = "nixos-unstable";
+
+    # nixpkgs containing PR #569770 (opencode 1.19.0 -> 2.0.29)
+    nixpkgs-opencode-pr.url = "github:shamil2/nixpkgs/e984fdfc038eac17534a9c063ab0772f42411722";
+
+    # nixpkgs commit with t3code 0.1.0 (not yet in nixos-unstable)
+    nixpkgs-t3code.url = "github:NixOS/nixpkgs/30548c3d1361282ba37b469a9544eaef9964a306";
   };
 
   outputs =
@@ -73,6 +79,14 @@
                     allowUnfree = true;
                     android_sdk.accept_license = true;
                   };
+                };
+                opencode-pr = import inputs.nixpkgs-opencode-pr {
+                  system = system;
+                  config.allowUnfree = true;
+                };
+                t3code-nixpkgs = import inputs.nixpkgs-t3code {
+                  system = system;
+                  config.allowUnfree = true;
                 };
               };
             }

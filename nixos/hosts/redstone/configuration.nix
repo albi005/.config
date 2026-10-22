@@ -1,6 +1,7 @@
 {
   pkgs,
   nixos-unstable,
+  t3code-nixpkgs,
   ...
 }:
 {
@@ -143,7 +144,7 @@
     # kubectl-cnpg
     # vscode
     nixos-unstable.google-chrome
-    nixos-unstable.t3code
+    t3code-nixpkgs.t3code
   ];
 
   environment.systemPackages = [
