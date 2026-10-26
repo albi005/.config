@@ -10,6 +10,7 @@
     ../../modules/desktop.nix
     ../../modules/dotnet.nix
     ../../modules/dev.nix
+    ../../modules/cloudflared.nix
   ];
 
   services.xserver.enable = true;
@@ -88,27 +89,6 @@
     # prisma-engines
     libreoffice
   ];
-
-  systemd.services.cloudflared = {
-    description = "cloudflared";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      TimeoutStartSec = 0;
-      Type = "notify";
-      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run";
-      Restart = "on-failure";
-      RestartSec = "5s";
-      EnvironmentFile = "/home/albi/secrets/cloudflared.env";
-      User = "cloudflared";
-      Group = "cloudflared";
-    };
-  };
-  users.users.cloudflared = {
-    group = "cloudflared";
-    isSystemUser = true;
-  };
-  users.groups.cloudflared = { };
 
   services.tailscale.useRoutingFeatures = "both";
 

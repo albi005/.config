@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/icss.nix
+    ../../modules/cloudflared.nix
   ];
 
   networking.hostName = "iron";
@@ -39,27 +40,6 @@
     enable = false;
     port = 10004;
   };
-
-  systemd.services.cloudflared = {
-    description = "cloudflared";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      TimeoutStartSec = 0;
-      Type = "notify";
-      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run --token $CLOUDFLARED_TOKEN";
-      Restart = "on-failure";
-      RestartSec = "5s";
-      EnvironmentFile = "/home/albi/secrets/cloudflared.env";
-      User = "cloudflared";
-      Group = "cloudflared";
-    };
-  };
-  users.users.cloudflared = {
-    group = "cloudflared";
-    isSystemUser = true;
-  };
-  users.groups.cloudflared = { };
 
   systemd.services.wakapi = {
     # https://github.com/muety/wakapi/blob/master/etc/wakapi.service

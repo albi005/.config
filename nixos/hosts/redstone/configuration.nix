@@ -12,6 +12,7 @@
     ../../modules/media.nix
     ../../modules/scanning.nix
     ../../modules/dev.nix
+    ../../modules/cloudflared.nix
     # ../../modules/flutter-dev.nix
     # ../../modules/android-dev.nix
   ];
@@ -147,27 +148,6 @@
 
   environment.systemPackages = [
   ];
-
-  systemd.services.cloudflared = {
-    description = "cloudflared";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      TimeoutStartSec = 0;
-      Type = "notify";
-      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run --token $CLOUDFLARED_TOKEN";
-      Restart = "on-failure";
-      RestartSec = "5s";
-      EnvironmentFile = "/home/albi/secrets/cloudflared.env";
-      User = "cloudflared";
-      Group = "cloudflared";
-    };
-  };
-  users.users.cloudflared = {
-    group = "cloudflared";
-    isSystemUser = true;
-  };
-  users.groups.cloudflared = { };
 
   services = {
     restic = {
