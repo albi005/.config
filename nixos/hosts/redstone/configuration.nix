@@ -113,7 +113,7 @@
 
   users.users.albi.packages = with pkgs; [
     lens
-    # libreoffice-qt-fresh
+    libreoffice-qt-fresh
     # argocd
     # nixos-unstable.renovate
     # nixos-unstable.updatecli
@@ -149,6 +149,16 @@
 
   environment.systemPackages = [
   ];
+
+  home-manager.users.albi.systemd.user.services.t3code = {
+    Unit.Description = "T3 Code server";
+    Service = {
+      ExecStart = "${t3code-nixpkgs.t3code}/bin/t3 --host t3-redstone.alb1.hu --no-browser";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install.WantedBy = [ "default.target" ];
+  };
 
   services = {
     restic = {
