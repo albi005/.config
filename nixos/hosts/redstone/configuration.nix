@@ -1,7 +1,6 @@
 {
   pkgs,
   nixos-unstable,
-  t3code-nixpkgs,
   ...
 }:
 {
@@ -14,6 +13,7 @@
     ../../modules/scanning.nix
     ../../modules/dev.nix
     ../../modules/cloudflared.nix
+    ../../modules/t3code.nix
     # ../../modules/flutter-dev.nix
     # ../../modules/android-dev.nix
   ];
@@ -144,21 +144,10 @@
     # kubectl-cnpg
     # vscode
     nixos-unstable.google-chrome
-    t3code-nixpkgs.t3code
   ];
 
   environment.systemPackages = [
   ];
-
-  home-manager.users.albi.systemd.user.services.t3code = {
-    Unit.Description = "T3 Code server";
-    Service = {
-      ExecStart = "${t3code-nixpkgs.t3code}/bin/t3 --host t3-redstone.alb1.hu --no-browser";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-    Install.WantedBy = [ "default.target" ];
-  };
 
   services = {
     restic = {

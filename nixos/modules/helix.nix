@@ -17,6 +17,7 @@
     pkgs.elixir-ls
     pkgs.helix # neovim but rust (actually goated)
     nixos-unstable.helm-ls
+    pkgs.superhtml # HTML formatter and LS, in Zig
     pkgs.lua-language-server # hyprland config
     pkgs.protols # Protocol Buffers Language Server (.proto files)
     pkgs.typescript-language-server

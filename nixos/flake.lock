@@ -85,6 +85,21 @@
       }
     },
     "flake-compat": {
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
       "flake": false,
       "locked": {
         "lastModified": 1777699697,
@@ -318,6 +333,29 @@
         "type": "github"
       }
     },
+    "nix-t3code": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixos-unstable"
+        ],
+        "systems": "systems_2",
+        "utils": "utils_2"
+      },
+      "locked": {
+        "lastModified": 1793092564,
+        "narHash": "sha256-sJ4ieUcelcTVtBiM5Mv+4smlGyPFTozN9J1aV+mAJR8=",
+        "owner": "limwa",
+        "repo": "nix-t3code",
+        "rev": "63d1a6ce49192d24e51344dfcec44ae55f028fcc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "limwa",
+        "repo": "nix-t3code",
+        "type": "github"
+      }
+    },
     "nixos-2505": {
       "locked": {
         "lastModified": 1767313136,
@@ -430,22 +468,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-t3code": {
-      "locked": {
-        "lastModified": 1792212597,
-        "narHash": "sha256-DVyX/Yh1vTNFZAMYR+N35+gTb7RFtar9ds7XaaXj+Ss=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "30548c3d1361282ba37b469a9544eaef9964a306",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "30548c3d1361282ba37b469a9544eaef9964a306",
-        "type": "github"
-      }
-    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -494,7 +516,7 @@
     },
     "nvf": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": "flake-compat_2",
         "mnw": "mnw",
         "nixpkgs": [
           "nixos-unstable"
@@ -519,12 +541,12 @@
         "git-leave": "git-leave",
         "helium-browser": "helium-browser",
         "home-manager": "home-manager",
+        "nix-t3code": "nix-t3code",
         "nixos-2505": "nixos-2505",
         "nixos-2511": "nixos-2511",
         "nixos-2605": "nixos-2605",
         "nixos-unstable": "nixos-unstable",
         "nixpkgs-opencode-pr": "nixpkgs-opencode-pr",
-        "nixpkgs-t3code": "nixpkgs-t3code",
         "nur": "nur",
         "nvf": "nvf",
         "stylix": "stylix",
@@ -587,7 +609,7 @@
           "nixos-2605"
         ],
         "nur": "nur_2",
-        "systems": "systems_2",
+        "systems": "systems_3",
         "tinted-kitty": "tinted-kitty",
         "tinted-schemes": "tinted-schemes",
         "tinted-tmux": "tinted-tmux",
@@ -624,6 +646,22 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1791244623,
+        "narHash": "sha256-uuanbkFk8a313Zfrxdcz8Us/yQtaxNnKJtX8v0ZPpd8=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "d36eeed142f88b5a636f2e3856a53c61654cf29b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "ref": "future-26.11",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -717,6 +755,27 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_2": {
+      "inputs": {
+        "systems": [
+          "nix-t3code",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1750097467,
+        "narHash": "sha256-/znllFZ9KtlGSUUALds+ziBuRZa553PFyG0PH1wxkSM=",
+        "owner": "limwa",
+        "repo": "nix-flake-utils",
+        "rev": "be2d710203df176f33482c8b335d93b421e05d3b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "limwa",
+        "repo": "nix-flake-utils",
         "type": "github"
       }
     },

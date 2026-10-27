@@ -11,6 +11,7 @@
     ../../modules/dotnet.nix
     ../../modules/dev.nix
     ../../modules/cloudflared.nix
+    ../../modules/t3code.nix
   ];
 
   services.xserver.enable = true;
