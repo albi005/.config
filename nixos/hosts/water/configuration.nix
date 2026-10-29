@@ -1,6 +1,7 @@
 {
   pkgs,
   nixos-unstable,
+  nixpkgs-rider,
   ...
 }: {
   imports = [
@@ -8,6 +9,7 @@
     ../../modules/base.nix
     ../../modules/desktop.nix
     ../../modules/dotnet.nix
+    ../../modules/cloudflared.nix
   ];
 
   networking = {
@@ -74,7 +76,8 @@
 
   environment.systemPackages = with pkgs; [
     # jetbrains.idea-ultimate
-    nixos-unstable.jetbrains.rider
+    nixpkgs-rider.jetbrains.rider
+    # nixos-unstable.jetbrains.rider
     # jetbrains.webstorm
     # prisma
   ];
@@ -86,10 +89,8 @@
   '';
 
   home-manager.users.albi = {...}: {
-    home.file.".config/hypr/host.conf".text = ''
-      input {
-          kb_options = caps:swapescape
-      }
+    home.file.".config/hypr/host.lua".text = ''
+      hl.config{input={kb_options='caps:swapescape'}}
     '';
   };
 }
