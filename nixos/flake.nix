@@ -38,9 +38,6 @@
     helium-browser.url = "github:schembriaiden/helium-browser-nix-flake";
     helium-browser.inputs.nixpkgs.follows = "nixos-unstable";
 
-    # nixpkgs containing PR #569770 (opencode 1.19.0 -> 2.0.29)
-    nixpkgs-opencode-pr.url = "github:shamil2/nixpkgs/e984fdfc038eac17534a9c063ab0772f42411722";
-
     # t3code, auto-updated to the latest non-prerelease
     nix-t3code.url = "github:limwa/nix-t3code";
     nix-t3code.inputs.nixpkgs.follows = "nixos-unstable";
@@ -80,10 +77,6 @@
                     allowUnfree = true;
                     android_sdk.accept_license = true;
                   };
-                };
-                opencode-pr = import inputs.nixpkgs-opencode-pr {
-                  system = system;
-                  config.allowUnfree = true;
                 };
               };
             }

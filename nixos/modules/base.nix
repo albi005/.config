@@ -3,7 +3,6 @@
   pkgs,
   config,
   inputs,
-  opencode-pr,
   nixos-unstable,
   ...
 }:
@@ -127,8 +126,7 @@
       pkgs.nmap # hackerman, `sudo nmap 192.168.0.0/24`
       pkgs.nodejs # slop machine
       pkgs.onefetch # neofetch for git
-      opencode-pr.opencode # open source vibe coding cli (PR #569770, v2)
-      pkgs.pstree # processs tree
+      nixos-unstable.opencode # open source vibe coding cli      pkgs.pstree # processs tree
       pkgs.python3 # even slower slop machine
       pkgs.restic # backups
       pkgs.ripgrep # rg, find text in files
