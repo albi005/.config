@@ -107,6 +107,7 @@
     in
     {
       packages.${system} = {
+        bbctl = pkgs.callPackage ./pkgs/bbctl.nix { };
         modelsim = pkgs.callPackage ./pkgs/modelsim { };
         quartus-ii-13_1 = pkgs.callPackage ./pkgs/quartus-ii-13_1 { };
         kcl-language-server = pkgs.callPackage ./pkgs/kcl-language-server { };
