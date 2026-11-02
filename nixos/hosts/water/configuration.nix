@@ -1,7 +1,6 @@
 {
   pkgs,
   nixos-unstable,
-  nixpkgs-rider,
   ...
 }: {
   imports = [
@@ -76,7 +75,7 @@
 
   environment.systemPackages = with pkgs; [
     # jetbrains.idea-ultimate
-    nixpkgs-rider.jetbrains.rider
+    # jetbrains.rider
     # nixos-unstable.jetbrains.rider
     # jetbrains.webstorm
     # prisma
