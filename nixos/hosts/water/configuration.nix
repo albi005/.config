@@ -90,6 +90,8 @@
   home-manager.users.albi = {...}: {
     home.file.".config/hypr/host.lua".text = ''
       hl.config{input={kb_options='caps:swapescape'}}
+      -- `kb_options = 'grp:win_space_toggle'` is supposed to do this but doesn't work on mac
+      hl.bind('SUPER + SPACE', hl.dsp.exec_cmd'hyprctl switchxkblayout apple-inc.-apple-internal-keyboard-/-trackpad next')
     '';
   };
 }
