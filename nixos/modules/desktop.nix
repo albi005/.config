@@ -19,7 +19,7 @@ in
   services.displayManager.ly.enable = true;
   # services.desktopManager.plasma6.enable = true; # enable if you need x11. switch using login manager after exiting hyprland
   programs.java.enable = true;
-  programs.java.package = pkgs.jdk25;
+  # programs.java.package = pkgs.jdk25;
   programs.kdeconnect.enable = true; # phone link
   programs.seahorse.enable = true; # gnome encryption key and password manager
   programs.wireshark.enable = true; # network protocol analyzer

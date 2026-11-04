@@ -75,11 +75,11 @@
   users.users.albi.packages = with pkgs; [
     # (callPackage ../../pkgs/modelsim { }) # HDL simulator
     # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
-    lens # K8s "IDE"
+    # lens # K8s "IDE"
     # jetbrains.idea-ultimate
     nixos-unstable.jetbrains.rider
-    nixos-unstable.android-studio
-    nixos-unstable.jetbrains.webstorm
+    # nixos-unstable.android-studio
+    # nixos-unstable.jetbrains.webstorm
     # jetbrains.rust-rover
     # jetbrains.clion
     # prismlauncher # minecraft launcher

@@ -72,7 +72,7 @@
     # /etc/profile sources /nix/store/*-set-environment
     variables = {
       NIXPKGS_ALLOW_UNFREE = "1";
-      JAVA_HOME = "${pkgs.jdk17}";
+      # JAVA_HOME = "${pkgs.jdk17}";
     };
 
     systemPackages = [
@@ -87,7 +87,7 @@
       pkgs.cargo # rust package manager/build system
       pkgs.cloc # Count Lines Of Code
       pkgs.cmatrix # Matrix like effect in your terminal
-      nixos-unstable.codex # OpenAI slop CLI
+      # nixos-unstable.codex # OpenAI slop CLI
       pkgs.corepack # pnpm pnpx yarn yarnpkg
       pkgs.cmctl # Kubernetes cert-manager manager
       pkgs.difftastic # structural diffs
