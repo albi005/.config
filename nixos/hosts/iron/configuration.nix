@@ -127,7 +127,7 @@
             # (the native module used vendorId 4939 = 0x134b). The default
             # 0xfff1 makes the new server create a fresh fabric instead of
             # migrating the existing one.
-            VENDOR_ID = "0x134b";
+            VENDOR_ID = "4939";
             FABRIC_ID = "1";
           };
           extraOptions = [
