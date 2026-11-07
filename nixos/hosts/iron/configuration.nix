@@ -441,6 +441,7 @@
         "google"
         "google_translate" # TTS fallback for wyoming-piper
         "homekit"
+        "ibeacon"
         "improv_ble"
         "ipp"
         "isal" # fast compression
