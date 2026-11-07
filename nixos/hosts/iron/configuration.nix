@@ -123,6 +123,12 @@
             PRIMARY_INTERFACE = "enp3s0";
             LISTEN_ADDRESS = "127.0.0.1";
             LOG_LEVEL = "info";
+            # Must match the fabric in the old python-matter-server chip.json
+            # (the native module used vendorId 4939 = 0x134b). The default
+            # 0xfff1 makes the new server create a fresh fabric instead of
+            # migrating the existing one.
+            VENDOR_ID = "0x134b";
+            FABRIC_ID = "1";
           };
           extraOptions = [
             "--network=host"
@@ -379,6 +385,12 @@
   # Keep HA from starting before its Matter/OTBR backends.
   systemd.services."docker-matter-server".before = [ "home-assistant.service" ];
   systemd.services."docker-otbr".before = [ "home-assistant.service" ];
+
+  # The matter.js image runs as UID 1000. tmpfiles only runs at boot, so make
+  # sure the bind-mounted data is owned correctly before every container start.
+  systemd.services."docker-matter-server".serviceConfig.ExecStartPre = [
+    "${pkgs.coreutils}/bin/chown -R 1000:1000 /var/lib/matter-server"
+  ];
 
   networking.firewall.interfaces."docker0" = {
     allowedTCPPorts = [
