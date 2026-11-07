@@ -378,6 +378,30 @@
     "${pkgs.coreutils}/bin/chown -R 1000:1000 /var/lib/matter-server"
   ];
 
+  # The native OTBR's SRP server defaults to unicast and picks the deprecated
+  # on-mesh address, so Thread devices don't re-register their _matter._tcp
+  # services after an agent restart and the Matter server can't resolve them.
+  # Anycast uses the preferred OMR address. otbr-agent has no option for this,
+  # so set it once the agent's CLI socket is up.
+  systemd.services.otbr-srp-anycast = {
+    description = "Set OTBR SRP server address mode to anycast";
+    after = [ "otbr-agent.service" ];
+    requires = [ "otbr-agent.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "otbr-srp-anycast" ''
+        for _ in $(seq 1 60); do
+          ${pkgs.openthread-border-router}/bin/ot-ctl srp server disable >/dev/null 2>&1 && break
+          sleep 1
+        done
+        ${pkgs.openthread-border-router}/bin/ot-ctl srp server addrmode anycast || true
+        ${pkgs.openthread-border-router}/bin/ot-ctl srp server enable || true
+      '';
+    };
+  };
+
   networking.firewall.interfaces."docker0" = {
     allowedTCPPorts = [
       4317
