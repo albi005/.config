@@ -85,31 +85,6 @@
     oci-containers = {
       backend = "docker";
       containers = {
-        # OpenThread Border Router, official upstream image. State lives in
-        # /var/lib/otbr (the container's /data); Thread state is in
-        # /var/lib/otbr/thread, migrated from the old native /var/lib/thread.
-        otbr = {
-          image = "openthread/border-router:latest";
-          volumes = [ "/var/lib/otbr:/data" ];
-          environment = {
-            OT_RCP_DEVICE = "spinel+hdlc+uart:///dev/serial/by-id/usb-Nabu_Casa_ZBT-2_1CDBD45F096C-if00?uart-baudrate=460800";
-            OT_INFRA_IF = "enp3s0";
-            OT_THREAD_IF = "wpan0";
-            OT_LOG_LEVEL = "5";
-            OT_REST_LISTEN_ADDR = "::";
-            OT_REST_LISTEN_PORT = "8081";
-            OT_WEB_LISTEN_ADDR = "::";
-            OT_WEB_LISTEN_PORT = "8082";
-          };
-          extraOptions = [
-            "--network=host"
-            "--cap-add=NET_ADMIN"
-            "--cap-add=NET_RAW"
-            "--device=/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_1CDBD45F096C-if00"
-            "--device=/dev/net/tun"
-          ];
-        };
-
         # Matter.js server, drop-in replacement for the EOL python-matter-server.
         # It migrates the old /var/lib/matter-server data on first start.
         matter-server = {
@@ -345,6 +320,10 @@
   # https://github.com/sweenu/nixfiles/blob/eff799274616b1c9679cf6cb73f4640617b5a0b3/profiles/core/base.nix#L92-L119
   services = {
     avahi = {
+      # The native OTBR module used to pull this in via mkDefault; without it
+      # avahi disappears when OTBR moves to a container, breaking mDNS/zeroconf
+      # discovery for HA and the Thread border router.
+      enable = true;
       nssmdns4 = true;
       publish = {
         enable = true;
@@ -359,20 +338,28 @@
     #     MulticastDNS = "no";
     #   };
     # };
-    # OTBR and Matter now run as OCI containers (see
-    # virtualisation.oci-containers below) so they track upstream instead of
-    # the nixpkgs stable branch. The sysctls the old
-    # services.openthread-border-router module set are re-added below.
+    # OTBR stays native. The official container's OpenThread mDNS stack
+    # registers _meshcop._udp internally but does not advertise it on the
+    # infra interface, so HA's Thread integration cannot discover the border
+    # router. The native module publishes via avahi and works.
+    openthread-border-router = {
+      enable = true;
+      backboneInterfaces = [ "enp3s0" ];
+      logLevel = "notice";
+      rest.listenAddress = "::";
+      web = {
+        enable = true;
+        listenAddress = "::";
+      };
+      radio = {
+        device = "/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_1CDBD45F096C-if00";
+        baudRate = 460800;
+        flowControl = false;
+      };
+    };
   };
 
-  # Formerly set by services.openthread-border-router.
   boot.kernelModules = [ "tun" ];
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-    "net.ipv6.conf.enp3s0.accept_ra" = 2;
-    "net.ipv6.conf.enp3s0.accept_ra_rt_info_max_plen" = 64;
-  };
 
   # The matter.js container runs as UID 1000; the old native module used a
   # DynamicUser, so fix ownership of the migrated data on boot.
@@ -384,7 +371,6 @@
 
   # Keep HA from starting before its Matter/OTBR backends.
   systemd.services."docker-matter-server".before = [ "home-assistant.service" ];
-  systemd.services."docker-otbr".before = [ "home-assistant.service" ];
 
   # The matter.js image runs as UID 1000. tmpfiles only runs at boot, so make
   # sure the bind-mounted data is owned correctly before every container start.
