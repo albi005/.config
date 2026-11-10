@@ -41,6 +41,10 @@
     # t3code, auto-updated to the latest non-prerelease
     nix-t3code.url = "github:limwa/nix-t3code";
     nix-t3code.inputs.nixpkgs.follows = "nixos-unstable";
+
+    # fancy UI showing what's happening at boot instead of just boring logs
+    bootvine.url = "git+https://codeberg.org/wvhulle/bootvine";
+    bootvine.inputs.nixpkgs.follows = "nixos-unstable";
   };
 
   outputs =
@@ -85,6 +89,7 @@
             inputs.home-manager.nixosModules.home-manager
             inputs.stylix.nixosModules.stylix
             inputs.nvf.nixosModules.default
+            inputs.bootvine.nixosModules.default
 
             # apply host-specific entry-point module
             ./hosts/${hostname}/configuration.nix

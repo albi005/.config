@@ -18,6 +18,10 @@
     enable = true;
     flake = "/home/albi/.config/nixos";
   };
+
+  # fancy UI showing what's happening at boot instead of boring logs
+  services.bootvine.enable = true;
+
   # nix.package = pkgs.lixPackageSets.stable.lix;
 
   nixpkgs.config.allowUnfree = true;
