@@ -66,6 +66,11 @@
         sshUser = "albi";
         systems = [ "x86_64-linux" ];
         maxJobs = 8;
+        # The legacy `ssh` protocol remote-builds via the privileged
+        # BuildDerivation RPC, which a non-trusted `albi` may not use
+        # ("you are not privileged to build input-addressed derivations").
+        # `ssh-ng` copies the derivation closure instead and needs no trust.
+        protocol = "ssh-ng";
       }
       # {
       #   hostName = "netherite";
