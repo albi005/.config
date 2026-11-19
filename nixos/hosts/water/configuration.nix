@@ -2,7 +2,8 @@
   pkgs,
   nixos-unstable,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
@@ -56,22 +57,38 @@
   nix = {
     # settings.trusted-users = ["root" "albi"];
 
+    # Remote builders are best-effort: the local machine stays available as a
+    # builder, so an unreachable builder just means the build happens locally.
+    distributedBuilds = true;
     buildMachines = [
       {
         hostName = "redstone";
         sshUser = "albi";
-        systems = ["x86_64-linux"];
+        systems = [ "x86_64-linux" ];
         maxJobs = 8;
       }
+      # {
+      #   hostName = "netherite";
+      #   sshUser = "albi";
+      #   systems = [ "x86_64-linux" ];
+      #   maxJobs = 8;
+      # }
     ];
 
     settings = {
-      substituters = ["ssh://albi@redstone?trusted=true"];
+      # Unreachable substituters are skipped, and `fallback` makes Nix build
+      # from source instead of failing when a substitute cannot be fetched.
+      substituters = [
+        "ssh://albi@redstone?trusted=true"
+        # "ssh://albi@netherite?trusted=true"
+      ];
       builders-use-substitutes = true;
+      fallback = true;
+      connect-timeout = 5; # fail over quickly when a builder/substituter is down
     };
   };
 
-  boot.supportedFilesystems = ["apfs"];
+  boot.supportedFilesystems = [ "apfs" ];
 
   environment.systemPackages = with pkgs; [
     # jetbrains.idea-ultimate
@@ -87,7 +104,7 @@
     options hid_apple fnmode=2
   '';
 
-  home-manager.users.albi = {...}: {
+  home-manager.users.albi = { ... }: {
     home.file.".config/hypr/host.lua".text = ''
       hl.config{input={kb_options='caps:swapescape'}}
       -- `kb_options = 'grp:win_space_toggle'` is supposed to do this but doesn't work on mac
