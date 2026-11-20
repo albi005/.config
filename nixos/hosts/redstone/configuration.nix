@@ -152,6 +152,7 @@
     # kubectl-cnpg
     # vscode
     nixos-unstable.google-chrome
+    moodle-dl
   ];
 
   environment.systemPackages = [

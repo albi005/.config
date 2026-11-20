@@ -89,6 +89,7 @@
     # prisma
     # prisma-engines
     libreoffice
+    moodle-dl
   ];
 
   services.tailscale.useRoutingFeatures = "both";
