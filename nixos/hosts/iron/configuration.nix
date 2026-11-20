@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
 {
@@ -9,6 +10,7 @@
     ../../modules/base.nix
     ../../modules/icss.nix
     ../../modules/cloudflared.nix
+    ../../modules/server-only.nix
   ];
 
   networking.hostName = "iron";
