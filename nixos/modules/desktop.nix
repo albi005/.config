@@ -133,17 +133,29 @@ in
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
     inputs.helium-browser.packages."${stdenv.hostPlatform.system}".default # chromium fork
 
-    # Build iron's closure locally on this desktop from GitHub (defaults to `main`,
-    # or pass a branch/ref as $1, e.g. `deploy-iron my-pr-branch`) and deploy over SSH.
+    # Build iron's closure locally on this desktop from GitHub and deploy over SSH.
+    # Mirrors comin's branch policy: uses `host/iron` (`test`) if present on origin,
+    # otherwise `main` (`switch`). Custom branches are not allowed.
     (pkgs.writeShellScriptBin "deploy-iron" ''
+      set -euo pipefail
       if [[ $# -gt 0 && "$1" != -* ]]; then
-        ref="$1"
-        shift
-      else
-        ref="main"
+        echo "deploy-iron: custom branches are not allowed (uses host/iron if present, else main)" >&2
+        exit 2
       fi
-      exec ${pkgs.nh}/bin/nh os switch "github:albi005/.config/$ref?dir=nixos" \
-        -H iron --target-host albi@iron --use-substitutes --refresh "$@"
+      refs="$(${pkgs.git}/bin/git ls-remote --heads https://github.com/albi005/.config.git host/iron main)"
+      if rev="$(printf '%s\n' "$refs" | ${pkgs.gawk}/bin/awk '$2 == "refs/heads/host/iron" { print $1 }')" && [ -n "$rev" ]; then
+        branch="host/iron"
+        op="test"
+      elif rev="$(printf '%s\n' "$refs" | ${pkgs.gawk}/bin/awk '$2 == "refs/heads/main" { print $1 }')" && [ -n "$rev" ]; then
+        branch="main"
+        op="switch"
+      else
+        echo "deploy-iron: neither host/iron nor main found on origin" >&2
+        exit 1
+      fi
+      echo "Deploying $branch ($rev) to iron via nh os $op..."
+      exec ${pkgs.nh}/bin/nh os "$op" "github:albi005/.config/$rev?dir=nixos" \
+        -H iron --target-host albi@iron --use-substitutes "$@"
     '')
   ];
 

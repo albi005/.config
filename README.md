@@ -153,12 +153,11 @@ comin suspend && comin resume    # pause / resume automatic deploys
 comin list --flake-url ./nixos   # list hosts defined in the flake
 
 # fast deploy to iron from a desktop (redstone / netherite), built from GitHub
-# run BEFORE merging heavy app changes (e.g. .NET) so iron doesn't compile on 2 threads;
-# once merged, comin sees the closure is already in /nix/store and skips building
-deploy-iron                      # builds github:albi005/.config/main?dir=nixos and deploys to iron
-deploy-iron <branch>             # deploy a PR branch directly from GitHub before merging
+# mirrors comin: deploys `host/iron` (test) if that branch exists, otherwise `main` (switch)
+# run right after pushing to `host/iron` or merging to `main` so iron doesn't compile heavy apps on 2 threads
+deploy-iron                      # builds host/iron (test) or main (switch) from GitHub and deploys to iron
 
-# test a branch on a single host via comin
+# test a branch on a single host via comin (or deploy-iron for iron)
 git push origin HEAD:host/iron
 git push origin :host/iron       # return host to main
 
