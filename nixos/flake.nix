@@ -114,7 +114,6 @@
     in
     {
       packages.${system} = {
-        alb1 = pkgs.callPackage ./pkgs/alb1.hu { };
         modelsim = pkgs2511.callPackage ./pkgs/modelsim { };
         quartus-ii-13_1 = pkgs2511.callPackage ./pkgs/quartus-ii-13_1 { };
         kcl-language-server = pkgs2511.callPackage ./pkgs/kcl-language-server { };

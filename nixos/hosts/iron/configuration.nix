@@ -7,6 +7,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./alb1.nix
     ../../modules/base.nix
     ../../modules/icss.nix
     ../../modules/cloudflared.nix
@@ -83,42 +84,6 @@
     isSystemUser = true;
   };
   users.groups.wakapi = { };
-
-  systemd.services.alb1 =
-    let
-      alb1 = pkgs.callPackage ../../pkgs/alb1.hu { };
-    in
-    {
-      description = "alb1.hu";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
-      environment = {
-        ASPNETCORE_URLS = "http://127.0.0.1:10001";
-        ASPNETCORE_ENVIRONMENT = "Production";
-        OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4317";
-        # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
-      };
-      serviceConfig = {
-        ExecStart = "${alb1}/bin/Hello";
-        User = "alb1";
-        Group = "alb1";
-        Restart = "on-failure";
-        RestartSec = "5s";
-        MemoryMax = "512M";
-        BindReadOnlyPaths = [ "/home/albi/alb1.hu_files:/alb1.hu_files" ];
-        NoNewPrivileges = true;
-        PrivateTmp = true;
-        PrivateDevices = true;
-        ProtectSystem = "strict";
-        ProtectHome = "read-only";
-      };
-    };
-  users.users.alb1 = {
-    group = "alb1";
-    isSystemUser = true;
-  };
-  users.groups.alb1 = { };
 
   virtualisation = {
     docker = {
