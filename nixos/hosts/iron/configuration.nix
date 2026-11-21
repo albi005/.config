@@ -4,19 +4,24 @@
   lib,
   ...
 }:
-let
-  pins = import ../../lib/pins.nix { inherit lib pkgs; };
-in
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/icss.nix
     ../../modules/cloudflared.nix
+    ../../modules/nix-sharing.nix
     ../../modules/server-only.nix
   ];
 
   networking.hostName = "iron";
+
+  # Always-on fallback cache on the main tailnet; offload heavy builds to redstone when it's awake.
+  nixSharing = {
+    serve = true;
+    priority = 46;
+    offloadToRedstone = true;
+  };
 
   nixpkgs.config.permittedInsecurePackages = [
     "docker-28.5.2"
@@ -82,21 +87,41 @@ in
   };
   users.groups.wakapi = { };
 
-  # Native Nix apps managed via GitOps (PR -> CI build + R2 cache -> comin deploy).
-  albi.apps.alb1 = {
-    description = "alb1.hu personal website";
-    runtime = "systemd";
-    package = pkgs.callPackage ../../apps/alb1/package.nix { };
-    port = 10001;
-    environment = {
-      ASPNETCORE_URLS = "http://127.0.0.1:10001";
-      ASPNETCORE_ENVIRONMENT = "Production";
-      OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4317";
-      # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
+  systemd.services.alb1 =
+    let
+      alb1 = pkgs.callPackage ../../pkgs/alb1.hu { };
+    in
+    {
+      description = "alb1.hu";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+      environment = {
+        ASPNETCORE_URLS = "http://127.0.0.1:10001";
+        ASPNETCORE_ENVIRONMENT = "Production";
+        OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4317";
+        # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
+      };
+      serviceConfig = {
+        ExecStart = "${alb1}/bin/Hello";
+        User = "alb1";
+        Group = "alb1";
+        Restart = "on-failure";
+        RestartSec = "5s";
+        MemoryMax = "512M";
+        BindReadOnlyPaths = [ "/home/albi/alb1.hu_files:/alb1.hu_files" ];
+        NoNewPrivileges = true;
+        PrivateTmp = true;
+        PrivateDevices = true;
+        ProtectSystem = "strict";
+        ProtectHome = "read-only";
+      };
     };
-    readOnlyPaths = [ "/home/albi/alb1.hu_files:/alb1.hu_files" ];
-    memoryMax = "512M";
+  users.users.alb1 = {
+    group = "alb1";
+    isSystemUser = true;
   };
+  users.groups.alb1 = { };
 
   virtualisation = {
     docker = {
@@ -109,7 +134,7 @@ in
         # Matter.js server, drop-in replacement for the EOL python-matter-server.
         # It migrates the old /var/lib/matter-server data on first start.
         matter-server = {
-          image = pins.imageRef "matter-server";
+          image = "ghcr.io/matter-js/matterjs-server:stable@sha256:9eb98c839d0b4b07f9230b96ad52de570f7f2a7c286c5992b4c04b6b26c08a3f";
           volumes = [
             "/var/lib/matter-server:/data"
             "/run/dbus:/run/dbus:ro"
@@ -164,7 +189,7 @@ in
           ports = [ "127.0.0.1:10006:8080" ];
         };
         redlib = {
-          image = pins.imageRef "redlib";
+          image = "quay.io/redlib/redlib:latest@sha256:37f624d87ce6cdd90d945af3688fdf0c195a0251d3b5ba62047792e8be2390df";
           user = "65534:65534";
           # recommended by gemini
           extraOptions = [

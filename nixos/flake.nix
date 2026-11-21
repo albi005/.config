@@ -46,7 +46,7 @@
     bootvine.url = "git+https://codeberg.org/wvhulle/bootvine";
     bootvine.inputs.nixpkgs.follows = "nixos-unstable";
 
-    # pull-based NixOS GitOps deployment daemon (ArgoCD for NixOS)
+    # pull-based NixOS GitOps deployment daemon
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixos-2605";
   };
@@ -114,7 +114,7 @@
     in
     {
       packages.${system} = {
-        alb1 = pkgs.callPackage ./apps/alb1/package.nix { };
+        alb1 = pkgs.callPackage ./pkgs/alb1.hu { };
         modelsim = pkgs2511.callPackage ./pkgs/modelsim { };
         quartus-ii-13_1 = pkgs2511.callPackage ./pkgs/quartus-ii-13_1 { };
         kcl-language-server = pkgs2511.callPackage ./pkgs/kcl-language-server { };

@@ -13,6 +13,7 @@
     ../../modules/scanning.nix
     ../../modules/dev.nix
     ../../modules/cloudflared.nix
+    ../../modules/nix-sharing.nix
     ../../modules/t3code.nix
     # ../../modules/flutter-dev.nix
     # ../../modules/android-dev.nix
@@ -31,6 +32,10 @@
   # accept those copies. This adds no real privilege here: `albi` is already
   # in `wheel` on this host.
   nix.settings.trusted-users = [ "albi" ];
+  nixSharing = {
+    serve = true;
+    priority = 45;
+  };
 
   # redstone shares its home NAT with iron; both defaulted to
   # Tailscale UDP port 41641, colliding on the external mapping and forcing

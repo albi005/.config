@@ -1,32 +1,42 @@
-{   fetchFromGitHub
-    , dotnetCorePackages
-    , buildDotnetModule
-    , openssl
-    , icu
+# Native Nix build for alb1.hu (.NET 10 Blazor Server)
+#
+# Regenerate NuGet lockfile after dependency changes:
+#   $(nix build --no-link --print-out-paths ./nixos#alb1.fetch-deps) ./nixos/pkgs/alb1.hu/deps.json
+{
+  fetchFromGitHub,
+  dotnetCorePackages,
+  buildDotnetModule,
+  openssl,
+  icu,
 }:
-
 buildDotnetModule {
-    name = "alb1.hu";
+  pname = "alb1";
+  version = "0.0.1-3beafac";
 
-    src = fetchFromGitHub {
-        owner = "albi005";
-        repo = "alb1.hu";
-        rev = "main";
-        sha256 = "sha256-AYrpuMOSqDj4y+aXbw81eE8k7N9aHO1gdnIiyaTiHGE=";
-    };
+  src = fetchFromGitHub {
+    owner = "albi005";
+    repo = "alb1.hu";
+    rev = "3beafaca860db4d504410c67ca2d20c72b037bf7";
+    hash = "sha256-Shi4ew1zYlkuv5ohXiqOvu34c9SF4ujP4EuTQIgvgQY=";
+  };
 
-    projectFile = "Hello/Hello.csproj";
-    nugetDeps = ./deps.nix;
-    dotnet-sdk = dotnetCorePackages.sdk_7_0;
-    dotnet-runtime = dotnetCorePackages.runtime_7_0;
-    # executables = [ "Hello" ];
-    selfContainedBuild = true;
+  projectFile = "Hello/Hello.csproj";
+  nugetDeps = ./deps.json;
+  dotnet-sdk = dotnetCorePackages.sdk_10_0;
+  dotnet-runtime = dotnetCorePackages.aspnetcore_10_0;
+  executables = [ "Hello" ];
 
-    # https://discourse.nixos.org/t/building-asp-net-core-app-with-nix-serving-static-files/30810/4
-    makeWrapperArgs = [
-        "--set DOTNET_CONTENTROOT ${placeholder "out"}/lib/"
-    ];
+  # ASP.NET Core serves wwwroot relative to DOTNET_CONTENTROOT.
+  makeWrapperArgs = [
+    "--set"
+    "DOTNET_CONTENTROOT"
+    "${placeholder "out"}/lib/alb1"
+  ];
 
-    buildInputs = [ ];
-    runtimeDeps = [ openssl icu ];
+  runtimeDeps = [
+    openssl
+    icu
+  ];
+
+  meta.mainProgram = "Hello";
 }

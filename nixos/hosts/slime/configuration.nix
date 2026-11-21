@@ -3,9 +3,6 @@
   lib,
   ...
 }:
-let
-  pins = import ../../lib/pins.nix { inherit lib pkgs; };
-in
 {
   imports = [
     ./hardware-configuration.nix
@@ -25,7 +22,7 @@ in
     backend = "docker";
     containers = {
       dfv = {
-        image = pins.imageRef "mssql";
+        image = "mcr.microsoft.com/mssql/server:2022-latest@sha256:4525e3efac9f3e241cb003bb2ff2a82818b502f37e12049d788b1a9fa7e13b7f";
         volumes = [
           "/var/lib/dfvdb/data:/var/opt/mssql/data"
           "/var/lib/dfvdb/log:/var/opt/mssql/log"

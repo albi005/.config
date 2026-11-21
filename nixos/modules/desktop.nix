@@ -25,6 +25,7 @@ in
   programs.wireshark.enable = true; # network protocol analyzer
   security.polkit.enable = true; # gui sudo
   services.gnome.gnome-keyring.enable = true; # security credential store
+  services.comin.desktop.enable = true; # desktop notifications on comin deploys
   services.gvfs.enable = true; # GNOME Virtual file system
   services.printing.enable = true;
   services.upower.enable = true; # required by ags battery widget

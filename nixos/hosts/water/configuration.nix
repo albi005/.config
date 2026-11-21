@@ -10,23 +10,25 @@
     ../../modules/desktop.nix
     ../../modules/dotnet.nix
     ../../modules/cloudflared.nix
+    ../../modules/nix-sharing.nix
   ];
+
+  # water doesn't usually have a stable connection — rebuild manually.
+  services.comin.enable = false;
+
+  nixSharing.offloadToRedstone = true;
+
+  # Tighter GC for water's 128 GB NixOS partition.
+  nix.gc.options = "--delete-older-than 7d";
+  nix.settings.min-free = 5 * 1024 * 1024 * 1024;
+  nix.settings.max-free = 12 * 1024 * 1024 * 1024;
+  boot.loader.systemd-boot.configurationLimit = 5;
 
   networking = {
     hostName = "water"; # Define your hostname.
     networkmanager.wifi.macAddress = "permanent";
     # networkmanager.enable = lib.mkForce false; # wifi driver no longer supported omegalul
     # wireless.iwd.enable = false; # no deps wifi daemon
-  };
-
-  # Tighter disk-space guardrails for water's 128 GB NixOS partition.
-  # Regular updates arrive pre-built from CI + Cloudflare R2 via comin;
-  # redstone remains configured below as an optional remote builder for local tests.
-  albi.gitops = {
-    gcRetention = "7d";
-    minFreeGiB = 5;
-    maxFreeGiB = 12;
-    bootEntryLimit = 5;
   };
 
   # virtualisation.docker.enable = true;
@@ -64,44 +66,10 @@
   #   };
   # };
 
-  nix = {
-    # settings.trusted-users = ["root" "albi"];
-
-    # Remote builders are best-effort: the local machine stays available as a
-    # builder, so an unreachable builder just means the build happens locally.
-    distributedBuilds = true;
-    buildMachines = [
-      {
-        hostName = "redstone";
-        sshUser = "albi";
-        systems = [ "x86_64-linux" ];
-        maxJobs = 8;
-        # The legacy `ssh` protocol remote-builds via the privileged
-        # BuildDerivation RPC, which a non-trusted `albi` may not use
-        # ("you are not privileged to build input-addressed derivations").
-        # `ssh-ng` copies the derivation closure instead and needs no trust.
-        protocol = "ssh-ng";
-      }
-      # {
-      #   hostName = "netherite";
-      #   sshUser = "albi";
-      #   systems = [ "x86_64-linux" ];
-      #   maxJobs = 8;
-      # }
-    ];
-
-    settings = {
-      # Unreachable substituters are skipped, and `fallback` makes Nix build
-      # from source instead of failing when a substitute cannot be fetched.
-      substituters = [
-        "ssh://albi@redstone?trusted=true"
-        # "ssh://albi@netherite?trusted=true"
-      ];
-      builders-use-substitutes = true;
-      fallback = true;
-      connect-timeout = 5; # fail over quickly when a builder/substituter is down
-    };
-  };
+  # Keep ssh:// fallback until Harmonia peer keys are added to nix-sharing.nix.
+  nix.settings.substituters = [
+    "ssh://albi@redstone?trusted=true"
+  ];
 
   boot.supportedFilesystems = [ "apfs" ];
 
