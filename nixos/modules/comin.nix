@@ -21,6 +21,9 @@
       {
         name = "origin";
         url = "https://github.com/albi005/.config.git";
+        # Disable automatic polling on `water` (unreliable connection / laptop);
+        # trigger manually with `comin fetch` (`gf`).
+        poller.period = if config.networking.hostName == "water" then 0 else 60;
         branches = {
           main = {
             name = "main";
