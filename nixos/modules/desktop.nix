@@ -133,29 +133,106 @@ in
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
     inputs.helium-browser.packages."${stdenv.hostPlatform.system}".default # chromium fork
 
-    # Build iron's closure locally on this desktop from GitHub and deploy over SSH.
-    # Mirrors comin's branch policy: uses `host/iron` (`test`) if present on origin,
-    # otherwise `main` (`switch`). Custom branches are not allowed.
-    (pkgs.writeShellScriptBin "deploy-iron" ''
+    # Interactive GitOps deploy script: pick flake input(s) with gum, update
+    # flake.lock in a clean temp clone, open a PR, optionally pre-build & copy
+    # closures to target hosts (zero sudo on iron), merge, and trigger comin.
+    (pkgs.writeShellScriptBin "deploy" ''
       set -euo pipefail
-      if [[ $# -gt 0 && "$1" != -* ]]; then
-        echo "deploy-iron: custom branches are not allowed (uses host/iron if present, else main)" >&2
-        exit 2
-      fi
-      refs="$(${pkgs.git}/bin/git ls-remote --heads https://github.com/albi005/.config.git host/iron main)"
-      if rev="$(printf '%s\n' "$refs" | ${pkgs.gawk}/bin/awk '$2 == "refs/heads/host/iron" { print $1 }')" && [ -n "$rev" ]; then
-        branch="host/iron"
-        op="test"
-      elif rev="$(printf '%s\n' "$refs" | ${pkgs.gawk}/bin/awk '$2 == "refs/heads/main" { print $1 }')" && [ -n "$rev" ]; then
-        branch="main"
-        op="switch"
+
+      git="${pkgs.git}/bin/git"
+      gh="${pkgs.gh}/bin/gh"
+      gum="${pkgs.gum}/bin/gum"
+      jq="${pkgs.jq}/bin/jq"
+      nix="${config.nix.package}/bin/nix"
+      ssh="${config.programs.ssh.package}/bin/ssh"
+
+      tmp="$(mktemp -d -t deploy-config-XXXXXX)"
+      trap 'rm -rf "$tmp"' EXIT
+
+      echo "Cloning albi005/.config (main)..."
+      "$git" clone --quiet --depth=1 --branch main https://github.com/albi005/.config.git "$tmp"
+      cd "$tmp"
+
+      if [[ $# -gt 0 ]]; then
+        inputs=("$@")
       else
-        echo "deploy-iron: neither host/iron nor main found on origin" >&2
-        exit 1
+        mapfile -t available < <("$jq" -r '.nodes.root.inputs | keys[]' nixos/flake.lock)
+        mapfile -t inputs < <("$gum" choose --no-limit --height=20 \
+          --header "Select flake input(s) to update (Space to toggle, Enter to confirm)" \
+          "''${available[@]}")
       fi
-      echo "Deploying $branch ($rev) to iron via nh os $op..."
-      exec ${pkgs.nh}/bin/nh os "$op" "github:albi005/.config/$rev?dir=nixos" \
-        -H iron --target-host albi@iron --use-substitutes "$@"
+
+      if [[ ''${#inputs[@]} -eq 0 ]]; then
+        echo "No inputs selected."
+        exit 0
+      fi
+
+      old_lock="$(cat nixos/flake.lock)"
+      echo "Updating flake input(s): ''${inputs[*]}..."
+      "$nix" flake update --flake ./nixos "''${inputs[@]}"
+
+      if "$git" diff --quiet nixos/flake.lock; then
+        echo "Already up to date (nixos/flake.lock unchanged)."
+        exit 0
+      fi
+
+      # Build a concise old -> new rev summary for the PR body.
+      summary=""
+      for inp in "''${inputs[@]}"; do
+        old_rev="$(printf '%s' "$old_lock" | "$jq" -r --arg k "$inp" '.nodes[.nodes.root.inputs[$k]].locked | (.rev // .narHash // "?")' | cut -c1-7)"
+        new_rev="$("$jq" -r --arg k "$inp" '.nodes[.nodes.root.inputs[$k]].locked | (.rev // .narHash // "?")' nixos/flake.lock | cut -c1-7)"
+        if [[ "$old_rev" != "$new_rev" ]]; then
+          summary+="- \`$inp\`: \`$old_rev\` -> \`$new_rev\`"$'\n'
+        fi
+      done
+      echo ""
+      printf '%s\n' "$summary"
+
+      slug="$(IFS=-; echo "''${inputs[*]}")"
+      branch="update/''${slug}-$(date +%Y%m%d-%H%M%S)"
+      title="Update ''${inputs[*]}"
+
+      "$git" checkout -q -b "$branch"
+      "$git" add nixos/flake.lock
+      "$git" commit -q -m "$title"
+      "$git" push -q -u origin "$branch"
+
+      pr_url="$("$gh" pr create --base main --head "$branch" --title "$title" --body "$(printf 'Updated flake input(s):\n\n%s' "$summary")")"
+      pr_num="''${pr_url##*/}"
+      echo "Opened PR #$pr_num: $pr_url"
+
+      local_host="$(hostname)"
+      host_choices=("iron")
+      if [[ "$local_host" != "iron" ]]; then
+        host_choices+=("$local_host")
+      fi
+
+      mapfile -t prebuild_hosts < <("$gum" choose --no-limit --selected=iron \
+        --header "Pre-build & push closure before merging? (Space to toggle, Enter to continue)" \
+        "''${host_choices[@]}" || true)
+
+      for host in "''${prebuild_hosts[@]}"; do
+        echo "Building nixosConfigurations.$host..."
+        out="$("$nix" build --no-link --print-out-paths "./nixos#nixosConfigurations.$host.config.system.build.toplevel")"
+        if [[ "$host" != "$local_host" ]]; then
+          echo "Copying closure to $host..."
+          "$nix" copy --to "ssh://albi@$host" --substitute-on-destination "$out"
+        fi
+      done
+
+      if "$gum" confirm "Merge PR #$pr_num and trigger comin fetch?"; then
+        "$gh" pr merge "$pr_num" --squash --delete-branch
+        for host in "''${prebuild_hosts[@]}"; do
+          if [[ "$host" == "$local_host" ]]; then
+            comin fetch || true
+          else
+            "$ssh" "albi@$host" comin fetch || true
+          fi
+        done
+        echo "Merged PR #$pr_num and triggered comin."
+      else
+        echo "Left PR #$pr_num open: $pr_url"
+      fi
     '')
   ];
 

@@ -1,19 +1,15 @@
 # Native Nix build and NixOS service for alb1.hu (.NET 10 Blazor Server)
 {
   pkgs,
+  inputs,
   ...
 }:
 let
   alb1 = pkgs.buildDotnetModule {
     pname = "alb1";
-    version = "0.0.1-3beafac";
+    version = "0.0.1-${inputs.alb1.shortRev or "dirty"}";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "albi005";
-      repo = "alb1.hu";
-      rev = "3beafaca860db4d504410c67ca2d20c72b037bf7";
-      hash = "sha256-Shi4ew1zYlkuv5ohXiqOvu34c9SF4ujP4EuTQIgvgQY=";
-    };
+    src = inputs.alb1;
 
     projectFile = "Hello/Hello.csproj";
     dotnet-sdk = pkgs.dotnetCorePackages.sdk_10_0;

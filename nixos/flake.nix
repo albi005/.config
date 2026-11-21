@@ -49,6 +49,12 @@
     # pull-based NixOS GitOps deployment daemon
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixos-2605";
+
+    # personal apps (once alb1.hu adds its own flake.nix, drop `flake = false`)
+    alb1 = {
+      url = "github:albi005/alb1.hu";
+      flake = false;
+    };
   };
 
   outputs =

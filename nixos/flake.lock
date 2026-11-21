@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "alb1": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786913693,
+        "narHash": "sha256-Shi4ew1zYlkuv5ohXiqOvu34c9SF4ujP4EuTQIgvgQY=",
+        "owner": "albi005",
+        "repo": "alb1.hu",
+        "rev": "3beafaca860db4d504410c67ca2d20c72b037bf7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "albi005",
+        "repo": "alb1.hu",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -591,6 +607,7 @@
     },
     "root": {
       "inputs": {
+        "alb1": "alb1",
         "bootvine": "bootvine",
         "comin": "comin",
         "git-leave": "git-leave",
