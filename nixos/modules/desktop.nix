@@ -146,6 +146,11 @@ in
       nix="${config.nix.package}/bin/nix"
       ssh="${config.programs.ssh.package}/bin/ssh"
 
+      state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/deploy"
+      mkdir -p "$state_dir"
+      last_input_file="$state_dir/last-input"
+      last_hosts_file="$state_dir/last-hosts"
+
       tmp="$(mktemp -d -t deploy-config-XXXXXX)"
       trap 'rm -rf "$tmp"' EXIT
 
@@ -156,16 +161,34 @@ in
       if [[ $# -gt 0 ]]; then
         inputs=("$@")
       else
-        mapfile -t available < <("$jq" -r '.nodes.root.inputs | keys[]' nixos/flake.lock)
-        mapfile -t inputs < <("$gum" choose --no-limit --height=20 \
-          --header "Select flake input(s) to update (Space to toggle, Enter to confirm)" \
-          "''${available[@]}")
+        last_input=""
+        if [[ -f "$last_input_file" ]]; then
+          last_input="$(cat "$last_input_file")"
+        fi
+
+        # Put the last-used input first so pressing Enter repeats it immediately,
+        # while typing fuzzy-searches all flake inputs.
+        mapfile -t available < <("$jq" -r --arg last "$last_input" '
+          (.nodes.root.inputs | keys) as $keys |
+          if ($last != "" and ($keys | index($last) != null)) then
+            [$last] + ($keys | map(select(. != $last)))
+          else
+            $keys
+          end | .[]
+        ' nixos/flake.lock)
+
+        selected="$("$gum" filter --height=20 \
+          --header "Select flake input to update (type to search, Enter to pick)" \
+          --placeholder "Search flake inputs..." \
+          "''${available[@]}")"
+        if [[ -z "$selected" ]]; then
+          echo "No input selected."
+          exit 0
+        fi
+        inputs=("$selected")
       fi
 
-      if [[ ''${#inputs[@]} -eq 0 ]]; then
-        echo "No inputs selected."
-        exit 0
-      fi
+      printf '%s\n' "''${inputs[0]}" > "$last_input_file"
 
       old_lock="$(cat nixos/flake.lock)"
       echo "Updating flake input(s): ''${inputs[*]}..."
@@ -207,9 +230,22 @@ in
         host_choices+=("$local_host")
       fi
 
-      mapfile -t prebuild_hosts < <("$gum" choose --no-limit --selected=iron \
-        --header "Pre-build & push closure before merging? (Space to toggle, Enter to continue)" \
-        "''${host_choices[@]}" || true)
+      default_hosts="iron"
+      if [[ -f "$last_hosts_file" ]]; then
+        default_hosts="$(paste -sd, "$last_hosts_file")"
+      fi
+
+      choose_args=(--no-limit --header "Pre-build & push closure before merging? (Space to toggle, Enter to continue)")
+      if [[ -n "$default_hosts" ]]; then
+        choose_args+=(--selected="$default_hosts")
+      fi
+
+      mapfile -t prebuild_hosts < <("$gum" choose "''${choose_args[@]}" "''${host_choices[@]}" || true)
+      if [[ ''${#prebuild_hosts[@]} -gt 0 ]]; then
+        printf '%s\n' "''${prebuild_hosts[@]}" > "$last_hosts_file"
+      else
+        : > "$last_hosts_file"
+      fi
 
       for host in "''${prebuild_hosts[@]}"; do
         echo "Building nixosConfigurations.$host..."
