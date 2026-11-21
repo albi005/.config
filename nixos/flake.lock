@@ -374,11 +374,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1795207035,
-        "narHash": "sha256-DDkKgiN9VaM33VuNn6nfFNj24Vzw4b6fzUHJMtBQdt8=",
+        "lastModified": 1795260537,
+        "narHash": "sha256-N2ligT+J1DuGsoWcSICKFnyTzWrEuOMb+as1NghqOcE=",
         "owner": "limwa",
         "repo": "nix-t3code",
-        "rev": "7da1a4162ea22d3368e107476ab2713e10c16465",
+        "rev": "5f8dad43b89690afee03513e8a7a6d2033a5a163",
         "type": "github"
       },
       "original": {

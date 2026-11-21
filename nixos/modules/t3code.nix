@@ -5,7 +5,7 @@
   ...
 }:
 let
-  t3code = inputs.nix-t3code.packages.${pkgs.stdenv.hostPlatform.system}.t3code;
+  t3code = inputs.nix-t3code.packages.${pkgs.stdenv.hostPlatform.system}.t3code-nightly;
 in
 {
   environment.systemPackages = [ t3code ];
