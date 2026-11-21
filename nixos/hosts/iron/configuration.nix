@@ -7,6 +7,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./alb1.nix
     ../../modules/base.nix
     ../../modules/icss.nix
     ../../modules/cloudflared.nix
@@ -14,6 +15,11 @@
   ];
 
   networking.hostName = "iron";
+
+  # Allow desktops (`redstone`, `netherite`) to push pre-built closures to iron
+  # via `nh os switch --target-host albi@iron` so iron doesn't have to compile
+  # heavy apps (e.g. .NET) on its 2 threads. Inbound only — zero outbound SSH.
+  nix.settings.trusted-users = [ "albi" ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "docker-28.5.2"
@@ -90,7 +96,7 @@
         # Matter.js server, drop-in replacement for the EOL python-matter-server.
         # It migrates the old /var/lib/matter-server data on first start.
         matter-server = {
-          image = "ghcr.io/matter-js/matterjs-server:stable";
+          image = "ghcr.io/matter-js/matterjs-server:stable@sha256:9eb98c839d0b4b07f9230b96ad52de570f7f2a7c286c5992b4c04b6b26c08a3f";
           volumes = [
             "/var/lib/matter-server:/data"
             "/run/dbus:/run/dbus:ro"
@@ -113,18 +119,6 @@
           ];
         };
 
-        alb1 = {
-          image = "alb1";
-          volumes = [ "/home/albi/alb1.hu_files:/alb1.hu_files:ro" ];
-          ports = [ "127.0.0.1:10001:8080" ];
-          environment = {
-            OTEL_EXPORTER_OTLP_ENDPOINT = "http://host.docker.internal:4317";
-            # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
-          };
-          extraOptions = [
-            "--add-host=host.docker.internal:host-gateway" # enable accessing the host
-          ];
-        };
         menza = {
           image = "menza";
           volumes = [ "/home/albi/www/Menza:/data" ];
@@ -157,7 +151,7 @@
           ports = [ "127.0.0.1:10006:8080" ];
         };
         redlib = {
-          image = "quay.io/redlib/redlib:latest";
+          image = "quay.io/redlib/redlib:latest@sha256:37f624d87ce6cdd90d945af3688fdf0c195a0251d3b5ba62047792e8be2390df";
           user = "65534:65534";
           # recommended by gemini
           extraOptions = [
@@ -166,7 +160,6 @@
             "--cap-drop=ALL"
             "--security-opt=no-new-privileges"
             "--memory=512m"
-            "--pull=always"
           ];
           environment = {
             REDLIB_ROBOTS_DISABLE_INDEXING = "on";

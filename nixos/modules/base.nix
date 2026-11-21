@@ -9,6 +9,7 @@
 
 {
   imports = [
+    ./comin.nix
     ./status.nix
     # ./neovim.nix
     ./helix.nix
@@ -27,6 +28,7 @@
   nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
+      auto-optimise-store = true;
       experimental-features = [
         "nix-command"
         "flakes"
@@ -41,6 +43,12 @@
         "nvf.cachix.org-1:GMQWiUhZ6ux9D5CvFFMwnc2nFrUHTeGaXRlVBXo+naI="
       ];
     };
+    gc = {
+      automatic = true;
+      dates = lib.mkDefault "04:11";
+      options = lib.mkDefault "--delete-older-than 14d";
+      persistent = lib.mkDefault true;
+    };
   };
 
   # https://nixos.org/manual/nixos/unstable/#sec-installation-manual-installing (scroll down)
@@ -48,6 +56,7 @@
     systemd-boot = {
       # Use systemd-boot by default
       enable = lib.mkDefault true;
+      configurationLimit = lib.mkDefault 10;
 
       # Fix virtual console being blurry
       # https://reddit.com/r/archlinux/comments/oe8u2q/fix_tty_resolution_with_nvidia_driver/
@@ -129,6 +138,7 @@
       pkgs.nixfmt # official nix formatter
       pkgs.nmap # hackerman, `sudo nmap 192.168.0.0/24`
       pkgs.nodejs # slop machine
+      pkgs.nvd # NixOS closure diff tool
       pkgs.onefetch # neofetch for git
       nixos-unstable.opencode # open source vibe coding cli      pkgs.pstree # processs tree
       pkgs.python3 # even slower slop machine
@@ -281,6 +291,8 @@
             f = "fastfetch";
             fn = "fortnite";
             fortnite = "systemctl reboot --boot-loader-entry auto-windows";
+            gf = "comin fetch";
+            gs = "comin status";
             h = "curl -v -o /dev/null";
             l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
             n = "${pkgs.mpv}/bin/mpv ${sounds.vine} --no-terminal >/dev/null 2>&1 & disown";

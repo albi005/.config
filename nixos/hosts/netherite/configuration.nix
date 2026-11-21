@@ -11,6 +11,7 @@
     ../../modules/dotnet.nix
     ../../modules/dev.nix
     ../../modules/cloudflared.nix
+    ../../modules/nix-sharing.nix
     ../../modules/t3code.nix
   ];
 
