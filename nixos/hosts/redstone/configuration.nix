@@ -153,9 +153,11 @@
     # vscode
     nixos-unstable.google-chrome
     moodle-dl
-    nixos-unstable.antigravity-cli
-    nixos-unstable.antigravity-ide
-    nixos-unstable.antigravity-hub
+
+    # managed by t3code
+    # nixos-unstable.antigravity-cli
+    # nixos-unstable.antigravity-ide
+    # nixos-unstable.antigravity-hub
   ];
 
   environment.systemPackages = [
