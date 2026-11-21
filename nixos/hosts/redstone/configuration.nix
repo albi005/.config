@@ -25,18 +25,6 @@
   networking.hostName = "redstone";
   networking.hostId = "d7e8126d"; # needed by zfs
 
-  # `water` offloads builds to this machine. The trustless `ssh-ng` path can
-  # only copy *signed* store paths to the builder, so unsigned locally-built
-  # inputs (e.g. generated initrd unit files) fail with "cannot add path ...
-  # lacks a signature by a trusted key". Trusting `albi` lets the daemon
-  # accept those copies. This adds no real privilege here: `albi` is already
-  # in `wheel` on this host.
-  nix.settings.trusted-users = [ "albi" ];
-  nixSharing = {
-    serve = true;
-    priority = 45;
-  };
-
   # redstone shares its home NAT with iron; both defaulted to
   # Tailscale UDP port 41641, colliding on the external mapping and forcing
   # netherite<->redstone onto DERP. Use a unique port.

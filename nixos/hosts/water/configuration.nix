@@ -16,8 +16,6 @@
   # water doesn't usually have a stable connection — rebuild manually.
   services.comin.enable = false;
 
-  nixSharing.offloadToRedstone = true;
-
   # Tighter GC for water's 128 GB NixOS partition.
   nix.gc.options = "--delete-older-than 7d";
   nix.settings.min-free = 5 * 1024 * 1024 * 1024;
@@ -65,11 +63,6 @@
   #     };
   #   };
   # };
-
-  # Keep ssh:// fallback until Harmonia peer keys are added to nix-sharing.nix.
-  nix.settings.substituters = [
-    "ssh://albi@redstone?trusted=true"
-  ];
 
   boot.supportedFilesystems = [ "apfs" ];
 

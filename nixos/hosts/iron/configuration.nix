@@ -10,18 +10,15 @@
     ../../modules/base.nix
     ../../modules/icss.nix
     ../../modules/cloudflared.nix
-    ../../modules/nix-sharing.nix
     ../../modules/server-only.nix
   ];
 
   networking.hostName = "iron";
 
-  # Always-on fallback cache on the main tailnet; offload heavy builds to redstone when it's awake.
-  nixSharing = {
-    serve = true;
-    priority = 46;
-    offloadToRedstone = true;
-  };
+  # Allow desktops (`redstone`, `netherite`) to push pre-built closures to iron
+  # via `nh os switch --target-host albi@iron` so iron doesn't have to compile
+  # heavy apps (e.g. .NET) on its 2 threads. Inbound only — zero outbound SSH.
+  nix.settings.trusted-users = [ "albi" ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "docker-28.5.2"

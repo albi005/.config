@@ -146,6 +146,12 @@ in
     {
       programs.fuzzel.enable = true;
 
+      programs.bash.shellAliases = {
+        # Build iron's closure locally on this desktop and deploy it over SSH
+        # so iron doesn't have to compile heavy apps (e.g. .NET) on 2 threads.
+        deploy-iron = "nh os switch /home/albi/.config/nixos -H iron --target-host albi@iron --use-substitutes";
+      };
+
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.lua".text = lib.mkDefault "";
 
