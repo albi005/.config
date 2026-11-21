@@ -132,6 +132,19 @@ in
     # zed-editor
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
     inputs.helium-browser.packages."${stdenv.hostPlatform.system}".default # chromium fork
+
+    # Build iron's closure locally on this desktop from GitHub (defaults to `main`,
+    # or pass a branch/ref as $1, e.g. `deploy-iron my-pr-branch`) and deploy over SSH.
+    (pkgs.writeShellScriptBin "deploy-iron" ''
+      if [[ $# -gt 0 && "$1" != -* ]]; then
+        ref="$1"
+        shift
+      else
+        ref="main"
+      fi
+      exec ${pkgs.nh}/bin/nh os switch "github:albi005/.config/$ref?dir=nixos" \
+        -H iron --target-host albi@iron --use-substitutes --refresh "$@"
+    '')
   ];
 
   # services.desktopManager.gnome.enable = true;
@@ -145,12 +158,6 @@ in
     }:
     {
       programs.fuzzel.enable = true;
-
-      programs.bash.shellAliases = {
-        # Build iron's closure locally on this desktop and deploy it over SSH
-        # so iron doesn't have to compile heavy apps (e.g. .NET) on 2 threads.
-        deploy-iron = "nh os switch /home/albi/.config/nixos -H iron --target-host albi@iron --use-substitutes";
-      };
 
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.lua".text = lib.mkDefault "";

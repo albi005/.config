@@ -152,17 +152,19 @@ comin deployment list            # list recent deployments and boot entries
 comin suspend && comin resume    # pause / resume automatic deploys
 comin list --flake-url ./nixos   # list hosts defined in the flake
 
-# local rebuilds & flake updates
-rb                               # sudo nixos-rebuild switch --flake ~/.config/nixos
-nh os test ~/.config/nixos       # test local changes without touching boot entries
-update                           # nix flake update --flake ~/.config/nixos
-
-# fast deploy to iron from a desktop (redstone / netherite)
+# fast deploy to iron from a desktop (redstone / netherite), built from GitHub
 # run BEFORE merging heavy app changes (e.g. .NET) so iron doesn't compile on 2 threads;
 # once merged, comin sees the closure is already in /nix/store and skips building
-deploy-iron                      # nh os switch ~/.config/nixos -H iron --target-host albi@iron --use-substitutes
+deploy-iron                      # builds github:albi005/.config/main?dir=nixos and deploys to iron
+deploy-iron <branch>             # deploy a PR branch directly from GitHub before merging
 
 # test a branch on a single host via comin
 git push origin HEAD:host/iron
 git push origin :host/iron       # return host to main
+
+# local checkout (fail-safe / uncommitted local edits only; comin never touches ~/.config)
+rb                               # sudo nixos-rebuild switch --flake ~/.config/nixos
+nh os test ~/.config/nixos       # test local changes without touching boot entries
+nh os switch ~/.config/nixos -H iron --target-host albi@iron --use-substitutes
+update                           # nix flake update --flake ~/.config/nixos
 ```
