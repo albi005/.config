@@ -103,10 +103,6 @@
     in
     let
       system = "x86_64-linux";
-      pkgs = import inputs.nixos-2605 {
-        inherit system;
-        config.allowUnfree = true;
-      };
       pkgs2511 = import inputs.nixos-2511 {
         inherit system;
         config.allowUnfree = true;

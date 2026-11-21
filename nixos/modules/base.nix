@@ -43,7 +43,6 @@
         "nvf.cachix.org-1:GMQWiUhZ6ux9D5CvFFMwnc2nFrUHTeGaXRlVBXo+naI="
       ];
     };
-    optimise.automatic = true;
     gc = {
       automatic = true;
       dates = lib.mkDefault "04:11";

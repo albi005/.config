@@ -14,12 +14,22 @@ let
   isRedstone = config.networking.hostName == "redstone";
 in
 {
+  # `nix.settings.connect-timeout` only applies to HTTP (libcurl), not OpenSSH.
+  # Give system-wide SSH (used by nix-daemon as root) a short timeout so builds
+  # fall back locally in 5s instead of hanging ~127s when `redstone` is offline.
+  programs.ssh.extraConfig = lib.mkIf (!isRedstone) ''
+    Host redstone
+      ConnectTimeout 5
+      ServerAliveInterval 15
+      ServerAliveCountMax 2
+      BatchMode yes
+  '';
+
   nix = {
-    # Needed on `redstone` to accept unsigned local inputs over `ssh-ng`, and
-    # on `netherite`/`water` to use the `ssh://...?trusted=true` substituter.
-    # Adds no real privilege: `albi` is already in `wheel` on all three hosts.
     settings = {
-      trusted-users = [ "albi" ];
+      # Needed on `redstone` so `nix-daemon` accepts unsigned local inputs
+      # copied over `ssh-ng`. Adds no real privilege: `albi` is already in `wheel`.
+      trusted-users = lib.mkIf isRedstone [ "albi" ];
       # Priority 45 (>40) keeps cache.nixos.org first for upstream nixpkgs
       # while pulling custom derivations from redstone when it's online.
       substituters = lib.mkIf (!isRedstone) [
@@ -31,8 +41,7 @@ in
     };
 
     # Best-effort offloading to redstone: shares in-progress builds natively via
-    # redstone's nix-daemon and falls back to local builds after connect-timeout
-    # when redstone is offline.
+    # redstone's nix-daemon and falls back to local builds when redstone is offline.
     distributedBuilds = lib.mkIf (!isRedstone) true;
     buildMachines = lib.mkIf (!isRedstone) [
       {

@@ -37,6 +37,10 @@
       }
     ];
 
+    # Keep Prometheus metrics bound to localhost (default is 0.0.0.0:4243,
+    # which would be exposed on hosts with the firewall disabled like `slime`).
+    exporter.listen_address = "127.0.0.1";
+
     # Bound retained profiles/boot entries so automatic updates don't fill disk.
     retention = {
       deployment_boot_entry_capacity = 3;

@@ -8,5 +8,5 @@
   nix.gc.persistent = false;
 
   # Allow root to inspect the local dotfiles git checkout if needed.
-  programs.git.config.safe.directory = "/home/albi/.config/.git";
+  programs.git.config.safe.directory = "/home/albi/.config";
 }

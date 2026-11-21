@@ -89,6 +89,11 @@ let
   };
 in
 {
+  systemd.tmpfiles.rules = [
+    # Ensure the read-only bind target exists under ProtectSystem="strict".
+    "d /alb1.hu_files 0755 root root -"
+  ];
+
   systemd.services.alb1 = {
     description = "alb1.hu";
     after = [ "network-online.target" ];
@@ -97,6 +102,8 @@ in
     environment = {
       ASPNETCORE_URLS = "http://127.0.0.1:10001";
       ASPNETCORE_ENVIRONMENT = "Production";
+      DOTNET_gcServer = "0"; # keep RAM usage within MemoryMax
+      HOME = "/var/lib/alb1"; # persist ASP.NET Core DataProtection keys
       OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4317";
       # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
     };
@@ -104,6 +111,8 @@ in
       ExecStart = "${alb1}/bin/Hello";
       User = "alb1";
       Group = "alb1";
+      StateDirectory = "alb1";
+      StateDirectoryMode = "0700";
       Restart = "on-failure";
       RestartSec = "5s";
       MemoryMax = "512M";
