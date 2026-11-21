@@ -19,6 +19,16 @@
     # wireless.iwd.enable = false; # no deps wifi daemon
   };
 
+  # Tighter disk-space guardrails for water's 128 GB NixOS partition.
+  # Regular updates arrive pre-built from CI + Cloudflare R2 via comin;
+  # redstone remains configured below as an optional remote builder for local tests.
+  albi.gitops = {
+    gcRetention = "7d";
+    minFreeGiB = 5;
+    maxFreeGiB = 12;
+    bootEntryLimit = 5;
+  };
+
   # virtualisation.docker.enable = true;
 
   services.postgresql = {

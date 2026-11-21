@@ -45,6 +45,10 @@
     # fancy UI showing what's happening at boot instead of just boring logs
     bootvine.url = "git+https://codeberg.org/wvhulle/bootvine";
     bootvine.inputs.nixpkgs.follows = "nixos-unstable";
+
+    # pull-based NixOS GitOps deployment daemon (ArgoCD for NixOS)
+    comin.url = "github:nlewo/comin";
+    comin.inputs.nixpkgs.follows = "nixos-2605";
   };
 
   outputs =
@@ -90,6 +94,7 @@
             inputs.stylix.nixosModules.stylix
             inputs.nvf.nixosModules.default
             inputs.bootvine.nixosModules.default
+            inputs.comin.nixosModules.comin
 
             # apply host-specific entry-point module
             ./hosts/${hostname}/configuration.nix
@@ -98,16 +103,21 @@
     in
     let
       system = "x86_64-linux";
-      pkgs = import inputs.nixos-2511 {
+      pkgs = import inputs.nixos-2605 {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgs2511 = import inputs.nixos-2511 {
         inherit system;
         config.allowUnfree = true;
       };
     in
     {
       packages.${system} = {
-        modelsim = pkgs.callPackage ./pkgs/modelsim { };
-        quartus-ii-13_1 = pkgs.callPackage ./pkgs/quartus-ii-13_1 { };
-        kcl-language-server = pkgs.callPackage ./pkgs/kcl-language-server { };
+        alb1 = pkgs.callPackage ./apps/alb1/package.nix { };
+        modelsim = pkgs2511.callPackage ./pkgs/modelsim { };
+        quartus-ii-13_1 = pkgs2511.callPackage ./pkgs/quartus-ii-13_1 { };
+        kcl-language-server = pkgs2511.callPackage ./pkgs/kcl-language-server { };
       };
 
       nixosConfigurations = {

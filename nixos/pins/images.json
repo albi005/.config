@@ -1,0 +1,17 @@
+{
+  "matter-server": {
+    "repository": "ghcr.io/matter-js/matterjs-server",
+    "tag": "stable",
+    "digest": "sha256:9eb98c839d0b4b07f9230b96ad52de570f7f2a7c286c5992b4c04b6b26c08a3f"
+  },
+  "redlib": {
+    "repository": "quay.io/redlib/redlib",
+    "tag": "latest",
+    "digest": "sha256:37f624d87ce6cdd90d945af3688fdf0c195a0251d3b5ba62047792e8be2390df"
+  },
+  "mssql": {
+    "repository": "mcr.microsoft.com/mssql/server",
+    "tag": "2022-latest",
+    "digest": "sha256:4525e3efac9f3e241cb003bb2ff2a82818b502f37e12049d788b1a9fa7e13b7f"
+  }
+}

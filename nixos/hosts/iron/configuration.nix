@@ -4,6 +4,9 @@
   lib,
   ...
 }:
+let
+  pins = import ../../lib/pins.nix { inherit lib pkgs; };
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -79,6 +82,22 @@
   };
   users.groups.wakapi = { };
 
+  # Native Nix apps managed via GitOps (PR -> CI build + R2 cache -> comin deploy).
+  albi.apps.alb1 = {
+    description = "alb1.hu personal website";
+    runtime = "systemd";
+    package = pkgs.callPackage ../../apps/alb1/package.nix { };
+    port = 10001;
+    environment = {
+      ASPNETCORE_URLS = "http://127.0.0.1:10001";
+      ASPNETCORE_ENVIRONMENT = "Production";
+      OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4317";
+      # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
+    };
+    readOnlyPaths = [ "/home/albi/alb1.hu_files:/alb1.hu_files" ];
+    memoryMax = "512M";
+  };
+
   virtualisation = {
     docker = {
       enable = true;
@@ -90,7 +109,7 @@
         # Matter.js server, drop-in replacement for the EOL python-matter-server.
         # It migrates the old /var/lib/matter-server data on first start.
         matter-server = {
-          image = "ghcr.io/matter-js/matterjs-server:stable";
+          image = pins.imageRef "matter-server";
           volumes = [
             "/var/lib/matter-server:/data"
             "/run/dbus:/run/dbus:ro"
@@ -113,18 +132,6 @@
           ];
         };
 
-        alb1 = {
-          image = "alb1";
-          volumes = [ "/home/albi/alb1.hu_files:/alb1.hu_files:ro" ];
-          ports = [ "127.0.0.1:10001:8080" ];
-          environment = {
-            OTEL_EXPORTER_OTLP_ENDPOINT = "http://host.docker.internal:4317";
-            # "Logging__LogLevel__Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware" = "Warning";
-          };
-          extraOptions = [
-            "--add-host=host.docker.internal:host-gateway" # enable accessing the host
-          ];
-        };
         menza = {
           image = "menza";
           volumes = [ "/home/albi/www/Menza:/data" ];
@@ -157,7 +164,7 @@
           ports = [ "127.0.0.1:10006:8080" ];
         };
         redlib = {
-          image = "quay.io/redlib/redlib:latest";
+          image = pins.imageRef "redlib";
           user = "65534:65534";
           # recommended by gemini
           extraOptions = [
@@ -166,7 +173,6 @@
             "--cap-drop=ALL"
             "--security-opt=no-new-privileges"
             "--memory=512m"
-            "--pull=always"
           ];
           environment = {
             REDLIB_ROBOTS_DISABLE_INDEXING = "on";

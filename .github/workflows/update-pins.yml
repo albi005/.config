@@ -1,0 +1,96 @@
+name: Update Flake & Pinned Images
+
+on:
+  schedule:
+    # Weekly on Monday at 05:00 UTC (06:00/07:00 Europe/Budapest)
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-flake:
+    name: Update nixos/flake.lock
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v16
+
+      - name: Run nix flake update
+        run: nix flake update --flake ./nixos
+
+      - name: Open or update flake update PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet nixos/flake.lock; then
+            echo "flake.lock is already up to date."
+            exit 0
+          fi
+
+          branch="chore/update-flake"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add nixos/flake.lock
+          git commit -m "chore(nixos): update flake.lock"
+          git push --force-with-lease origin "$branch"
+
+          title="chore(nixos): update flake.lock"
+          body="Automated weekly \`nix flake update\`. Review the \`nvd\` closure diff comment below before merging."
+
+          existing_pr=$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing_pr" ]; then
+            gh pr edit "$existing_pr" --title "$title" --body "$body"
+          else
+            gh pr create --base main --head "$branch" --title "$title" --body "$body"
+          fi
+
+  update-images:
+    name: Update pinned 3rd-party OCI image digests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install skopeo
+        run: sudo apt-get update && sudo apt-get install -y skopeo jq
+
+      - name: Refresh nixos/pins/images.json
+        id: update
+        run: |
+          summary=$(./scripts/ci/update-image-pins.sh nixos/pins/images.json)
+          {
+            echo "summary<<EOF"
+            echo "$summary"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open or update image pin PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet nixos/pins/images.json; then
+            echo "All pinned OCI images are already up to date."
+            exit 0
+          fi
+
+          branch="chore/update-images"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add nixos/pins/images.json
+          git commit -m "chore(nixos): update pinned OCI image digests"
+          git push --force-with-lease origin "$branch"
+
+          title="chore(nixos): update pinned OCI images"
+          body=$(printf 'Automated update of digest-pinned 3rd-party OCI images in `nixos/pins/images.json`:\n\n%s\n' "${{ steps.update.outputs.summary }}")
+
+          existing_pr=$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing_pr" ]; then
+            gh pr edit "$existing_pr" --title "$title" --body "$body"
+          else
+            gh pr create --base main --head "$branch" --title "$title" --body "$body"
+          fi

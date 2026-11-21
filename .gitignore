@@ -4,6 +4,7 @@
 !*/
 
 # include
+!/.github/**
 !/ags/**
 !/alacritty/**
 !/albert/**

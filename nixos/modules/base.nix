@@ -9,6 +9,8 @@
 
 {
   imports = [
+    ./apps.nix
+    ./gitops.nix
     ./status.nix
     # ./neovim.nix
     ./helix.nix
@@ -129,6 +131,7 @@
       pkgs.nixfmt # official nix formatter
       pkgs.nmap # hackerman, `sudo nmap 192.168.0.0/24`
       pkgs.nodejs # slop machine
+      pkgs.nvd # NixOS generation & closure diff tool
       pkgs.onefetch # neofetch for git
       nixos-unstable.opencode # open source vibe coding cli      pkgs.pstree # processs tree
       pkgs.python3 # even slower slop machine
@@ -281,6 +284,10 @@
             f = "fastfetch";
             fn = "fortnite";
             fortnite = "systemctl reboot --boot-loader-entry auto-windows";
+            gf = "comin fetch"; # trigger an immediate GitOps poll
+            gpause = "comin suspend"; # pause automatic GitOps deployments while hacking locally
+            gresume = "comin resume"; # resume automatic GitOps deployments
+            gs = "comin status"; # inspect current GitOps deployment state
             h = "curl -v -o /dev/null";
             l = "lsd -al --group-directories-first --date '+%Y.%m.%d %H:%M'";
             n = "${pkgs.mpv}/bin/mpv ${sounds.vine} --no-terminal >/dev/null 2>&1 & disown";

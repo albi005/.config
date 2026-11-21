@@ -1,0 +1,205 @@
+name: Reusable - Deploy Dockerfile App (No Registry)
+
+# Call from any Dockerfile-based app repo to deploy to NixOS WITHOUT publishing
+# to a container registry (GHCR/DockerHub):
+#
+#   permissions:
+#     contents: write   # needed to publish the OCI tarball release asset
+#   jobs:
+#     deploy:
+#       uses: albi005/.config/.github/workflows/reusable-deploy-dockerfile-app.yml@main
+#       with:
+#         app: startsch
+#         dockerfile: StartSch/Dockerfile
+#       secrets:
+#         CONFIG_REPO_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
+#
+# For private app repos, set `storage: r2` and pass the R2_* secrets so Nix can
+# fetch the OCI tarball over HTTPS from your Cloudflare R2 bucket.
+
+on:
+  workflow_call:
+    inputs:
+      app:
+        description: "App directory name under nixos/apps/<app>"
+        required: true
+        type: string
+      dockerfile:
+        description: "Path to Dockerfile in the app repository"
+        required: false
+        type: string
+        default: "Dockerfile"
+      context:
+        description: "Docker build context directory"
+        required: false
+        type: string
+        default: "."
+      target:
+        description: "Optional multi-stage Dockerfile target"
+        required: false
+        type: string
+        default: ""
+      config_repo:
+        description: "Target NixOS config repository"
+        required: false
+        type: string
+        default: "albi005/.config"
+      storage:
+        description: "Where to store the exported OCI tarball: 'github-release' (public repos) or 'r2'"
+        required: false
+        type: string
+        default: "github-release"
+      r2_bucket:
+        description: "R2 bucket name (required when storage == 'r2')"
+        required: false
+        type: string
+        default: ""
+      r2_endpoint:
+        description: "R2 S3 endpoint URL (required when storage == 'r2')"
+        required: false
+        type: string
+        default: ""
+      r2_public_url:
+        description: "Public HTTPS base URL for R2 (e.g. https://cache.alb1.hu, required when storage == 'r2')"
+        required: false
+        type: string
+        default: ""
+    secrets:
+      CONFIG_REPO_TOKEN:
+        description: "Fine-grained PAT with contents:write and pull_requests:write on config_repo"
+        required: true
+      R2_ACCESS_KEY_ID:
+        required: false
+      R2_SECRET_ACCESS_KEY:
+        required: false
+
+jobs:
+  build-and-open-pr:
+    name: Build Dockerfile & open PR (${{ inputs.app }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Compute version and build OCI tarball
+        id: build
+        run: |
+          short_sha="${GITHUB_SHA:0:7}"
+          version="v0.0.${GITHUB_RUN_NUMBER}"
+          image="${{ inputs.app }}:${version}"
+          tarball="${{ inputs.app }}-${version}.tar.gz"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "image=${image}" >> "$GITHUB_OUTPUT"
+          echo "tarball=${tarball}" >> "$GITHUB_OUTPUT"
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
+          target: ${{ inputs.target }}
+          load: true
+          tags: ${{ steps.build.outputs.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Export compressed OCI tarball & compute Nix SRI hash
+        id: export
+        run: |
+          tarball="/tmp/${{ steps.build.outputs.tarball }}"
+          docker save "${{ steps.build.outputs.image }}" | gzip -9 > "$tarball"
+          ls -lh "$tarball"
+          # Compute Nix-compatible SRI sha256 hash without needing Nix installed yet
+          b64=$(openssl dgst -sha256 -binary "$tarball" | openssl base64 -A)
+          echo "hash=sha256-${b64}" >> "$GITHUB_OUTPUT"
+          echo "tarball_path=${tarball}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish tarball to GitHub Release (no container registry)
+        id: upload_gh
+        if: ${{ inputs.storage == 'github-release' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ steps.build.outputs.version }}"
+          tarball="${{ steps.export.outputs.tarball_path }}"
+          gh release create "$tag" "$tarball" \
+            --target "${GITHUB_SHA}" \
+            --title "${{ inputs.app }} ${tag}" \
+            --notes "OCI tarball artifact for NixOS GitOps deployment (${GITHUB_SHA})."
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${tag}/${{ steps.build.outputs.tarball }}"
+          echo "url=${url}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish tarball to Cloudflare R2 (private-repo friendly, no container registry)
+        id: upload_r2
+        if: ${{ inputs.storage == 'r2' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          key="oci/${{ inputs.app }}/${{ steps.build.outputs.tarball }}"
+          aws s3 cp "${{ steps.export.outputs.tarball_path }}" "s3://${{ inputs.r2_bucket }}/${key}" \
+            --endpoint-url "${{ inputs.r2_endpoint }}" \
+            --region auto
+          url="${{ inputs.r2_public_url }}/${key}"
+          echo "url=${url}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout ${{ inputs.config_repo }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.config_repo }}
+          token: ${{ secrets.CONFIG_REPO_TOKEN }}
+          path: config-repo
+
+      - name: Update pin.json and open PR
+        working-directory: config-repo
+        env:
+          GH_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
+        run: |
+          url="${{ steps.upload_gh.outputs.url || steps.upload_r2.outputs.url }}"
+          out=$(./scripts/ci/update-app-pin.sh dockerfile \
+            "${{ inputs.app }}" \
+            "${GITHUB_SHA}" \
+            "${{ steps.build.outputs.version }}" \
+            "${{ steps.build.outputs.image }}" \
+            "$url" \
+            "${{ steps.export.outputs.hash }}")
+          old_rev=$(echo "$out" | awk -F= '/^OLD_REV=/ { print $2 }')
+
+          branch="deploy-app/${{ inputs.app }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B "$branch"
+          git add "nixos/apps/${{ inputs.app }}"
+          git commit -m "deploy(${{ inputs.app }}): bump to ${{ steps.build.outputs.version }}"
+          git push --force-with-lease origin "$branch"
+
+          if [ -n "$old_rev" ] && [ "$old_rev" != "${GITHUB_SHA}" ]; then
+            compare_line="Changes: https://github.com/${GITHUB_REPOSITORY}/compare/${old_rev:0:7}...${GITHUB_SHA:0:7}"
+          else
+            compare_line="Commit: https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+          fi
+
+          title="deploy(${{ inputs.app }}): ${{ steps.build.outputs.version }}"
+          body=$(cat <<EOF
+          Automated Dockerfile OCI tarball update triggered by [\`${GITHUB_REPOSITORY}@${GITHUB_SHA:0:7}\`](https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}).
+
+          - **App**: \`${{ inputs.app }}\` (Dockerfile → Nix \`imageFile\`, no container registry)
+          - **Image**: \`${{ steps.build.outputs.image }}\`
+          - **Artifact**: ${url}
+          - **Hash**: \`${{ steps.export.outputs.hash }}\`
+          - ${compare_line}
+
+          Merge this PR once CI checks pass to deploy automatically via \`comin\`.
+          EOF
+          )
+
+          existing_pr=$(gh pr list --repo "${{ inputs.config_repo }}" --head "$branch" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing_pr" ]; then
+            gh pr edit "$existing_pr" --repo "${{ inputs.config_repo }}" --title "$title" --body "$body"
+          else
+            gh pr create --repo "${{ inputs.config_repo }}" --base main --head "$branch" --title "$title" --body "$body"
+          fi

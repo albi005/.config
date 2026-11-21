@@ -3,10 +3,14 @@
   lib,
   ...
 }:
+let
+  pins = import ../../lib/pins.nix { inherit lib pkgs; };
+in
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/base.nix
+    ../../modules/server-only.nix
   ];
 
   networking.hostName = "slime";
@@ -21,7 +25,7 @@
     backend = "docker";
     containers = {
       dfv = {
-        image = "mcr.microsoft.com/mssql/server:2022-latest";
+        image = pins.imageRef "mssql";
         volumes = [
           "/var/lib/dfvdb/data:/var/opt/mssql/data"
           "/var/lib/dfvdb/log:/var/opt/mssql/log"
