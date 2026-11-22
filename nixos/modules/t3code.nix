@@ -31,7 +31,7 @@ in
       User = "albi";
       Group = "users";
       WorkingDirectory = "/home/albi";
-      ExecStart = "${t3code}/bin/t3 serve --tailscale-serve";
+      ExecStart = "${t3code}/bin/t3 serve --tailscale-serve --tailscale-serve-port 3773";
       Restart = "on-failure";
       RestartSec = 5;
     };
