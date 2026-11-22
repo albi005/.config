@@ -10,11 +10,20 @@ in
 {
   environment.systemPackages = [ t3code ];
 
+  services.tailscale.extraSetFlags = [ "--operator=albi" ];
+
   systemd.services.t3code = {
     description = "T3 Code server";
     wantedBy = [ "multi-user.target" ];
-    wants = [ "tailscaled.service" ];
-    after = [ "tailscaled.service" ];
+    wants = [
+      "tailscaled.service"
+      "tailscaled-set.service"
+    ];
+    after = [
+      "tailscaled.service"
+      "tailscaled-set.service"
+    ];
+    path = [ config.services.tailscale.package ];
     environment = {
       HOME = "/home/albi";
     };
@@ -22,7 +31,7 @@ in
       User = "albi";
       Group = "users";
       WorkingDirectory = "/home/albi";
-      ExecStart = "${t3code}/bin/t3 --host t3-${config.networking.hostName}.alb1.hu --no-browser";
+      ExecStart = "${t3code}/bin/t3 serve --tailscale-serve";
       Restart = "on-failure";
       RestartSec = 5;
     };
