@@ -16,14 +16,24 @@ in
     description = "T3 Code server";
     wantedBy = [ "multi-user.target" ];
     wants = [
+      "network-online.target"
       "tailscaled.service"
       "tailscaled-set.service"
     ];
     after = [
+      "network-online.target"
       "tailscaled.service"
       "tailscaled-set.service"
     ];
     path = [ config.services.tailscale.package ];
+    preStart = ''
+      for ((i = 0; i < 60; i++)); do
+        if tailscale status --peers=false >/dev/null 2>&1 && tailscale serve status >/dev/null 2>&1; then
+          exit 0
+        fi
+        sleep 1
+      done
+    '';
     environment = {
       HOME = "/home/albi";
     };
