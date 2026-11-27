@@ -77,6 +77,25 @@
     options hid_apple fnmode=2
   '';
 
+  # Ensure Bluetooth isn't left soft-blocked by rfkill (e.g. restored from
+  # /var/lib/systemd/rfkill); bluez/bluetuith cannot clear rfkill soft-blocks
+  # on their own and fail with 0x03.
+  systemd.services.unblock-bluetooth = {
+    description = "Unblock Bluetooth rfkill soft-block";
+    after = [
+      "bluetooth.service"
+      "systemd-rfkill.service"
+    ];
+    wantedBy = [
+      "bluetooth.target"
+      "multi-user.target"
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.util-linux}/bin/rfkill unblock bluetooth";
+    };
+  };
+
   home-manager.users.albi = { ... }: {
     home.file.".config/hypr/host.lua".text = ''
       hl.config{input={kb_options='caps:swapescape'}}
