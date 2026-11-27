@@ -125,7 +125,7 @@
     # (pkgs.callPackage ../../pkgs/modelsim { }) # HDL simulator
     # (pkgs.callPackage ../../pkgs/quartus-ii-13_1 { }) # FPGA simulator
     # nixos-unstable.jetbrains.rider
-    pkgs.jetbrains.rider
+    # pkgs.jetbrains.rider
     # nixos-unstable.jetbrains.goland
     # krita
     # jetbrains.ruby-mine # pek-next
