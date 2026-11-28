@@ -107,17 +107,12 @@
         inherit system;
         config.allowUnfree = true;
       };
-      pkgs2605 = import inputs.nixos-2605 {
-        inherit system;
-        config.allowUnfree = true;
-      };
     in
     {
       packages.${system} = {
         modelsim = pkgs2511.callPackage ./pkgs/modelsim { };
         quartus-ii-13_1 = pkgs2511.callPackage ./pkgs/quartus-ii-13_1 { };
         kcl-language-server = pkgs2511.callPackage ./pkgs/kcl-language-server { };
-        deepseek-harness = pkgs2605.callPackage ./pkgs/deepseek-harness { };
       };
 
       nixosConfigurations = {

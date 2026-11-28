@@ -2,11 +2,12 @@
   pkgs,
   config,
   inputs,
+  nixos-unstable,
   ...
 }:
 let
   t3code = inputs.nix-t3code.packages.${pkgs.stdenv.hostPlatform.system}.t3code-nightly;
-  deepseek-harness = pkgs.callPackage ../pkgs/deepseek-harness { };
+  deepseek-harness = nixos-unstable.deepseek-harness;
 in
 {
   environment.systemPackages = [
