@@ -6,9 +6,13 @@
 }:
 let
   t3code = inputs.nix-t3code.packages.${pkgs.stdenv.hostPlatform.system}.t3code-nightly;
+  deepseek-harness = pkgs.callPackage ../pkgs/deepseek-harness { };
 in
 {
-  environment.systemPackages = [ t3code ];
+  environment.systemPackages = [
+    t3code
+    deepseek-harness
+  ];
 
   services.tailscale.extraSetFlags = [ "--operator=albi" ];
 
@@ -25,7 +29,10 @@ in
       "tailscaled.service"
       "tailscaled-set.service"
     ];
-    path = [ config.services.tailscale.package ];
+    path = [
+      config.services.tailscale.package
+      deepseek-harness
+    ];
     preStart = ''
       for ((i = 0; i < 60; i++)); do
         if tailscale status --peers=false >/dev/null 2>&1 && tailscale serve status >/dev/null 2>&1; then
