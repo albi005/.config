@@ -130,3 +130,40 @@ gv select last selection
 ## Bookmarks
 
 - https://github.com/hyprland-community/awesome-hyprland
+
+## Deploy
+
+Machines deploy themselves from GitHub via [`comin`](https://github.com/nlewo/comin) (pull-based GitOps). Dotfiles in `~/.config` stay a manual git checkout (`git pull`) so Hyprland, Helix, etc. hot-reload immediately.
+
+### How it works
+
+- **Merge to `main`**: `iron`, `slime`, `redstone`, and `netherite` poll `main` every 60s and `switch` automatically.
+- **`water` (laptop)**: `comin` is enabled with automatic polling disabled (`poller.period = 0`) — run `gf` (`comin fetch`) whenever you want to update it.
+- **Test on one host before merging**: push a `host/<hostname>` branch (e.g. `host/iron`). `comin` activates it with `test` (no boot entry); once the PR is merged and the branch deleted, the host returns to `main`.
+- **Work sharing**: `netherite` and `water` pull custom derivations from `redstone` over Tailscale SSH and offload builds best-effort (`ssh-ng`), falling back locally after 5s when `redstone` is off. `iron` and `slime` do not share builders.
+
+### Cheat sheet
+
+```sh
+# comin (aliases: gs = comin status, gf = comin fetch)
+gs                               # check fetcher / builder / deployer state
+gf                               # trigger a fetch & deploy now (required on water)
+comin deployment list            # list recent deployments and boot entries
+comin suspend && comin resume    # pause / resume automatic deploys
+comin list --flake-url ./nixos   # list hosts defined in the flake
+
+# interactive app / flake-input deploy from a desktop (redstone / netherite)
+# picks flake input(s) with gum, updates flake.lock in a temp clone, opens a PR,
+# pre-builds & copies the closure to iron before merging, merges, and runs `comin fetch`
+deploy                           # interactive picker (or `deploy alb1` to skip picker)
+
+# test a branch on a single host via comin
+git push origin HEAD:host/iron
+git push origin :host/iron       # return host to main
+
+# local checkout (fail-safe / uncommitted local edits only; comin never touches ~/.config)
+rb                               # sudo nixos-rebuild switch --flake ~/.config/nixos
+nh os test ~/.config/nixos       # test local changes without touching boot entries
+nh os switch ~/.config/nixos -H iron --target-host albi@iron --use-substitutes
+update                           # nix flake update --flake ~/.config/nixos
+```

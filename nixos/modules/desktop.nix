@@ -132,6 +132,144 @@ in
     # zed-editor
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default # arc but based on firefox
     inputs.helium-browser.packages."${stdenv.hostPlatform.system}".default # chromium fork
+
+    # Interactive GitOps deploy script: pick flake input(s) with gum, update
+    # flake.lock in a clean temp clone, open a PR, optionally pre-build & copy
+    # closures to target hosts (zero sudo on iron), merge, and trigger comin.
+    (pkgs.writeShellScriptBin "deploy" ''
+      set -euo pipefail
+
+      git="${pkgs.git}/bin/git"
+      gh="${pkgs.gh}/bin/gh"
+      gum="${pkgs.gum}/bin/gum"
+      jq="${pkgs.jq}/bin/jq"
+      nix="${config.nix.package}/bin/nix"
+      ssh="${config.programs.ssh.package}/bin/ssh"
+
+      state_dir="''${XDG_STATE_HOME:-$HOME/.local/state}/deploy"
+      mkdir -p "$state_dir"
+      last_input_file="$state_dir/last-input"
+      last_hosts_file="$state_dir/last-hosts"
+
+      tmp="$(mktemp -d -t deploy-config-XXXXXX)"
+      trap 'rm -rf "$tmp"' EXIT
+
+      echo "Cloning albi005/.config (main)..."
+      "$git" clone --quiet --depth=1 --branch main https://github.com/albi005/.config.git "$tmp"
+      cd "$tmp"
+
+      if [[ $# -gt 0 ]]; then
+        inputs=("$@")
+      else
+        last_input=""
+        if [[ -f "$last_input_file" ]]; then
+          last_input="$(cat "$last_input_file")"
+        fi
+
+        # Put the last-used input first so pressing Enter repeats it immediately,
+        # while typing fuzzy-searches all flake inputs.
+        mapfile -t available < <("$jq" -r --arg last "$last_input" '
+          (.nodes.root.inputs | keys) as $keys |
+          if ($last != "" and ($keys | index($last) != null)) then
+            [$last] + ($keys | map(select(. != $last)))
+          else
+            $keys
+          end | .[]
+        ' nixos/flake.lock)
+
+        selected="$("$gum" filter --height=20 \
+          --header "Select flake input to update (type to search, Enter to pick)" \
+          --placeholder "Search flake inputs..." \
+          "''${available[@]}")"
+        if [[ -z "$selected" ]]; then
+          echo "No input selected."
+          exit 0
+        fi
+        inputs=("$selected")
+      fi
+
+      printf '%s\n' "''${inputs[0]}" > "$last_input_file"
+
+      old_lock="$(cat nixos/flake.lock)"
+      echo "Updating flake input(s): ''${inputs[*]}..."
+      "$nix" flake update --flake ./nixos "''${inputs[@]}"
+
+      if "$git" diff --quiet nixos/flake.lock; then
+        echo "Already up to date (nixos/flake.lock unchanged)."
+        exit 0
+      fi
+
+      # Build a concise old -> new rev summary for the PR body.
+      summary=""
+      for inp in "''${inputs[@]}"; do
+        old_rev="$(printf '%s' "$old_lock" | "$jq" -r --arg k "$inp" '.nodes[.nodes.root.inputs[$k]].locked | (.rev // .narHash // "?")' | cut -c1-7)"
+        new_rev="$("$jq" -r --arg k "$inp" '.nodes[.nodes.root.inputs[$k]].locked | (.rev // .narHash // "?")' nixos/flake.lock | cut -c1-7)"
+        if [[ "$old_rev" != "$new_rev" ]]; then
+          summary+="- \`$inp\`: \`$old_rev\` -> \`$new_rev\`"$'\n'
+        fi
+      done
+      echo ""
+      printf '%s\n' "$summary"
+
+      slug="$(IFS=-; echo "''${inputs[*]}")"
+      branch="update/''${slug}-$(date +%Y%m%d-%H%M%S)"
+      title="Update ''${inputs[*]}"
+
+      "$git" checkout -q -b "$branch"
+      "$git" add nixos/flake.lock
+      "$git" commit -q -m "$title"
+      "$git" push -q -u origin "$branch"
+
+      pr_url="$("$gh" pr create --base main --head "$branch" --title "$title" --body "$(printf 'Updated flake input(s):\n\n%s' "$summary")")"
+      pr_num="''${pr_url##*/}"
+      echo "Opened PR #$pr_num: $pr_url"
+
+      local_host="$(hostname)"
+      host_choices=("iron")
+      if [[ "$local_host" != "iron" ]]; then
+        host_choices+=("$local_host")
+      fi
+
+      default_hosts="iron"
+      if [[ -f "$last_hosts_file" ]]; then
+        default_hosts="$(paste -sd, "$last_hosts_file")"
+      fi
+
+      choose_args=(--no-limit --header "Pre-build & push closure before merging? (Space to toggle, Enter to continue)")
+      if [[ -n "$default_hosts" ]]; then
+        choose_args+=(--selected="$default_hosts")
+      fi
+
+      mapfile -t prebuild_hosts < <("$gum" choose "''${choose_args[@]}" "''${host_choices[@]}" || true)
+      if [[ ''${#prebuild_hosts[@]} -gt 0 ]]; then
+        printf '%s\n' "''${prebuild_hosts[@]}" > "$last_hosts_file"
+      else
+        : > "$last_hosts_file"
+      fi
+
+      for host in "''${prebuild_hosts[@]}"; do
+        echo "Building nixosConfigurations.$host..."
+        out="$("$nix" build --no-link --print-out-paths "./nixos#nixosConfigurations.$host.config.system.build.toplevel")"
+        if [[ "$host" != "$local_host" ]]; then
+          echo "Copying closure to $host..."
+          "$nix" copy --to "ssh://albi@$host" --substitute-on-destination "$out"
+        fi
+      done
+
+      if "$gum" confirm "Merge PR #$pr_num and trigger comin fetch?"; then
+        "$gh" pr merge "$pr_num" --squash --delete-branch
+        for host in "''${prebuild_hosts[@]}"; do
+          if [[ "$host" == "$local_host" ]]; then
+            comin fetch || true
+          else
+            "$ssh" "albi@$host" comin fetch || true
+          fi
+        done
+        echo "Merged PR #$pr_num and triggered comin."
+      else
+        echo "Left PR #$pr_num open: $pr_url"
+      fi
+    '')
   ];
 
   # services.desktopManager.gnome.enable = true;
@@ -145,12 +283,6 @@ in
     }:
     {
       programs.fuzzel.enable = true;
-
-      programs.bash.shellAliases = {
-        # Build iron's closure locally on this desktop and deploy it over SSH
-        # so iron doesn't have to compile heavy apps (e.g. .NET) on 2 threads.
-        deploy-iron = "nh os switch /home/albi/.config/nixos -H iron --target-host albi@iron --use-substitutes";
-      };
 
       # can be overridden to set host specific hyprland config, imported in hyprland.conf, empty by default
       home.file.".config/hypr/host.lua".text = lib.mkDefault "";

@@ -1,77 +1,78 @@
 # Native Nix build and NixOS service for alb1.hu (.NET 10 Blazor Server)
 {
   pkgs,
+  inputs,
   ...
 }:
 let
   alb1 = pkgs.buildDotnetModule {
     pname = "alb1";
-    version = "0.0.1-3beafac";
+    version = "0.0.1-${inputs.alb1.shortRev or "dirty"}";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "albi005";
-      repo = "alb1.hu";
-      rev = "3beafaca860db4d504410c67ca2d20c72b037bf7";
-      hash = "sha256-Shi4ew1zYlkuv5ohXiqOvu34c9SF4ujP4EuTQIgvgQY=";
-    };
+    src = inputs.alb1;
 
     projectFile = "Hello/Hello.csproj";
     dotnet-sdk = pkgs.dotnetCorePackages.sdk_10_0;
     dotnet-runtime = pkgs.dotnetCorePackages.aspnetcore_10_0;
     executables = [ "Hello" ];
 
-    nugetDeps = map pkgs.fetchNuGet [
-      {
-        pname = "Blazored.LocalStorage";
-        version = "4.5.0";
-        hash = "sha256-0vklTFHEGgNG8V6ivQictuooyiXS2nMn/qLpfYhEBlE=";
-      }
-      {
-        pname = "HtmlAgilityPack";
-        version = "1.11.65";
-        hash = "sha256-aZ8l3RbcCqI918whQuMktbdGGAo0/P4Mj5ywyrX/Klc=";
-      }
-      {
-        pname = "OpenTelemetry";
-        version = "1.14.0";
-        hash = "sha256-nspJW+N+4P+9F8wwpCtJgFovPeInveotw7CAYfP3MN4=";
-      }
-      {
-        pname = "OpenTelemetry.Api";
-        version = "1.14.0";
-        hash = "sha256-Dn8gWzYyFQuNjP1m6YJzSrPetF+G+R+zVFEJevFSv+c=";
-      }
-      {
-        pname = "OpenTelemetry.Api.ProviderBuilderExtensions";
-        version = "1.14.0";
-        hash = "sha256-1jbbubCLqiw5f+QzpjMdGtKeNU57hQUTxvKPZck/5Pk=";
-      }
-      {
-        pname = "OpenTelemetry.Exporter.OpenTelemetryProtocol";
-        version = "1.14.0";
-        hash = "sha256-bHwqcxT4FWXlfmVlq3ztFrzJB98tcmFkZ2xL8uCXuSA=";
-      }
-      {
-        pname = "OpenTelemetry.Extensions.Hosting";
-        version = "1.14.0";
-        hash = "sha256-cIbpTokrkIFc4R3PmOFn5B/zR/FWW4Gy6/c003GfY8M=";
-      }
-      {
-        pname = "OpenTelemetry.Instrumentation.AspNetCore";
-        version = "1.14.0";
-        hash = "sha256-v93jmSUWGQjENx14eUlCMLEV8x8SaES73bpUkOr3qtU=";
-      }
-      {
-        pname = "OpenTelemetry.Instrumentation.Http";
-        version = "1.14.0";
-        hash = "sha256-FzOu1W8Ox8MAUhv1KrwQ7w5PAAQKGTdzB0F51y390ag=";
-      }
-      {
-        pname = "OpenTelemetry.Instrumentation.Runtime";
-        version = "1.14.0";
-        hash = "sha256-ShkIVKcGbBTkuz319ffZKag7PmVWwGVwLfrhYB+pkM4=";
-      }
-    ];
+    nugetDeps = pkgs.mkNugetDeps {
+      name = "alb1";
+      nugetDeps =
+        { fetchNuGet }:
+        map fetchNuGet [
+          {
+            pname = "Blazored.LocalStorage";
+            version = "4.5.0";
+            hash = "sha256-0vklTFHEGgNG8V6ivQictuooyiXS2nMn/qLpfYhEBlE=";
+          }
+          {
+            pname = "HtmlAgilityPack";
+            version = "1.11.65";
+            hash = "sha256-aZ8l3RbcCqI918whQuMktbdGGAo0/P4Mj5ywyrX/Klc=";
+          }
+          {
+            pname = "OpenTelemetry";
+            version = "1.14.0";
+            hash = "sha256-nspJW+N+4P+9F8wwpCtJgFovPeInveotw7CAYfP3MN4=";
+          }
+          {
+            pname = "OpenTelemetry.Api";
+            version = "1.14.0";
+            hash = "sha256-Dn8gWzYyFQuNjP1m6YJzSrPetF+G+R+zVFEJevFSv+c=";
+          }
+          {
+            pname = "OpenTelemetry.Api.ProviderBuilderExtensions";
+            version = "1.14.0";
+            hash = "sha256-1jbbubCLqiw5f+QzpjMdGtKeNU57hQUTxvKPZck/5Pk=";
+          }
+          {
+            pname = "OpenTelemetry.Exporter.OpenTelemetryProtocol";
+            version = "1.14.0";
+            hash = "sha256-bHwqcxT4FWXlfmVlq3ztFrzJB98tcmFkZ2xL8uCXuSA=";
+          }
+          {
+            pname = "OpenTelemetry.Extensions.Hosting";
+            version = "1.14.0";
+            hash = "sha256-cIbpTokrkIFc4R3PmOFn5B/zR/FWW4Gy6/c003GfY8M=";
+          }
+          {
+            pname = "OpenTelemetry.Instrumentation.AspNetCore";
+            version = "1.14.0";
+            hash = "sha256-v93jmSUWGQjENx14eUlCMLEV8x8SaES73bpUkOr3qtU=";
+          }
+          {
+            pname = "OpenTelemetry.Instrumentation.Http";
+            version = "1.14.0";
+            hash = "sha256-FzOu1W8Ox8MAUhv1KrwQ7w5PAAQKGTdzB0F51y390ag=";
+          }
+          {
+            pname = "OpenTelemetry.Instrumentation.Runtime";
+            version = "1.14.0";
+            hash = "sha256-ShkIVKcGbBTkuz319ffZKag7PmVWwGVwLfrhYB+pkM4=";
+          }
+        ];
+    };
 
     # ASP.NET Core serves wwwroot relative to DOTNET_CONTENTROOT.
     makeWrapperArgs = [
